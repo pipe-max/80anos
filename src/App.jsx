@@ -265,17 +265,48 @@ function FormularioPadres() {
   }
 
   if (success) {
+    const ResumenDia = ({ label, recoge }) => (
+      <div style={{ background: '#f8fbff', border: `1px solid ${C.cardB}`, borderRadius: 10, padding: '14px 16px', textAlign: 'left', flex: 1, minWidth: 220 }}>
+        <div style={{ fontWeight: 700, color: C.blueL, fontSize: 14, marginBottom: 8 }}>{label}</div>
+        {recoge.tipo === 'padres' ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: C.green, fontWeight: 600, fontSize: 14 }}>
+            👨‍👩‍👧 Papá / Mamá
+          </div>
+        ) : recoge.tipo === 'autorizado' ? (
+          <div style={{ fontSize: 13, color: C.text, display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <div>👤 <strong>{recoge.auth.nombre}</strong></div>
+            <div style={{ color: C.muted }}>🪪 Cédula: {recoge.auth.cedula}</div>
+            <div style={{ color: C.muted }}>🤝 Parentesco: {recoge.auth.parentesco}</div>
+            <div style={{ color: C.muted }}>📱 Celular: {recoge.auth.celular}</div>
+            {recoge.auth.placa && <div style={{ color: C.muted }}>🚗 Placa: {recoge.auth.placa}</div>}
+          </div>
+        ) : <div style={{ color: C.muted, fontSize: 13 }}>—</div>}
+      </div>
+    )
+
     return (
       <div style={S.page}>
         <Header />
-        <div style={{ ...S.container, textAlign: 'center', paddingTop: 60 }}>
-          <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
-          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 28, fontWeight: 700, color: C.green, marginBottom: 10 }}>
-            {isEditing ? '¡Información actualizada!' : '¡Formulario enviado!'}
+        <div style={{ ...S.container, paddingTop: 40 }}>
+          <div style={{ textAlign: 'center', marginBottom: 28 }}>
+            <div style={{ fontSize: 52, marginBottom: 12 }}>✅</div>
+            <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 28, fontWeight: 700, color: C.green, marginBottom: 8 }}>
+              ¡Formulario enviado!
+            </div>
+            <div style={{ color: C.muted, fontSize: 14 }}>
+              Información registrada para <strong style={{ color: C.text }}>{nombre}</strong> · {nombreSeccion(grado)}
+            </div>
           </div>
-          <div style={{ color: C.muted, marginBottom: 28, maxWidth: 400, margin: '0 auto 28px' }}>
-            La información de recogida para <strong style={{ color: C.text }}>{nombre}</strong> fue registrada exitosamente.
+
+          {/* Resumen */}
+          <div style={{ ...S.card, marginBottom: 20 }}>
+            <div style={{ ...S.sectionTitle, marginBottom: 16 }}>📋 Resumen del registro</div>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+              <ResumenDia label="☀️ Lunes 4 de mayo" recoge={day4} />
+              <ResumenDia label="🌤️ Martes 5 de mayo" recoge={day5} />
+            </div>
           </div>
+
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button style={S.btn(C.yellow)} onClick={() => { setSuccess(false); setIsEditing(true); setError('') }}>
               ✏️ Corregir información
