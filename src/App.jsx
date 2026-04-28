@@ -55,9 +55,9 @@ const emptyRecoge = () => ({ tipo: '', auth: emptyAuth() })
 
 // ─── Colores ─────────────────────────────────────────────────────────────────
 const C = {
-  bg: '#060b14', card: '#0c1728', cardB: '#163060',
-  blue: '#1d6eed', blueL: '#4da6ff',
-  text: '#d4e8ff', muted: '#527ea8',
+  bg: '#f0f4f9', card: '#ffffff', cardB: '#d0dce8',
+  blue: '#1d6eed', blueL: '#1a5abf',
+  text: '#1a2a3a', muted: '#5a7a9a',
   green: '#10b981', red: '#f43f5e', yellow: '#f59e0b',
 }
 
@@ -70,8 +70,8 @@ const S = {
   container: { maxWidth: 720, margin: '0 auto', padding: '28px 16px' },
   card: { background: C.card, border: `1px solid ${C.cardB}`, borderRadius: 14, padding: '24px 22px', marginBottom: 20 },
   label: { fontSize: 13, color: C.muted, marginBottom: 6, display: 'block', fontWeight: 500 },
-  input: { width: '100%', background: '#0a1628', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 15, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none' },
-  select: { width: '100%', background: '#0a1628', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 15, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none', cursor: 'pointer' },
+  input: { width: '100%', background: '#f5f8fc', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 15, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none' },
+  select: { width: '100%', background: '#f5f8fc', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 15, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none', cursor: 'pointer' },
   btn: (color = C.blue) => ({ background: color, color: '#fff', border: 'none', borderRadius: 8, padding: '11px 22px', fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }),
   btnSm: (color = C.blue) => ({ background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }),
   row: { display: 'flex', gap: 12, flexWrap: 'wrap' },
