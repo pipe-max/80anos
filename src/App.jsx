@@ -112,7 +112,7 @@ function RecogeCard({ dia, value, onChange }) {
           required
         >
           <option value="">— Selecciona —</option>
-          <option value="padres">Papá / Mamá</option>
+          <option value="padres">Padres</option>
           <option value="autorizado">Persona autorizada</option>
         </select>
       </div>
