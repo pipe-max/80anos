@@ -150,6 +150,7 @@ function BuscarRegistro({ onEditar }) {
   const [resultados, setResultados] = useState([])
   const [buscando, setBuscando] = useState(false)
   const [sinResultados, setSinResultados] = useState(false)
+  const [pinCheck, setPinCheck] = useState({})     // { [id]: { input, error, visible } }
 
   const buscar = async () => {
     if (!busqueda.trim()) return
@@ -197,9 +198,55 @@ function BuscarRegistro({ onEditar }) {
             <div style={{ fontWeight: 700, color: C.text, fontSize: 15 }}>{reg.nombre}</div>
             <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{nombreSeccion(reg.seccion)} · Lunes: {reg.day4?.tipo === 'padres' ? 'Papá/Mamá' : reg.day4?.nombre || '—'} · Martes: {reg.day5?.tipo === 'padres' ? 'Papá/Mamá' : reg.day5?.nombre || '—'}</div>
           </div>
-          <button type="button" style={S.btn(C.yellow)} onClick={() => { onEditar(reg); setOpen(false) }}>
-            ✏️ Editar
-          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, minWidth: 180 }}>
+            {!pinCheck[reg.id]?.visible ? (
+              <button
+                type="button"
+                style={S.btn(C.yellow)}
+                onClick={() => setPinCheck(p => ({ ...p, [reg.id]: { input: '', error: '', visible: true } }))}
+              >
+                ✏️ Editar
+              </button>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, alignItems: 'flex-end' }}>
+                <div style={{ fontSize: 12, color: C.muted, fontWeight: 600 }}>🔐 Ingresa tu PIN:</div>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={6}
+                    style={{ ...S.input, width: 110, textAlign: 'center', letterSpacing: 4, fontWeight: 700, fontSize: 16 }}
+                    placeholder="_ _ _ _ _ _"
+                    value={pinCheck[reg.id]?.input || ''}
+                    onChange={e => setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], input: e.target.value, error: '' } }))}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false) }
+                        else setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], error: 'PIN incorrecto' } }))
+                      }
+                    }}
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    style={S.btn(C.green)}
+                    onClick={() => {
+                      if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false) }
+                      else setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], error: 'PIN incorrecto' } }))
+                    }}
+                  >✓</button>
+                  <button
+                    type="button"
+                    style={S.btn(C.muted)}
+                    onClick={() => setPinCheck(p => ({ ...p, [reg.id]: { input: '', error: '', visible: false } }))}
+                  >✕</button>
+                </div>
+                {pinCheck[reg.id]?.error && (
+                  <div style={{ fontSize: 12, color: C.red, fontWeight: 600 }}>⚠️ {pinCheck[reg.id].error}</div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       ))}
     </div>
@@ -218,6 +265,7 @@ function FormularioPadres() {
   const [error, setError] = useState('')
   const [editId, setEditId] = useState(null)   // id del registro guardado
   const [isEditing, setIsEditing] = useState(false)
+  const [generatedPin, setGeneratedPin] = useState('')
 
   const gradosDisponibles = nivel ? SECCIONES_POR_NIVEL(nivel) : []
   const estudiantes = grado ? ESTUDIANTES[grado] || [] : []
@@ -225,7 +273,7 @@ function FormularioPadres() {
   const resetForm = () => {
     setNivel(''); setGrado(''); setNombre('')
     setDay4(emptyRecoge()); setDay5(emptyRecoge())
-    setEditId(null); setIsEditing(false); setSuccess(false); setError('')
+    setEditId(null); setIsEditing(false); setSuccess(false); setError(''); setGeneratedPin('')
   }
 
   const handleSubmit = async (e) => {
@@ -251,11 +299,13 @@ function FormularioPadres() {
         const { error: err } = await supabase.from('submissions').update(payload).eq('id', editId)
         if (err) throw err
       } else {
-        // CREAR nuevo registro
+        // CREAR nuevo registro — generar PIN de 6 dígitos
+        const pin = Math.floor(100000 + Math.random() * 900000).toString()
         const newId = crypto.randomUUID()
-        const { error: err } = await supabase.from('submissions').insert([{ id: newId, ...payload }])
+        const { error: err } = await supabase.from('submissions').insert([{ id: newId, pin, ...payload }])
         if (err) throw err
         setEditId(newId)
+        setGeneratedPin(pin)
       }
       setIsEditing(false)
       setSuccess(true)
@@ -298,6 +348,16 @@ function FormularioPadres() {
             <div style={{ color: C.muted, fontSize: 14 }}>
               Información registrada para <strong style={{ color: C.text }}>{nombre}</strong> · {nombreSeccion(grado)}
             </div>
+
+            {generatedPin && (
+              <div style={{ marginTop: 22, background: '#fff8e1', border: '2px solid #f59e0b', borderRadius: 14, padding: '18px 24px', display: 'inline-block', minWidth: 260 }}>
+                <div style={{ fontSize: 13, color: '#92610a', fontWeight: 600, marginBottom: 6 }}>🔐 Tu PIN de edición</div>
+                <div style={{ fontSize: 38, fontWeight: 800, letterSpacing: 8, color: '#1a2a3a', fontFamily: 'monospace' }}>{generatedPin}</div>
+                <div style={{ fontSize: 12, color: '#92610a', marginTop: 8, lineHeight: 1.5 }}>
+                  ⚠️ <strong>Guarda este PIN.</strong> Lo necesitarás si en el futuro<br/>quieres modificar la información de este registro.
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Resumen */}
