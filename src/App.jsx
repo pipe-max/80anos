@@ -466,22 +466,22 @@ function PanelDirectores({ onLogout }) {
     doc.text(`Listado de Recogida · ${secLabel} · ${diaLabel}`, 14, 21)
     doc.text(`Generado: ${new Date().toLocaleString('es-CO')}`, 14, 27)
 
-    const head = [['Estudiante', 'Grado', '☀️ Lunes 4 - Quién recoge', 'Recogido L4', '🌤️ Martes 5 - Quién recoge', 'Recogido M5']]
+    const head = [['Estudiante', 'Grado', 'Lunes 4 - Quien recoge', 'Recogido L4', 'Martes 5 - Quien recoge', 'Recogido M5']]
     const body = filtered.map(r => {
       const d4 = r.day4 || {}
       const d5 = r.day5 || {}
       const fmt = (d) => d.tipo === 'padres'
-        ? 'Papá / Mamá'
+        ? 'Papa / Mama'
         : d.tipo === 'autorizado'
-          ? `${d.nombre || ''}\nCC: ${d.cedula || ''} · ${d.parentesco || ''}\nCel: ${d.celular || ''}${d.placa ? ' · Placa: ' + d.placa : ''}`
-          : '—'
+          ? `${d.nombre || ''}\nCC: ${d.cedula || ''} - ${d.parentesco || ''}\nCel: ${d.celular || ''}${d.placa ? ' - Placa: ' + d.placa : ''}`
+          : '-'
       return [
         r.nombre,
         nombreSeccion(r.seccion),
         fmt(d4),
-        r.d4_checked ? '✔ Sí' : '—',
+        r.d4_checked ? 'Si' : '-',
         fmt(d5),
-        r.d5_checked ? '✔ Sí' : '—',
+        r.d5_checked ? 'Si' : '-',
       ]
     })
 
