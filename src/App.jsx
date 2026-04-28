@@ -152,17 +152,22 @@ function BuscarRegistro({ onEditar }) {
   const [sinResultados, setSinResultados] = useState(false)
   const [pinCheck, setPinCheck] = useState({})     // { [id]: { input, error, visible } }
 
+  const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()
+
   const buscar = async () => {
     if (!busqueda.trim()) return
     setBuscando(true); setSinResultados(false); setResultados([])
+    // Traer todos y filtrar localmente para tolerar tildes y mayúsculas
     const { data, error } = await supabase
       .from('submissions')
       .select('*')
-      .ilike('nombre', `%${busqueda.trim()}%`)
-      .limit(10)
+      .order('submitted_at', { ascending: false })
     setBuscando(false)
-    if (error || !data || data.length === 0) { setSinResultados(true); return }
-    setResultados(data)
+    if (error) { setSinResultados(true); return }
+    const termino = norm(busqueda.trim())
+    const filtrados = (data || []).filter(r => norm(r.nombre || '').includes(termino)).slice(0, 10)
+    if (filtrados.length === 0) { setSinResultados(true); return }
+    setResultados(filtrados)
   }
 
   if (!open) return (
