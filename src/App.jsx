@@ -151,9 +151,17 @@ function FormularioPadres() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
+  const [editId, setEditId] = useState(null)   // id del registro guardado
+  const [isEditing, setIsEditing] = useState(false)
 
   const gradosDisponibles = nivel ? SECCIONES_POR_NIVEL(nivel) : []
   const estudiantes = grado ? ESTUDIANTES[grado] || [] : []
+
+  const resetForm = () => {
+    setNivel(''); setGrado(''); setNombre('')
+    setDay4(emptyRecoge()); setDay5(emptyRecoge())
+    setEditId(null); setIsEditing(false); setSuccess(false); setError('')
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -167,14 +175,24 @@ function FormularioPadres() {
     setError('')
     setLoading(true)
     const seccion = grado
+    const payload = {
+      nombre, seccion,
+      day4: day4.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day4.auth },
+      day5: day5.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day5.auth },
+    }
     try {
-      const { error: err } = await supabase.from('submissions').insert([{
-        id: crypto.randomUUID(),
-        nombre, seccion,
-        day4: day4.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day4.auth },
-        day5: day5.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day5.auth },
-      }])
-      if (err) throw err
+      if (isEditing && editId) {
+        // ACTUALIZAR registro existente
+        const { error: err } = await supabase.from('submissions').update(payload).eq('id', editId)
+        if (err) throw err
+      } else {
+        // CREAR nuevo registro
+        const newId = crypto.randomUUID()
+        const { error: err } = await supabase.from('submissions').insert([{ id: newId, ...payload }])
+        if (err) throw err
+        setEditId(newId)
+      }
+      setIsEditing(false)
       setSuccess(true)
     } catch (e) {
       setError('Error al enviar: ' + e.message)
@@ -190,14 +208,19 @@ function FormularioPadres() {
         <div style={{ ...S.container, textAlign: 'center', paddingTop: 60 }}>
           <div style={{ fontSize: 56, marginBottom: 16 }}>✅</div>
           <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 28, fontWeight: 700, color: C.green, marginBottom: 10 }}>
-            ¡Formulario enviado!
+            {isEditing ? '¡Información actualizada!' : '¡Formulario enviado!'}
           </div>
           <div style={{ color: C.muted, marginBottom: 28, maxWidth: 400, margin: '0 auto 28px' }}>
             La información de recogida para <strong style={{ color: C.text }}>{nombre}</strong> fue registrada exitosamente.
           </div>
-          <button style={S.btn(C.blue)} onClick={() => { setSuccess(false); setNivel(''); setGrado(''); setNombre(''); setDay4(emptyRecoge()); setDay5(emptyRecoge()) }}>
-            Registrar otro estudiante
-          </button>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button style={S.btn(C.yellow)} onClick={() => { setSuccess(false); setIsEditing(true); setError('') }}>
+              ✏️ Corregir información
+            </button>
+            <button style={S.btn(C.blue)} onClick={resetForm}>
+              Registrar otro estudiante
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -208,6 +231,11 @@ function FormularioPadres() {
       <Header />
       <div style={S.container}>
         <div style={{ marginBottom: 24 }}>
+          {isEditing && (
+            <div style={{ background: C.yellow + '22', border: `1px solid ${C.yellow}88`, borderRadius: 10, padding: '12px 16px', marginBottom: 16, fontSize: 14, color: C.yellow, fontWeight: 600 }}>
+              ✏️ Modo edición — Corrige los datos y vuelve a enviar el formulario.
+            </div>
+          )}
           <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 26, fontWeight: 700, letterSpacing: 0.5, marginBottom: 6 }}>
             Formulario de Recogida
           </div>
@@ -256,7 +284,7 @@ function FormularioPadres() {
           )}
 
           <button type="submit" style={{ ...S.btn(C.blue), marginTop: 20, width: '100%', padding: '14px', fontSize: 16 }} disabled={loading}>
-            {loading ? 'Enviando...' : '📨 Enviar formulario'}
+            {loading ? 'Enviando...' : isEditing ? '💾 Guardar cambios' : '📨 Enviar formulario'}
           </button>
         </form>
       </div>
