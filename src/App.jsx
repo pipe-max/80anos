@@ -15,6 +15,32 @@ const PIN_DEFAULT = 'director80'
 const shortName = (sec) =>
   `${sec.split(' - ')[0]} ${sec.endsWith('Alef') ? 'Alef' : 'Bet'}`
 
+// Mapeo de grado (nombre antes del " - ") a nivel
+const NIVEL_MAP = {
+  'K3': 'Preescolar', 'K4': 'Preescolar', 'K5': 'Preescolar', 'Primero': 'Preescolar',
+  'Segundo': 'Primaria', 'Tercero': 'Primaria', 'Cuarto': 'Primaria', 'Quinto': 'Primaria', 'Sexto': 'Primaria',
+  'Séptimo': 'Bachillerato', 'Octavo': 'Bachillerato', 'Noveno': 'Bachillerato',
+  'Décimo': 'Bachillerato', 'Once': 'Bachillerato', 'Doce': 'Bachillerato',
+}
+const NIVELES = ['Preescolar', 'Primaria', 'Bachillerato']
+
+// Lista de grados únicos (sin Alef/Bet) ordenados
+const GRADOS_ORDEN = ['K3','K4','K5','Primero','Segundo','Tercero','Cuarto','Quinto','Sexto','Séptimo','Octavo','Noveno','Décimo','Once','Doce']
+const GRADOS_POR_NIVEL = (nivel) => GRADOS_ORDEN.filter(g => NIVEL_MAP[g] === nivel)
+
+// Obtener estudiantes de un grado (combina Alef y Bet, sin duplicados)
+const estudiantesPorGrado = (grado) => {
+  const todos = SECCIONES
+    .filter(s => s.startsWith(grado + ' - '))
+    .flatMap(s => ESTUDIANTES[s] || [])
+  return [...new Set(todos)].sort()
+}
+
+// Obtener la sección real de un estudiante dado grado y nombre
+const seccionDeEstudiante = (grado, nombre) => {
+  return SECCIONES.find(s => s.startsWith(grado + ' - ') && (ESTUDIANTES[s] || []).includes(nombre)) || grado
+}
+
 const emptyAuth = () => ({ nombre: '', cedula: '', placa: '', parentesco: '', celular: '' })
 const emptyRecoge = () => ({ tipo: '', auth: emptyAuth() })
 
@@ -108,7 +134,8 @@ function RecogeCard({ dia, value, onChange }) {
 
 // ─── FORMULARIO PADRES ────────────────────────────────────────────────────────
 function FormularioPadres() {
-  const [seccion, setSeccion] = useState('')
+  const [nivel, setNivel] = useState('')
+  const [grado, setGrado] = useState('')
   const [nombre, setNombre] = useState('')
   const [day4, setDay4] = useState(emptyRecoge())
   const [day5, setDay5] = useState(emptyRecoge())
@@ -116,11 +143,12 @@ function FormularioPadres() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
 
-  const estudiantes = seccion ? ESTUDIANTES[seccion] || [] : []
+  const gradosDisponibles = nivel ? GRADOS_POR_NIVEL(nivel) : []
+  const estudiantes = grado ? estudiantesPorGrado(grado) : []
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!seccion || !nombre) return setError('Por favor selecciona la sección y el nombre del estudiante.')
+    if (!nivel || !grado || !nombre) return setError('Por favor completa el nivel, grado y nombre del estudiante.')
     if (!day4.tipo || !day5.tipo) return setError('Indica quién recoge en cada día.')
     if (day4.tipo === 'autorizado' && (!day4.auth.nombre || !day4.auth.cedula || !day4.auth.parentesco || !day4.auth.celular))
       return setError('Completa todos los datos de la persona autorizada para el lunes 4.')
@@ -129,6 +157,7 @@ function FormularioPadres() {
 
     setError('')
     setLoading(true)
+    const seccion = seccionDeEstudiante(grado, nombre)
     try {
       const { error: err } = await supabase.from('submissions').insert([{
         nombre, seccion,
@@ -156,7 +185,7 @@ function FormularioPadres() {
           <div style={{ color: C.muted, marginBottom: 28, maxWidth: 400, margin: '0 auto 28px' }}>
             La información de recogida para <strong style={{ color: C.text }}>{nombre}</strong> fue registrada exitosamente.
           </div>
-          <button style={S.btn(C.blue)} onClick={() => { setSuccess(false); setSeccion(''); setNombre(''); setDay4(emptyRecoge()); setDay5(emptyRecoge()) }}>
+          <button style={S.btn(C.blue)} onClick={() => { setSuccess(false); setNivel(''); setGrado(''); setNombre(''); setDay4(emptyRecoge()); setDay5(emptyRecoge()) }}>
             Registrar otro estudiante
           </button>
         </div>
@@ -183,14 +212,21 @@ function FormularioPadres() {
             <div style={S.sectionTitle}>Datos del Estudiante</div>
             <div style={{ marginBottom: 14 }}>
               <label style={S.label}>Sección <span style={{ color: C.red }}>*</span></label>
-              <select style={S.select} value={seccion} onChange={e => { setSeccion(e.target.value); setNombre('') }} required>
+              <select style={S.select} value={nivel} onChange={e => { setNivel(e.target.value); setGrado(''); setNombre('') }} required>
                 <option value="">— Selecciona la sección —</option>
-                {SECCIONES.map(s => <option key={s} value={s}>{shortName(s)}</option>)}
+                {NIVELES.map(n => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={S.label}>Grado <span style={{ color: C.red }}>*</span></label>
+              <select style={S.select} value={grado} onChange={e => { setGrado(e.target.value); setNombre('') }} required disabled={!nivel}>
+                <option value="">— Selecciona el grado —</option>
+                {gradosDisponibles.map(g => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div>
               <label style={S.label}>Nombre del estudiante <span style={{ color: C.red }}>*</span></label>
-              <select style={S.select} value={nombre} onChange={e => setNombre(e.target.value)} required disabled={!seccion}>
+              <select style={S.select} value={nombre} onChange={e => setNombre(e.target.value)} required disabled={!grado}>
                 <option value="">— Selecciona el nombre —</option>
                 {estudiantes.map(n => <option key={n} value={n}>{n}</option>)}
               </select>
