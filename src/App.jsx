@@ -466,7 +466,7 @@ function PanelDirectores({ onLogout }) {
     doc.text(`Listado de Recogida · ${secLabel} · ${diaLabel}`, 14, 21)
     doc.text(`Generado: ${new Date().toLocaleString('es-CO')}`, 14, 27)
 
-    const head = [['Estudiante', 'Grado', 'Lunes 4 - Quien recoge', 'Recogido L4', 'Martes 5 - Quien recoge', 'Recogido M5']]
+    const head = [['Estudiante', 'Grado', 'Lunes 4 - Quien recoge', 'Recogido Lunes', 'Martes 5 - Quien recoge', 'Recogido Martes']]
     const body = filtered.map(r => {
       const d4 = r.day4 || {}
       const d5 = r.day5 || {}
@@ -492,7 +492,7 @@ function PanelDirectores({ onLogout }) {
       styles: { fontSize: 8, cellPadding: 3, overflow: 'linebreak' },
       headStyles: { fillColor: [29, 110, 237], textColor: 255, fontStyle: 'bold' },
       alternateRowStyles: { fillColor: [240, 244, 249] },
-      columnStyles: { 0: { cellWidth: 50 }, 1: { cellWidth: 28 }, 2: { cellWidth: 65 }, 3: { cellWidth: 18 }, 4: { cellWidth: 65 }, 5: { cellWidth: 18 } },
+      columnStyles: { 0: { cellWidth: 48 }, 1: { cellWidth: 26 }, 2: { cellWidth: 62 }, 3: { cellWidth: 26 }, 4: { cellWidth: 62 }, 5: { cellWidth: 26 } },
     })
 
     const secFile = filtroSec ? nombreSeccion(filtroSec).replace(/\s+/g, '_') : 'todas'
