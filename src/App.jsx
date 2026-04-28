@@ -701,8 +701,8 @@ function RowSubmission({ r, onToggle, onSaveObs, saving }) {
 
 function DiaPanel({ label, recoge, auth, checked, obs, onObs, onToggle, onSaveObs, isSaving }) {
   return (
-    <div style={{ background: '#060e1e', borderRadius: 10, padding: '12px 14px', border: `1px solid ${C.cardB}` }}>
-      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 15, fontWeight: 600, marginBottom: 8, color: C.muted }}>{label}</div>
+    <div style={{ background: '#f5f8fc', borderRadius: 10, padding: '12px 14px', border: `1px solid ${C.cardB}` }}>
+      <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 15, fontWeight: 600, marginBottom: 8, color: C.blueL }}>{label}</div>
       <div style={{ marginBottom: 8 }}>{recoge}</div>
       {auth.tipo === 'autorizado' && (
         <div style={{ fontSize: 12, color: C.muted, marginBottom: 8, lineHeight: 1.6 }}>
