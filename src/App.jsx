@@ -659,6 +659,12 @@ function RowSubmission({ r, onToggle, onSaveObs, saving }) {
         <div>
           <div style={{ fontWeight: 600, fontSize: 16 }}>{r.nombre}</div>
           <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{shortName(r.seccion)}</div>
+          {r.pin && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 5, background: '#fff8e1', border: '1px solid #f59e0b99', borderRadius: 6, padding: '2px 8px' }}>
+              <span style={{ fontSize: 11, color: '#92610a', fontWeight: 600 }}>🔑 PIN:</span>
+              <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: 3, color: '#1a2a3a', fontFamily: 'monospace' }}>{r.pin}</span>
+            </div>
+          )}
         </div>
         <div style={{ fontSize: 12, color: C.muted }}>{r.submitted_at ? new Date(r.submitted_at).toLocaleString('es-CO') : ''}</div>
       </div>
