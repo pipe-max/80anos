@@ -520,7 +520,7 @@ function PanelDirectores({ onLogout }) {
   const exportPDF = () => {
     const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
 
-    const secLabel = filtroSec ? nombreSeccion(filtroSec) : 'Todas las secciones'
+    const secLabel = filtroSec ? nombreSeccion(filtroSec) : 'Todos los grupos'
     const diaLabel = filtroDia === 'todos' ? 'Ambos días' : filtroDia === 'lunes' ? 'Lunes 4 de mayo' : 'Martes 5 de mayo'
 
     // Encabezado
@@ -602,8 +602,12 @@ function PanelDirectores({ onLogout }) {
             <div>
               <label style={S.label}>📚 Filtrar por grupo</label>
               <select style={S.select} value={filtroSec} onChange={e => setFiltroSec(e.target.value)}>
-                <option value="">Todas las secciones</option>
-                {SECCIONES.map(s => <option key={s} value={s}>{shortName(s)}</option>)}
+                <option value="">Todos los grupos</option>
+                {[...SECCIONES].sort((a, b) => {
+                  const ia = GRADOS_ORDEN.indexOf(a.split(' - ')[0])
+                  const ib = GRADOS_ORDEN.indexOf(b.split(' - ')[0])
+                  return ia !== ib ? ia - ib : a.localeCompare(b)
+                }).map(s => <option key={s} value={s}>{shortName(s)}</option>)}
               </select>
             </div>
             <div>
