@@ -28,12 +28,21 @@ const NIVELES = ['Preescolar', 'Primaria', 'Bachillerato']
 const GRADOS_ORDEN = ['K3','K4','K5','Primero','Segundo','Tercero','Cuarto','Quinto','Sexto','Séptimo','Octavo','Noveno','Décimo','Once','Doce']
 const GRADOS_POR_NIVEL = (nivel) => GRADOS_ORDEN.filter(g => NIVEL_MAP[g] === nivel)
 
-// Obtener estudiantes de un grado (combina Alef y Bet, sin duplicados)
-const estudiantesPorGrado = (grado) => {
-  const todos = SECCIONES
-    .filter(s => s.startsWith(grado + ' - '))
-    .flatMap(s => ESTUDIANTES[s] || [])
-  return [...new Set(todos)].sort()
+// Obtener grados (secciones reales) filtrados por nivel, con nombre legible
+const SECCIONES_POR_NIVEL = (nivel) =>
+  SECCIONES
+    .filter(s => NIVEL_MAP[s.split(' - ')[0]] === nivel)
+    .sort((a, b) => {
+      const ia = GRADOS_ORDEN.indexOf(a.split(' - ')[0])
+      const ib = GRADOS_ORDEN.indexOf(b.split(' - ')[0])
+      return ia !== ib ? ia - ib : a.localeCompare(b)
+    })
+
+// Nombre legible de sección: "K3 Alef", "Cuarto Bet", etc.
+const nombreSeccion = (sec) => {
+  const grado = sec.split(' - ')[0]
+  const div = sec.endsWith('Alef') ? 'Alef' : 'Bet'
+  return `${grado} ${div}`
 }
 
 // Obtener la sección real de un estudiante dado grado y nombre
@@ -143,8 +152,8 @@ function FormularioPadres() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
 
-  const gradosDisponibles = nivel ? GRADOS_POR_NIVEL(nivel) : []
-  const estudiantes = grado ? estudiantesPorGrado(grado) : []
+  const gradosDisponibles = nivel ? SECCIONES_POR_NIVEL(nivel) : []
+  const estudiantes = grado ? ESTUDIANTES[grado] || [] : []
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -157,7 +166,7 @@ function FormularioPadres() {
 
     setError('')
     setLoading(true)
-    const seccion = seccionDeEstudiante(grado, nombre)
+    const seccion = grado
     try {
       const { error: err } = await supabase.from('submissions').insert([{
         nombre, seccion,
@@ -221,7 +230,7 @@ function FormularioPadres() {
               <label style={S.label}>Grado <span style={{ color: C.red }}>*</span></label>
               <select style={S.select} value={grado} onChange={e => { setGrado(e.target.value); setNombre('') }} required disabled={!nivel}>
                 <option value="">— Selecciona el grado —</option>
-                {gradosDisponibles.map(g => <option key={g} value={g}>{g}</option>)}
+                {gradosDisponibles.map(g => <option key={g} value={g}>{nombreSeccion(g)}</option>)}
               </select>
             </div>
             <div>
