@@ -463,6 +463,7 @@ function DiaPanel({ label, recoge, auth, checked, obs, onObs, onToggle, onSaveOb
 function Header({ extra }) {
   return (
     <div style={S.header}>
+      <img src="/logo80.png" alt="Logo 80 años" style={{ height: 48, width: 'auto', objectFit: 'contain' }} />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={S.logoText}>CTH · 80 Años Creando Memorias</div>
         <div style={S.subtitle}>Teatro Metropolitano · 4 y 5 de mayo</div>
