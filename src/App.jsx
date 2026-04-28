@@ -141,6 +141,69 @@ function RecogeCard({ dia, value, onChange }) {
   )
 }
 
+// ─── Buscar y editar registro existente ──────────────────────────────────────
+function BuscarRegistro({ onEditar }) {
+  const [open, setOpen] = useState(false)
+  const [busqueda, setBusqueda] = useState('')
+  const [resultados, setResultados] = useState([])
+  const [buscando, setBuscando] = useState(false)
+  const [sinResultados, setSinResultados] = useState(false)
+
+  const buscar = async () => {
+    if (!busqueda.trim()) return
+    setBuscando(true); setSinResultados(false); setResultados([])
+    const { data, error } = await supabase
+      .from('submissions')
+      .select('*')
+      .ilike('nombre', `%${busqueda.trim()}%`)
+      .limit(10)
+    setBuscando(false)
+    if (error || !data || data.length === 0) { setSinResultados(true); return }
+    setResultados(data)
+  }
+
+  if (!open) return (
+    <div style={{ marginBottom: 20, textAlign: 'center' }}>
+      <button type="button" style={{ ...S.btn(C.muted), fontSize: 13, padding: '8px 18px' }} onClick={() => setOpen(true)}>
+        🔍 ¿Ya registraste? Busca y edita tu registro
+      </button>
+    </div>
+  )
+
+  return (
+    <div style={{ ...S.card, marginBottom: 20, border: `1px solid ${C.yellow}66` }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+        <div style={{ ...S.sectionTitle, marginBottom: 0 }}>🔍 Buscar registro existente</div>
+        <button type="button" onClick={() => { setOpen(false); setBusqueda(''); setResultados([]) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.muted, fontSize: 18 }}>✕</button>
+      </div>
+      <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+        <input
+          style={{ ...S.input, flex: 1 }}
+          placeholder="Escribe el nombre del estudiante..."
+          value={busqueda}
+          onChange={e => { setBusqueda(e.target.value); setSinResultados(false) }}
+          onKeyDown={e => e.key === 'Enter' && buscar()}
+        />
+        <button type="button" style={S.btn(C.blue)} onClick={buscar} disabled={buscando}>
+          {buscando ? '...' : 'Buscar'}
+        </button>
+      </div>
+      {sinResultados && <div style={{ color: C.muted, fontSize: 14 }}>No se encontró ningún registro con ese nombre.</div>}
+      {resultados.map(reg => (
+        <div key={reg.id} style={{ background: '#f8fbff', border: `1px solid ${C.cardB}`, borderRadius: 10, padding: '12px 16px', marginBottom: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+          <div>
+            <div style={{ fontWeight: 700, color: C.text, fontSize: 15 }}>{reg.nombre}</div>
+            <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{nombreSeccion(reg.seccion)} · Lunes: {reg.day4?.tipo === 'padres' ? 'Papá/Mamá' : reg.day4?.nombre || '—'} · Martes: {reg.day5?.tipo === 'padres' ? 'Papá/Mamá' : reg.day5?.nombre || '—'}</div>
+          </div>
+          <button type="button" style={S.btn(C.yellow)} onClick={() => { onEditar(reg); setOpen(false) }}>
+            ✏️ Editar
+          </button>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 // ─── FORMULARIO PADRES ────────────────────────────────────────────────────────
 function FormularioPadres() {
   const [nivel, setNivel] = useState('')
@@ -244,6 +307,25 @@ function FormularioPadres() {
           </div>
         </div>
 
+        {/* ── Buscar registro existente ── */}
+        {!isEditing && <BuscarRegistro onEditar={(reg) => {
+          // Detectar nivel y grado a partir de la sección guardada
+          const sec = reg.seccion
+          const gradoKey = sec ? sec.split(' - ')[0] : ''
+          const nivelDetectado = NIVEL_MAP[gradoKey] || ''
+          setNivel(nivelDetectado)
+          setGrado(sec)
+          setNombre(reg.nombre)
+          // Reconstruir day4 y day5
+          const toRecoge = (d) => d.tipo === 'padres'
+            ? { tipo: 'padres', auth: emptyAuth() }
+            : { tipo: 'autorizado', auth: { nombre: d.nombre||'', cedula: d.cedula||'', placa: d.placa||'', parentesco: d.parentesco||'', celular: d.celular||'' } }
+          setDay4(toRecoge(reg.day4 || {}))
+          setDay5(toRecoge(reg.day5 || {}))
+          setEditId(reg.id)
+          setIsEditing(true)
+          setError('')
+        }} />}
         <form onSubmit={handleSubmit}>
           {/* Sección y nombre */}
           <div style={S.card}>
