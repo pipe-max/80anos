@@ -431,27 +431,39 @@ function FormularioPadres() {
           {/* Sección y nombre */}
           <div style={S.card}>
             <div style={S.sectionTitle}>Datos del Estudiante</div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={S.label}>Sección <span style={{ color: C.red }}>*</span></label>
-              <select style={S.select} value={nivel} onChange={e => { setNivel(e.target.value); setGrado(''); setNombre('') }} required>
-                <option value="">— Selecciona la sección —</option>
-                {NIVELES.map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </div>
-            <div style={{ marginBottom: 14 }}>
-              <label style={S.label}>Grado <span style={{ color: C.red }}>*</span></label>
-              <select style={S.select} value={grado} onChange={e => { setGrado(e.target.value); setNombre('') }} required disabled={!nivel}>
-                <option value="">— Selecciona el grado —</option>
-                {gradosDisponibles.map(g => <option key={g} value={g}>{nombreSeccion(g)}</option>)}
-              </select>
-            </div>
-            <div>
-              <label style={S.label}>Nombre del estudiante <span style={{ color: C.red }}>*</span></label>
-              <select style={S.select} value={nombre} onChange={e => setNombre(e.target.value)} required disabled={!grado}>
-                <option value="">— Selecciona el nombre —</option>
-                {estudiantes.map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </div>
+            {isEditing ? (
+              /* En edición: mostrar solo texto, no se puede cambiar el estudiante */
+              <div style={{ background: '#f0f4f9', border: `1px solid ${C.cardB}`, borderRadius: 10, padding: '14px 16px' }}>
+                <div style={{ fontSize: 13, color: C.muted, marginBottom: 4, fontWeight: 500 }}>Estudiante</div>
+                <div style={{ fontWeight: 700, fontSize: 16, color: C.text }}>{nombre}</div>
+                <div style={{ fontSize: 13, color: C.muted, marginTop: 2 }}>{grado ? nombreSeccion(grado) : ''}</div>
+                <div style={{ fontSize: 12, color: C.muted, marginTop: 8, fontStyle: 'italic' }}>🔒 El estudiante no se puede cambiar en modo edición.</div>
+              </div>
+            ) : (
+              <>
+                <div style={{ marginBottom: 14 }}>
+                  <label style={S.label}>Sección <span style={{ color: C.red }}>*</span></label>
+                  <select style={S.select} value={nivel} onChange={e => { setNivel(e.target.value); setGrado(''); setNombre('') }} required>
+                    <option value="">— Selecciona la sección —</option>
+                    {NIVELES.map(n => <option key={n} value={n}>{n}</option>)}
+                  </select>
+                </div>
+                <div style={{ marginBottom: 14 }}>
+                  <label style={S.label}>Grado <span style={{ color: C.red }}>*</span></label>
+                  <select style={S.select} value={grado} onChange={e => { setGrado(e.target.value); setNombre('') }} required disabled={!nivel}>
+                    <option value="">— Selecciona el grado —</option>
+                    {gradosDisponibles.map(g => <option key={g} value={g}>{nombreSeccion(g)}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label style={S.label}>Nombre del estudiante <span style={{ color: C.red }}>*</span></label>
+                  <select style={S.select} value={nombre} onChange={e => setNombre(e.target.value)} required disabled={!grado}>
+                    <option value="">— Selecciona el nombre —</option>
+                    {estudiantes.map(n => <option key={n} value={n}>{n}</option>)}
+                  </select>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Días */}
