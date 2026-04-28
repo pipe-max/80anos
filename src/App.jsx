@@ -29,9 +29,9 @@ const C = {
 // ─── Estilos utilitarios ──────────────────────────────────────────────────────
 const S = {
   page: { minHeight: '100vh', background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif", padding: '0 0 60px' },
-  header: { background: C.card, borderBottom: `1px solid ${C.cardB}`, padding: '18px 24px', display: 'flex', alignItems: 'center', gap: 14 },
-  logoText: { fontFamily: "'Barlow Condensed', sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: 1, color: C.blueL },
-  subtitle: { fontSize: 13, color: C.muted, marginTop: 2 },
+  header: { background: '#ffffff', borderBottom: `1px solid #d0dff0`, padding: '20px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 },
+  logoText: { fontFamily: "'Barlow Condensed', sans-serif", fontSize: 22, fontWeight: 700, letterSpacing: 1, color: '#1d3a6e', textAlign: 'center' },
+  subtitle: { fontSize: 13, color: '#4a6a9a', marginTop: 2, textAlign: 'center' },
   container: { maxWidth: 720, margin: '0 auto', padding: '28px 16px' },
   card: { background: C.card, border: `1px solid ${C.cardB}`, borderRadius: 14, padding: '24px 22px', marginBottom: 20 },
   label: { fontSize: 13, color: C.muted, marginBottom: 6, display: 'block', fontWeight: 500 },
@@ -463,7 +463,7 @@ function DiaPanel({ label, recoge, auth, checked, obs, onObs, onToggle, onSaveOb
 function Header({ extra }) {
   return (
     <div style={S.header}>
-      <img src="/logo80.png" alt="Logo 80 años" style={{ height: 48, width: 'auto', objectFit: 'contain' }} />
+      <img src="/logo80.png" alt="Logo 80 años" style={{ height: 90, width: 'auto', objectFit: 'contain' }} />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={S.logoText}>CTH · 80 Años Creando Memorias</div>
         <div style={S.subtitle}>Teatro Metropolitano · 4 y 5 de mayo</div>
