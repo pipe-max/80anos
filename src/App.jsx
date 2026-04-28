@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { ESTUDIANTES } from './estudiantes.js'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
 
 // ─── Supabase ────────────────────────────────────────────────────────────────
 const supabase = createClient(
@@ -448,41 +450,53 @@ function PanelDirectores({ onLogout }) {
     return true
   })
 
-  // ─── Export CSV ──────────────────────────────────────────────────────────────
-  const exportCSV = () => {
-    const rows = [
-      ['Nombre', 'Sección', 'Lunes 4 - Tipo', 'Lunes 4 - Autorizado', 'Lunes 4 - Cédula', 'Lunes 4 - Parentesco', 'Lunes 4 - Celular', 'Lunes 4 - Placa', 'Lunes 4 - Recogido', 'Lunes 4 - Observación',
-        'Martes 5 - Tipo', 'Martes 5 - Autorizado', 'Martes 5 - Cédula', 'Martes 5 - Parentesco', 'Martes 5 - Celular', 'Martes 5 - Placa', 'Martes 5 - Recogido', 'Martes 5 - Observación',
-        'Enviado el'],
-      ...filtered.map(r => {
-        const d4 = r.day4 || {}
-        const d5 = r.day5 || {}
-        const fmt = (d) => d.tipo === 'padres' ? 'Padres' : 'Autorizado'
-        const fecha = r.submitted_at ? new Date(r.submitted_at).toLocaleString('es-CO') : ''
-        return [
-          r.nombre, shortName(r.seccion),
-          fmt(d4), d4.nombre || '', d4.cedula || '', d4.parentesco || '', d4.celular || '', d4.placa || '',
-          r.d4_checked ? 'Sí' : 'No', r.d4_obs || '',
-          fmt(d5), d5.nombre || '', d5.cedula || '', d5.parentesco || '', d5.celular || '', d5.placa || '',
-          r.d5_checked ? 'Sí' : 'No', r.d5_obs || '',
-          fecha,
-        ]
-      })
-    ]
+  // ─── Export PDF ──────────────────────────────────────────────────────────────
+  const exportPDF = () => {
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' })
 
-    const csv = rows.map(row =>
-      row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')
-    ).join('\n')
+    const secLabel = filtroSec ? nombreSeccion(filtroSec) : 'Todas las secciones'
+    const diaLabel = filtroDia === 'todos' ? 'Ambos días' : filtroDia === 'lunes' ? 'Lunes 4 de mayo' : 'Martes 5 de mayo'
 
-    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    const secLabel = filtroSec ? shortName(filtroSec).replace(/\s+/g, '_') : 'todas_secciones'
-    const diaLabel = filtroDia === 'todos' ? 'ambos_dias' : filtroDia
-    a.download = `recogida_cth80_${secLabel}_${diaLabel}.csv`
-    a.click()
-    URL.revokeObjectURL(url)
+    // Encabezado
+    doc.setFontSize(16)
+    doc.setTextColor(29, 110, 237)
+    doc.text('CTH · 80 Años Creando Memorias', 14, 14)
+    doc.setFontSize(10)
+    doc.setTextColor(90, 122, 154)
+    doc.text(`Listado de Recogida · ${secLabel} · ${diaLabel}`, 14, 21)
+    doc.text(`Generado: ${new Date().toLocaleString('es-CO')}`, 14, 27)
+
+    const head = [['Estudiante', 'Grado', '☀️ Lunes 4 - Quién recoge', 'Recogido L4', '🌤️ Martes 5 - Quién recoge', 'Recogido M5']]
+    const body = filtered.map(r => {
+      const d4 = r.day4 || {}
+      const d5 = r.day5 || {}
+      const fmt = (d) => d.tipo === 'padres'
+        ? 'Papá / Mamá'
+        : d.tipo === 'autorizado'
+          ? `${d.nombre || ''}\nCC: ${d.cedula || ''} · ${d.parentesco || ''}\nCel: ${d.celular || ''}${d.placa ? ' · Placa: ' + d.placa : ''}`
+          : '—'
+      return [
+        r.nombre,
+        nombreSeccion(r.seccion),
+        fmt(d4),
+        r.d4_checked ? '✔ Sí' : '—',
+        fmt(d5),
+        r.d5_checked ? '✔ Sí' : '—',
+      ]
+    })
+
+    autoTable(doc, {
+      startY: 32,
+      head,
+      body,
+      styles: { fontSize: 8, cellPadding: 3, overflow: 'linebreak' },
+      headStyles: { fillColor: [29, 110, 237], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [240, 244, 249] },
+      columnStyles: { 0: { cellWidth: 50 }, 1: { cellWidth: 28 }, 2: { cellWidth: 65 }, 3: { cellWidth: 18 }, 4: { cellWidth: 65 }, 5: { cellWidth: 18 } },
+    })
+
+    const secFile = filtroSec ? nombreSeccion(filtroSec).replace(/\s+/g, '_') : 'todas'
+    doc.save(`recogida_cth80_${secFile}_${filtroDia}.pdf`)
   }
 
   const countD4 = filtered.filter(r => r.d4_checked).length
@@ -530,8 +544,8 @@ function PanelDirectores({ onLogout }) {
             <span style={S.tag(C.green)}>L4: {countD4}/{filtered.length} recogidos</span>
             <span style={S.tag(C.yellow)}>M5: {countD5}/{filtered.length} recogidos</span>
             <div style={{ marginLeft: 'auto', display: 'flex', gap: 8 }}>
-              <button style={S.btnSm(C.green)} onClick={exportCSV} title="Exportar vista actual a CSV">
-                ⬇️ Exportar CSV
+              <button style={S.btnSm(C.green)} onClick={exportPDF} title="Exportar vista actual a PDF">
+                ⬇️ Exportar PDF
               </button>
               <button style={S.btnSm(C.cardB)} onClick={fetchData} title="Refrescar datos">
                 🔄 Actualizar
