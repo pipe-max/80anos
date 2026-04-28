@@ -72,8 +72,8 @@ const S = {
   container: { maxWidth: 720, margin: '0 auto', padding: '28px 16px' },
   card: { background: C.card, border: `1px solid ${C.cardB}`, borderRadius: 14, padding: '24px 22px', marginBottom: 20 },
   label: { fontSize: 13, color: C.muted, marginBottom: 6, display: 'block', fontWeight: 500 },
-  input: { width: '100%', background: '#f5f8fc', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 15, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none' },
-  select: { width: '100%', background: '#f5f8fc', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 15, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none', cursor: 'pointer' },
+  input: { width: '100%', background: '#f5f8fc', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 16, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none' },
+  select: { width: '100%', background: '#f5f8fc', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '10px 14px', color: C.text, fontSize: 16, fontFamily: "'DM Sans', sans-serif", boxSizing: 'border-box', outline: 'none', cursor: 'pointer' },
   btn: (color = C.blue) => ({ background: color, color: '#fff', border: 'none', borderRadius: 8, padding: '11px 22px', fontSize: 15, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }),
   btnSm: (color = C.blue) => ({ background: color, color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }),
   row: { display: 'flex', gap: 12, flexWrap: 'wrap' },
@@ -492,6 +492,23 @@ function PanelDirectores({ onLogout }) {
   }, [])
 
   useEffect(() => { fetchData() }, [fetchData])
+
+  // ─── Tiempo real: escuchar cambios en submissions ─────────────────────────
+  useEffect(() => {
+    const channel = supabase
+      .channel('submissions-realtime')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'submissions' }, (payload) => {
+        if (payload.eventType === 'INSERT') {
+          setSubmissions(prev => [payload.new, ...prev])
+        } else if (payload.eventType === 'UPDATE') {
+          setSubmissions(prev => prev.map(r => r.id === payload.new.id ? payload.new : r))
+        } else if (payload.eventType === 'DELETE') {
+          setSubmissions(prev => prev.filter(r => r.id !== payload.old.id))
+        }
+      })
+      .subscribe()
+    return () => { supabase.removeChannel(channel) }
+  }, [])
 
   const toggle = async (id, field, currentVal) => {
     setSaving(s => ({ ...s, [id + field]: true }))
