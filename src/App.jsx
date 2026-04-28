@@ -169,6 +169,7 @@ function FormularioPadres() {
     const seccion = grado
     try {
       const { error: err } = await supabase.from('submissions').insert([{
+        id: crypto.randomUUID(),
         nombre, seccion,
         day4: day4.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day4.auth },
         day5: day5.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day5.auth },
