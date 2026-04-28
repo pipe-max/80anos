@@ -503,7 +503,8 @@ function PanelDirectores({ onLogout }) {
   // Filtrar
   const filtered = submissions.filter(r => {
     const matchSec = !filtroSec || r.seccion === filtroSec
-    const matchBus = !busqueda || r.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    const matchBus = !busqueda || norm(r.nombre).includes(norm(busqueda))
     if (!matchSec || !matchBus) return false
     if (filtroDia === 'd4_pendiente') return !r.d4_checked
     if (filtroDia === 'd5_pendiente') return !r.d5_checked
@@ -594,7 +595,7 @@ function PanelDirectores({ onLogout }) {
               <input style={S.input} placeholder="Nombre..." value={busqueda} onChange={e => setBusqueda(e.target.value)} />
             </div>
             <div>
-              <label style={S.label}>📚 Filtrar por sección</label>
+              <label style={S.label}>📚 Filtrar por grupo</label>
               <select style={S.select} value={filtroSec} onChange={e => setFiltroSec(e.target.value)}>
                 <option value="">Todas las secciones</option>
                 {SECCIONES.map(s => <option key={s} value={s}>{shortName(s)}</option>)}
