@@ -144,7 +144,7 @@ function RecogeCard({ dia, value, onChange }) {
 }
 
 // ─── Buscar y editar registro existente ──────────────────────────────────────
-function BuscarRegistro({ onEditar }) {
+function BuscarRegistro({ onEditar, onOpenChange }) {
   const [open, setOpen] = useState(false)
   const [busqueda, setBusqueda] = useState('')
   const [resultados, setResultados] = useState([])
@@ -172,7 +172,7 @@ function BuscarRegistro({ onEditar }) {
 
   if (!open) return (
     <div style={{ marginBottom: 20, textAlign: 'center' }}>
-      <button type="button" style={{ ...S.btn(C.muted), fontSize: 13, padding: '8px 18px' }} onClick={() => setOpen(true)}>
+      <button type="button" style={{ ...S.btn(C.muted), fontSize: 13, padding: '8px 18px' }} onClick={() => { setOpen(true); onOpenChange?.(true) }}>
         🔍 ¿Ya registraste? Busca y edita tu registro
       </button>
     </div>
@@ -182,7 +182,7 @@ function BuscarRegistro({ onEditar }) {
     <div style={{ ...S.card, marginBottom: 20, border: `1px solid ${C.yellow}66` }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
         <div style={{ ...S.sectionTitle, marginBottom: 0 }}>🔍 Buscar registro existente</div>
-        <button type="button" onClick={() => { setOpen(false); setBusqueda(''); setResultados([]) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.muted, fontSize: 18 }}>✕</button>
+        <button type="button" onClick={() => { setOpen(false); setBusqueda(''); setResultados([]); onOpenChange?.(false) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: C.muted, fontSize: 18 }}>✕</button>
       </div>
       <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
         <input
@@ -270,6 +270,7 @@ function FormularioPadres() {
   const [error, setError] = useState('')
   const [editId, setEditId] = useState(null)   // id del registro guardado
   const [isEditing, setIsEditing] = useState(false)
+  const [buscadorAbierto, setBuscadorAbierto] = useState(false)
   const [generatedPin, setGeneratedPin] = useState('')
 
   const gradosDisponibles = nivel ? SECCIONES_POR_NIVEL(nivel) : []
@@ -406,7 +407,9 @@ function FormularioPadres() {
         </div>
 
         {/* ── Buscar registro existente ── */}
-        {!isEditing && <BuscarRegistro onEditar={(reg) => {
+        {!isEditing && <BuscarRegistro
+          onOpenChange={setBuscadorAbierto}
+          onEditar={(reg) => {
           // Detectar nivel y grado a partir de la sección guardada
           const sec = reg.seccion
           const gradoKey = sec ? sec.split(' - ')[0] : ''
@@ -424,7 +427,7 @@ function FormularioPadres() {
           setIsEditing(true)
           setError('')
         }} />}
-        <form onSubmit={handleSubmit}>
+        {!buscadorAbierto && <form onSubmit={handleSubmit}>
           {/* Sección y nombre */}
           <div style={S.card}>
             <div style={S.sectionTitle}>Datos del Estudiante</div>
@@ -466,7 +469,7 @@ function FormularioPadres() {
           <button type="submit" style={{ ...S.btn(C.blue), marginTop: 20, width: '100%', padding: '14px', fontSize: 16 }} disabled={loading}>
             {loading ? 'Enviando...' : isEditing ? '💾 Guardar cambios' : '📨 Enviar formulario'}
           </button>
-        </form>
+        </form>}
       </div>
     </div>
   )
