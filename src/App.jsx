@@ -493,6 +493,18 @@ function PanelDirectores({ onLogout }) {
       headStyles: { fillColor: [29, 110, 237], textColor: 255, fontStyle: 'bold' },
       alternateRowStyles: { fillColor: [240, 244, 249] },
       columnStyles: { 0: { cellWidth: 48 }, 1: { cellWidth: 26 }, 2: { cellWidth: 62 }, 3: { cellWidth: 26 }, 4: { cellWidth: 62 }, 5: { cellWidth: 26 } },
+      didParseCell: (data) => {
+        // Columnas 2 y 3 = Lunes (azul claro)
+        if (data.column.index === 2 || data.column.index === 3) {
+          if (data.section === 'head') data.cell.styles.fillColor = [30, 90, 180]
+          else data.cell.styles.fillColor = [220, 234, 255]
+        }
+        // Columnas 4 y 5 = Martes (verde claro)
+        if (data.column.index === 4 || data.column.index === 5) {
+          if (data.section === 'head') data.cell.styles.fillColor = [14, 130, 100]
+          else data.cell.styles.fillColor = [210, 245, 230]
+        }
+      },
     })
 
     const secFile = filtroSec ? nombreSeccion(filtroSec).replace(/\s+/g, '_') : 'todas'
