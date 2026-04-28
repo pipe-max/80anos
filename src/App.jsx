@@ -226,7 +226,7 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
                     onChange={e => setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], input: e.target.value, error: '' } }))}
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
-                        if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false) }
+                        if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false); onOpenChange?.(false) }
                         else setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], error: 'PIN incorrecto' } }))
                       }
                     }}
@@ -236,7 +236,7 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
                     type="button"
                     style={S.btn(C.green)}
                     onClick={() => {
-                      if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false) }
+                      if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false); onOpenChange?.(false) }
                       else setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], error: 'PIN incorrecto' } }))
                     }}
                   >✓</button>
