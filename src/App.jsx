@@ -13,6 +13,7 @@ const supabase = createClient(
 // ─── Constantes ──────────────────────────────────────────────────────────────
 const SECCIONES = Object.keys(ESTUDIANTES).sort()
 const PIN_DEFAULT = import.meta.env.VITE_DIRECTOR_PIN || 'musical80'
+const TOTAL_ESTUDIANTES = Object.values(ESTUDIANTES).reduce((acc, arr) => acc + arr.length, 0)
 
 const shortName = (sec) =>
   `${sec.split(' - ')[0]} ${sec.endsWith('Alef') ? 'Alef' : 'Bet'}`
@@ -368,6 +369,23 @@ function FormularioPadres({ extra }) {
         ) : <div style={{ color: C.muted, fontSize: 13 }}>—</div>}
       </div>
     )
+    const PinCopiado = () => {
+      const [copiado, setCopiado] = useState(false)
+      const copiar = () => {
+        navigator.clipboard.writeText(generatedPin).then(() => {
+          setCopiado(true)
+          setTimeout(() => setCopiado(false), 2500)
+        })
+      }
+      return (
+        <button
+          onClick={copiar}
+          style={{ marginTop: 12, background: copiado ? C.green : '#f59e0b', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 20px', fontSize: 14, fontWeight: 700, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", transition: 'background 0.3s', display: 'flex', alignItems: 'center', gap: 7, margin: '12px auto 0' }}
+        >
+          {copiado ? '✅ ¡Copiado!' : '📋 Copiar PIN'}
+        </button>
+      )
+    }
 
     return (
       <div style={S.page}>
@@ -386,7 +404,8 @@ function FormularioPadres({ extra }) {
               <div style={{ marginTop: 22, background: '#fff8e1', border: '2px solid #f59e0b', borderRadius: 14, padding: '18px 24px', display: 'inline-block', minWidth: 260 }}>
                 <div style={{ fontSize: 13, color: '#92610a', fontWeight: 600, marginBottom: 6 }}>🔐 Tu PIN de edición</div>
                 <div style={{ fontSize: 38, fontWeight: 800, letterSpacing: 8, color: '#1a2a3a', fontFamily: 'monospace' }}>{generatedPin}</div>
-                <div style={{ fontSize: 12, color: '#92610a', marginTop: 8, lineHeight: 1.5 }}>
+                <PinCopiado />
+                <div style={{ fontSize: 12, color: '#92610a', marginTop: 10, lineHeight: 1.5 }}>
                   ⚠️ <strong>Guarda este PIN.</strong> Lo necesitarás si en el futuro<br/>quieres modificar la información de este registro.
                 </div>
               </div>
@@ -1522,11 +1541,46 @@ function DiaPanel({ label, recoge, auth, checked, obs, onObs, onToggle, onSaveOb
 }
 
 // ─── Header ───────────────────────────────────────────────────────────────────
+// ─── Hook: contador de registros en tiempo real ───────────────────────────────
+function useContadorRegistros() {
+  const [count, setCount] = useState(null)
+
+  useEffect(() => {
+    // Carga inicial
+    supabase.from('submissions').select('id', { count: 'exact', head: true })
+      .then(({ count: c }) => setCount(c ?? 0))
+
+    // Escuchar INSERT y DELETE en tiempo real
+    const channel = supabase
+      .channel('contador-registros')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'submissions' }, () => {
+        setCount(c => (c ?? 0) + 1)
+      })
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'submissions' }, () => {
+        setCount(c => Math.max(0, (c ?? 0) - 1))
+      })
+      .subscribe()
+
+    return () => supabase.removeChannel(channel)
+  }, [])
+
+  return count
+}
+
 function Header({ extra }) {
+  const count = useContadorRegistros()
   return (
     <div style={{ ...S.header, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px' }}>
       <div style={{ width: 120 }} />
-      <img src="/logo80.png" alt="Logo 80 años" style={{ height: 120, width: 'auto', objectFit: 'contain' }} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+        <img src="/logo80.png" alt="Logo 80 años" style={{ height: 120, width: 'auto', objectFit: 'contain' }} />
+        {count !== null && (
+          <div style={{ background: '#e8f5e9', border: '1px solid #a5d6a7', borderRadius: 20, padding: '4px 14px', fontSize: 13, fontWeight: 600, color: '#2e7d32', display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#43a047', animation: 'pulse 1.5s infinite' }} />
+            {count} de {TOTAL_ESTUDIANTES} estudiantes registrados
+          </div>
+        )}
+      </div>
       <div style={{ width: 120, display: 'flex', justifyContent: 'flex-end' }}>{extra}</div>
     </div>
   )
