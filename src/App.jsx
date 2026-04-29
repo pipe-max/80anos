@@ -219,9 +219,9 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
                   <input
                     type="text"
                     inputMode="numeric"
-                    maxLength={6}
-                    style={{ ...S.input, width: 110, textAlign: 'center', letterSpacing: 4, fontWeight: 700, fontSize: 16 }}
-                    placeholder="_ _ _ _ _ _"
+                    maxLength={4}
+                    style={{ ...S.input, width: 90, textAlign: 'center', letterSpacing: 4, fontWeight: 700, fontSize: 16 }}
+                    placeholder="_ _ _ _"
                     value={pinCheck[reg.id]?.input || ''}
                     onChange={e => setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], input: e.target.value, error: '' } }))}
                     onKeyDown={e => {
@@ -306,7 +306,7 @@ function FormularioPadres({ extra }) {
         if (err) throw err
       } else {
         // CREAR nuevo registro — generar PIN de 6 dígitos
-        const pin = Math.floor(100000 + Math.random() * 900000).toString()
+        const pin = Math.floor(1000 + Math.random() * 9000).toString()
         const newId = crypto.randomUUID()
         const { error: err } = await supabase.from('submissions').insert([{ id: newId, pin, ...payload }])
         if (err) throw err
@@ -619,7 +619,7 @@ function PanelDirectores({ onLogout }) {
           style={{ background: '#c0392b', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
           onClick={onLogout}
         >
-          🚪 Cerrar sesión
+          🚪 Cerrar
         </button>
       } />
       <div style={S.container}>
