@@ -485,6 +485,55 @@ function FormularioPadres({ extra }) {
             <RecogeCard dia="🌤️ Martes 5 de mayo" value={day5} onChange={setDay5} />
           </div>
 
+          {error && (
+            <div style={{ background: C.red + '22', border: `1px solid ${C.red}55`, color: C.red, borderRadius: 8, padding: '12px 16px', marginTop: 16, fontSize: 14 }}>
+              ⚠️ {error}
+            </div>
+          )}
+
+          {duplicado && (
+            <div style={{ background: '#fff8e1', border: '2px solid #f59e0b', borderRadius: 12, padding: '16px 18px', marginTop: 16 }}>
+              <div style={{ fontWeight: 700, color: '#92610a', fontSize: 15, marginBottom: 6 }}>⚠️ Ya existe un registro para este estudiante</div>
+              <div style={{ fontSize: 13, color: C.text, marginBottom: 4 }}>
+                <strong>{duplicado.nombre}</strong> ya fue registrado el {new Date(duplicado.submitted_at).toLocaleString('es-CO')}.
+              </div>
+              <div style={{ fontSize: 13, color: C.muted, marginBottom: 14 }}>
+                Si quieres modificar ese registro, usa el botón <strong>"¿Ya registraste?"</strong> e ingresa tu PIN. Si de todas formas quieres crear un registro nuevo, confirma abajo.
+              </div>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  style={S.btn(C.red)}
+                  onClick={async () => {
+                    setDuplicado(null)
+                    setLoading(true)
+                    const seccion = grado
+                    const pin = Math.floor(1000 + Math.random() * 9000).toString()
+                    const newId = crypto.randomUUID()
+                    const payload = {
+                      nombre, seccion,
+                      day4: day4.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day4.auth },
+                      day5: day5.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day5.auth },
+                    }
+                    const { error: err } = await supabase.from('submissions').insert([{ id: newId, pin, ...payload }])
+                    setLoading(false)
+                    if (err) { setError('Error al enviar: ' + err.message); return }
+                    setEditId(newId); setGeneratedPin(pin); setIsEditing(false); setSuccess(true)
+                  }}
+                >
+                  Crear de todas formas
+                </button>
+                <button type="button" style={S.btn(C.muted)} onClick={() => setDuplicado(null)}>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          )}
+
+          <button type="submit" style={{ ...S.btn(C.blue), marginTop: 20, width: '100%', padding: '14px', fontSize: 16 }} disabled={loading}>
+            {loading ? 'Enviando...' : isEditing ? '💾 Guardar cambios' : '📨 Enviar formulario'}
+          </button>
+
           {/* ── Sección informativa ── */}
           <div style={{ ...S.card, marginTop: 20, marginBottom: 0, border: `1px solid #d0dce8` }}>
             <div style={{ ...S.sectionTitle, marginBottom: 18 }}>📌 Información importante</div>
@@ -565,54 +614,6 @@ function FormularioPadres({ extra }) {
             </div>
           </div>
 
-          {error && (
-            <div style={{ background: C.red + '22', border: `1px solid ${C.red}55`, color: C.red, borderRadius: 8, padding: '12px 16px', marginTop: 16, fontSize: 14 }}>
-              ⚠️ {error}
-            </div>
-          )}
-
-          {duplicado && (
-            <div style={{ background: '#fff8e1', border: '2px solid #f59e0b', borderRadius: 12, padding: '16px 18px', marginTop: 16 }}>
-              <div style={{ fontWeight: 700, color: '#92610a', fontSize: 15, marginBottom: 6 }}>⚠️ Ya existe un registro para este estudiante</div>
-              <div style={{ fontSize: 13, color: C.text, marginBottom: 4 }}>
-                <strong>{duplicado.nombre}</strong> ya fue registrado el {new Date(duplicado.submitted_at).toLocaleString('es-CO')}.
-              </div>
-              <div style={{ fontSize: 13, color: C.muted, marginBottom: 14 }}>
-                Si quieres modificar ese registro, usa el botón <strong>"¿Ya registraste?"</strong> e ingresa tu PIN. Si de todas formas quieres crear un registro nuevo, confirma abajo.
-              </div>
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  style={S.btn(C.red)}
-                  onClick={async () => {
-                    setDuplicado(null)
-                    setLoading(true)
-                    const seccion = grado
-                    const pin = Math.floor(1000 + Math.random() * 9000).toString()
-                    const newId = crypto.randomUUID()
-                    const payload = {
-                      nombre, seccion,
-                      day4: day4.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day4.auth },
-                      day5: day5.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day5.auth },
-                    }
-                    const { error: err } = await supabase.from('submissions').insert([{ id: newId, pin, ...payload }])
-                    setLoading(false)
-                    if (err) { setError('Error al enviar: ' + err.message); return }
-                    setEditId(newId); setGeneratedPin(pin); setIsEditing(false); setSuccess(true)
-                  }}
-                >
-                  Crear de todas formas
-                </button>
-                <button type="button" style={S.btn(C.muted)} onClick={() => setDuplicado(null)}>
-                  Cancelar
-                </button>
-              </div>
-            </div>
-          )}
-
-          <button type="submit" style={{ ...S.btn(C.blue), marginTop: 20, width: '100%', padding: '14px', fontSize: 16 }} disabled={loading}>
-            {loading ? 'Enviando...' : isEditing ? '💾 Guardar cambios' : '📨 Enviar formulario'}
-          </button>
         </form>}
       </div>
     </div>
