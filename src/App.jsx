@@ -1153,7 +1153,7 @@ function LogisticaView({ onBack }) {
               <div style={{ fontSize: 14, color: C.muted, marginBottom: 14 }}>Plano del evento. Pellizca o usa el scroll para hacer zoom.</div>
               <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.cardB}` }}>
                 <img
-                  src="/mapadeleevnto.jpg"
+                  src="/mapadelevento.jpg"
                   alt="Mapa del evento"
                   style={{ width: '100%', display: 'block', cursor: 'zoom-in' }}
                   onClick={e => {
