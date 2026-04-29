@@ -1187,7 +1187,7 @@ function LogisticaView({ onBack }) {
 function LoginLogistica({ onLogin, onBack }) {
   const [pin, setPin] = useState('')
   const [error, setError] = useState('')
-  const PIN_LOG = 'herzl80'
+  const PIN_LOG = import.meta.env.VITE_DIRECTOR_PIN || 'musical80'
 
   const handleLogin = (e) => {
     e.preventDefault()
