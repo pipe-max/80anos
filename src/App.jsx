@@ -154,13 +154,25 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
 
   const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase()
 
+  // Verifica el PIN consultando en Supabase — el PIN nunca baja al navegador
+  const verificarPin = async (id, inputPin) => {
+    const { data } = await supabase
+      .from('submissions')
+      .select('id')
+      .eq('id', id)
+      .eq('pin', inputPin)
+      .maybeSingle()
+    return !!data
+  }
+
   const buscar = async () => {
     if (!busqueda.trim()) return
     setBuscando(true); setSinResultados(false); setResultados([])
     // Traer todos y filtrar localmente para tolerar tildes y mayúsculas
+    // Excluir el campo pin para no exponerlo en el navegador
     const { data, error } = await supabase
       .from('submissions')
-      .select('*')
+      .select('id, nombre, seccion, autorizados, submitted_at')
       .order('submitted_at', { ascending: false })
     setBuscando(false)
     if (error) { setSinResultados(true); return }
@@ -224,9 +236,10 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
                     placeholder="_ _ _ _"
                     value={pinCheck[reg.id]?.input || ''}
                     onChange={e => setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], input: e.target.value, error: '' } }))}
-                    onKeyDown={e => {
+                    onKeyDown={async e => {
                       if (e.key === 'Enter') {
-                        if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false); onOpenChange?.(false) }
+                        const ok = await verificarPin(reg.id, pinCheck[reg.id]?.input)
+                        if (ok) { onEditar(reg); setOpen(false); onOpenChange?.(false) }
                         else setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], error: 'PIN incorrecto' } }))
                       }
                     }}
@@ -235,8 +248,9 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
                   <button
                     type="button"
                     style={S.btn(C.green)}
-                    onClick={() => {
-                      if (pinCheck[reg.id]?.input === reg.pin) { onEditar(reg); setOpen(false); onOpenChange?.(false) }
+                    onClick={async () => {
+                      const ok = await verificarPin(reg.id, pinCheck[reg.id]?.input)
+                      if (ok) { onEditar(reg); setOpen(false); onOpenChange?.(false) }
                       else setPinCheck(p => ({ ...p, [reg.id]: { ...p[reg.id], error: 'PIN incorrecto' } }))
                     }}
                   >✓</button>
