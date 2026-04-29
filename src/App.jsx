@@ -646,6 +646,53 @@ function FormularioPadres({ extra }) {
                 ))}
               </div>
             </div>
+
+            {/* Logística — Salida de estudiantes */}
+            <div style={{ background: '#fffbeb', border: '1px solid #f59e0b44', borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ fontWeight: 700, color: '#92610a', fontSize: 14, marginBottom: 12 }}>🛡️ Información importante — Salida de estudiantes</div>
+
+              <div style={{ fontSize: 13, color: C.text, lineHeight: 1.7, marginBottom: 12 }}>
+                Una vez finalice el espectáculo (entre 7:30 y 8:00 p.m., aproximadamente) los estudiantes regresarán a sus casas con sus familias de la siguiente manera:
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  {
+                    icon: '🎭',
+                    title: 'Familias de Kinder 3 a 2°',
+                    text: 'Permanecerán sentados en el teatro. Aproximadamente 15–20 minutos después de finalizado el espectáculo, se realizará la entrega de los niños directamente a sus familias dentro del teatro.'
+                  },
+                  {
+                    icon: '⛺',
+                    title: 'Familias de 3° a 12°',
+                    text: 'Al finalizar el espectáculo deberán salir del teatro y seguir las indicaciones del personal logístico, quienes los guiarán hacia la plazoleta central. Allí, en carpas dispuestas para este fin, se realizará la entrega. Este desplazamiento debe hacerse caminando (no en vehículo).'
+                  },
+                  {
+                    icon: '�',
+                    title: 'Familias que van solo a recoger (sin asistir al espectáculo)',
+                    text: 'Se habilitará el ingreso de vehículos entre las 8:20 y 8:40 p.m. aproximadamente. Una vez ingresen, deberán estacionar y dirigirse al punto de entrega: K3 a 2° ingresan al teatro; 3° a 12° se dirigen a las carpas de la plazoleta central.'
+                  },
+                  {
+                    icon: '👨‍👩‍👧‍👦',
+                    title: 'Hijos en diferentes secciones',
+                    text: 'Les solicitamos recoger primero a los niños de Kinder 3 a 2° y, posteriormente, ir por los estudiantes de 3° a 12°.'
+                  },
+                  {
+                    icon: '⏳',
+                    title: 'Tiempos aproximados',
+                    text: 'Agradecemos su paciencia y comprensión. Los tiempos indicados son aproximados y pueden presentar variaciones, ya que este proceso logístico requiere el tiempo necesario para garantizar la seguridad y el bienestar de todos los estudiantes.'
+                  },
+                ].map((r, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: '#fff', border: '1px solid #fde68a', borderRadius: 8, padding: '10px 12px' }}>
+                    <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{r.icon}</span>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: 13, color: '#92610a', marginBottom: 2 }}>{r.title}</div>
+                      <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{r.text}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
         </form>}
