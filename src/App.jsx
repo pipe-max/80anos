@@ -1577,12 +1577,78 @@ function LoginDirectores({ onLogin }) {
 }
 
 // ─── APP ROOT ─────────────────────────────────────────────────────────────────
+// ─── Modal Habeas Data / Términos ────────────────────────────────────────────
+function ModalTerminos({ onAceptar }) {
+  return (
+    <div style={{
+      position: 'fixed', inset: 0, zIndex: 9999,
+      background: 'rgba(10,20,50,0.7)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: '16px',
+    }}>
+      <div style={{
+        background: '#fff', borderRadius: 16, padding: '32px 28px',
+        maxWidth: 520, width: '100%', boxShadow: '0 8px 40px rgba(0,0,0,0.25)',
+        maxHeight: '90vh', overflowY: 'auto',
+      }}>
+        {/* Logo + título */}
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <img src="/logo80.png" alt="Logo" style={{ height: 60, marginBottom: 12 }} />
+          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 22, fontWeight: 700, color: '#1a2a3a' }}>
+            Autorización de Tratamiento de Datos
+          </div>
+          <div style={{ fontSize: 13, color: '#5a7a9a', marginTop: 4 }}>
+            Colegio Theodoro Herzl · Evento 80 Años
+          </div>
+        </div>
+
+        {/* Texto legal */}
+        <div style={{ fontSize: 13, color: '#2a3a4a', lineHeight: 1.7, marginBottom: 24 }}>
+          <p>De conformidad con la <strong>Ley 1581 de 2012</strong> (Habeas Data) y el <strong>Decreto 1377 de 2013</strong> de la República de Colombia, el <strong>Colegio Theodoro Herzl</strong> le informa que los datos personales que usted suministre en este formulario serán tratados de forma confidencial, con las siguientes condiciones:</p>
+
+          <ul style={{ paddingLeft: 18, margin: '10px 0' }}>
+            <li><strong>Finalidad:</strong> Los datos recolectados (nombre del estudiante, información de la persona autorizada para recogerlo y datos de contacto) serán utilizados <em>exclusivamente</em> para la coordinación y control de la recogida de estudiantes durante el evento <strong>"80 Años Creando Memorias"</strong> (4 y 5 de mayo de 2026) en el Teatro Metropolitano de Medellín.</li>
+            <li style={{ marginTop: 8 }}><strong>Responsable:</strong> Colegio Theodoro Herzl — Medellín, Colombia.</li>
+            <li style={{ marginTop: 8 }}><strong>Derechos:</strong> Usted tiene derecho a conocer, actualizar, rectificar y suprimir sus datos personales. Para ejercer estos derechos puede comunicarse con la institución.</li>
+            <li style={{ marginTop: 8 }}><strong>Almacenamiento:</strong> Los datos serán conservados únicamente durante el período del evento y eliminados posteriormente.</li>
+            <li style={{ marginTop: 8 }}><strong>No cesión:</strong> La información no será compartida con terceros ajenos al colegio ni usada para fines distintos a los aquí descritos.</li>
+          </ul>
+
+          <p style={{ marginTop: 10 }}>Al hacer clic en <strong>"Acepto y continuar"</strong>, usted declara haber leído, entendido y aceptado el tratamiento de sus datos personales bajo las condiciones descritas.</p>
+        </div>
+
+        <button
+          onClick={onAceptar}
+          style={{
+            width: '100%', background: '#1d6eed', color: '#fff', border: 'none',
+            borderRadius: 10, padding: '14px', fontSize: 16, fontWeight: 700,
+            cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
+            boxShadow: '0 2px 10px rgba(29,110,237,0.3)',
+          }}
+        >
+          ✅ Acepto y continuar
+        </button>
+        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 11, color: '#9aacbe' }}>
+          Si no acepta, no podrá diligenciar el formulario.
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   // URL routing simple: si hay ?panel en la URL → panel
   const isPanel = window.location.search.includes('panel') || window.location.pathname.includes('panel')
   const [view, setView] = useState(isPanel ? 'login' : 'form')
   const [authed, setAuthed] = useState(false)
   const [logAuthed, setLogAuthed] = useState(false)
+  // Términos: directores y logística no necesitan aceptar
+  const [termAceptado, setTermAceptado] = useState(() => sessionStorage.getItem('termAceptado') === 'si' || isPanel)
+
+  const aceptarTerminos = () => {
+    sessionStorage.setItem('termAceptado', 'si')
+    setTermAceptado(true)
+  }
 
   const extraBtns = (
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -1603,6 +1669,9 @@ export default function App() {
 
   return (
     <div>
+      {/* Modal de términos — solo para el formulario de padres */}
+      {!termAceptado && view === 'form' && <ModalTerminos onAceptar={aceptarTerminos} />}
+
       {view === 'form' && <FormularioPadres extra={extraBtns} />}
       {view === 'login' && !authed && (
         <LoginDirectores onLogin={() => { setAuthed(true); setView('panel') }} />
