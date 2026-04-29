@@ -1022,9 +1022,14 @@ function LogisticaView({ onBack }) {
           {/* Tab: Buscar mi comisión */}
           {tab === 'buscar' && (
             <div>
-              <div style={{ fontSize: 14, color: C.muted, marginBottom: 14 }}>Escribe tu nombre para ver a qué comisión perteneces y cuáles son tus funciones.</div>
+              {/* Banner hero */}
+              <div style={{ background: 'linear-gradient(135deg, #1d3a6e 0%, #2a52a0 100%)', borderRadius: 12, padding: '20px 18px', marginBottom: 18, textAlign: 'center' }}>
+                <div style={{ fontSize: 32, marginBottom: 6 }}>🔍</div>
+                <div style={{ color: '#fff', fontWeight: 800, fontSize: 17, fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: 0.5, marginBottom: 4 }}>¿A qué comisión perteneces?</div>
+                <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13 }}>Escribe tu nombre y descubre tu rol en el espectáculo</div>
+              </div>
               <input
-                style={{ ...S.input, marginBottom: 16, fontSize: 15 }}
+                style={{ ...S.input, marginBottom: 16, fontSize: 15, border: `2px solid ${C.blue}`, boxShadow: `0 0 0 4px ${C.blue}18` }}
                 placeholder="Ej: Sonia Franco, Carlos Giraldo..."
                 value={busqueda}
                 onChange={e => setBusqueda(e.target.value)}
@@ -1058,7 +1063,7 @@ function LogisticaView({ onBack }) {
                 </div>
               ))}
               {busqueda.trim().length < 2 && (
-                <div style={{ textAlign: 'center', padding: '20px 0', color: C.muted, fontSize: 13 }}>
+                <div style={{ textAlign: 'center', padding: '10px 0 20px', color: C.muted, fontSize: 13 }}>
                   Escribe al menos 2 caracteres para buscar.
                 </div>
               )}
