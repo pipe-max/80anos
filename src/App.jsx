@@ -172,7 +172,7 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
 
   if (!open) return (
     <div style={{ marginBottom: 20, textAlign: 'center' }}>
-      <button type="button" style={{ ...S.btn(C.muted), fontSize: 13, padding: '8px 18px' }} onClick={() => { setOpen(true); onOpenChange?.(true) }}>
+      <button type="button" style={{ ...S.btn(C.yellow), fontSize: 15, padding: '12px 28px', fontWeight: 700, boxShadow: '0 2px 8px rgba(245,158,11,0.3)' }} onClick={() => { setOpen(true); onOpenChange?.(true) }}>
         🔍 ¿Ya registraste? Busca y edita tu registro
       </button>
     </div>
