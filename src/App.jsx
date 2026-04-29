@@ -12,7 +12,7 @@ const supabase = createClient(
 
 // ─── Constantes ──────────────────────────────────────────────────────────────
 const SECCIONES = Object.keys(ESTUDIANTES).sort()
-const PIN_DEFAULT = import.meta.env.VITE_DIRECTOR_PIN || 'director80'
+const PIN_DEFAULT = import.meta.env.VITE_DIRECTOR_PIN || 'musical80'
 
 const shortName = (sec) =>
   `${sec.split(' - ')[0]} ${sec.endsWith('Alef') ? 'Alef' : 'Bet'}`
