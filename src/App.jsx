@@ -1604,17 +1604,15 @@ function ModalTerminos({ onAceptar }) {
 
         {/* Texto legal */}
         <div style={{ fontSize: 13, color: '#2a3a4a', lineHeight: 1.7, marginBottom: 24 }}>
-          <p>De conformidad con la <strong>Ley 1581 de 2012</strong> (Habeas Data) y el <strong>Decreto 1377 de 2013</strong> de la República de Colombia, el <strong>Colegio Theodoro Herzl</strong> le informa que los datos personales que usted suministre en este formulario serán tratados de forma confidencial, con las siguientes condiciones:</p>
-
-          <ul style={{ paddingLeft: 18, margin: '10px 0' }}>
-            <li><strong>Finalidad:</strong> Los datos recolectados (nombre del estudiante, información de la persona autorizada para recogerlo y datos de contacto) serán utilizados <em>exclusivamente</em> para la coordinación y control de la recogida de estudiantes durante el evento <strong>"80 Años Creando Memorias"</strong> (4 y 5 de mayo de 2026) en el Teatro Metropolitano de Medellín.</li>
-            <li style={{ marginTop: 8 }}><strong>Responsable:</strong> Colegio Theodoro Herzl — Medellín, Colombia.</li>
-            <li style={{ marginTop: 8 }}><strong>Derechos:</strong> Usted tiene derecho a conocer, actualizar, rectificar y suprimir sus datos personales. Para ejercer estos derechos puede comunicarse con la institución.</li>
-            <li style={{ marginTop: 8 }}><strong>Almacenamiento:</strong> Los datos serán conservados únicamente durante el período del evento y eliminados posteriormente.</li>
-            <li style={{ marginTop: 8 }}><strong>No cesión:</strong> La información no será compartida con terceros ajenos al colegio ni usada para fines distintos a los aquí descritos.</li>
+          <p style={{ marginBottom: 12 }}>
+            Conforme a la <strong>Ley 1581 de 2012 (Habeas Data)</strong>, el <strong>Colegio Theodoro Herzl</strong> le informa:
+          </p>
+          <ul style={{ paddingLeft: 18, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <li><strong>Finalidad:</strong> Sus datos se usarán <em>únicamente</em> para coordinar la recogida de estudiantes en el evento <strong>"80 Años Creando Memorias"</strong> (4 y 5 de mayo, Teatro Metropolitano).</li>
+            <li><strong>Confidencialidad:</strong> La información no será compartida con terceros ni usada para ningún otro fin.</li>
+            <li><strong>Eliminación:</strong> Los datos serán borrados una vez finalizado el evento.</li>
+            <li><strong>Derechos:</strong> Puede solicitar en cualquier momento conocer, corregir o eliminar sus datos contactando al colegio.</li>
           </ul>
-
-          <p style={{ marginTop: 10 }}>Al hacer clic en <strong>"Acepto y continuar"</strong>, usted declara haber leído, entendido y aceptado el tratamiento de sus datos personales bajo las condiciones descritas.</p>
         </div>
 
         <button
