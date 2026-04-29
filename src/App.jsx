@@ -615,8 +615,11 @@ function PanelDirectores({ onLogout }) {
   return (
     <div style={S.page}>
       <Header extra={
-        <button style={{ ...S.btnSm('#334'), marginLeft: 'auto' }} onClick={onLogout}>
-          Cerrar sesión
+        <button
+          style={{ background: '#c0392b', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
+          onClick={onLogout}
+        >
+          🚪 Cerrar sesión
         </button>
       } />
       <div style={S.container}>
@@ -784,9 +787,9 @@ function DiaPanel({ label, recoge, auth, checked, obs, onObs, onToggle, onSaveOb
 function Header({ extra }) {
   return (
     <div style={{ ...S.header, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px' }}>
-      <div style={{ width: 80 }} />
+      <div style={{ width: 120 }} />
       <img src="/logo80.png" alt="Logo 80 años" style={{ height: 120, width: 'auto', objectFit: 'contain' }} />
-      <div style={{ width: 80, display: 'flex', justifyContent: 'flex-end' }}>{extra}</div>
+      <div style={{ width: 120, display: 'flex', justifyContent: 'flex-end' }}>{extra}</div>
     </div>
   )
 }
@@ -863,10 +866,10 @@ export default function App() {
         <>
           <FormularioPadres extra={
             <button
-              style={{ ...S.btnSm('#0c1728'), border: `1px solid ${C.cardB}`, opacity: 0.7, fontSize: 11 }}
+              style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
               onClick={() => setView('login')}
             >
-              Directores
+              🔐 Directores
             </button>
           } />
         </>
