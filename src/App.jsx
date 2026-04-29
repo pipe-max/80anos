@@ -532,10 +532,9 @@ function FormularioPadres({ extra }) {
               <div style={{ fontWeight: 700, color: '#0a7a54', fontSize: 14, marginBottom: 10 }}>🛡️ Recomendaciones de seguridad</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {[
-                  { icon: '🪪', text: 'La persona autorizada debe presentar su cédula al momento de recoger al estudiante.' },
                   { icon: '⏰', text: 'Llegue puntual al horario de recogida asignado para evitar congestión.' },
                   { icon: '📵', text: 'No envíe a personas no registradas en este formulario. No se entregará el estudiante sin autorización previa.' },
-                  { icon: '📞', text: 'Mantenga su celular activo durante el evento por si el colegio necesita contactarle.' },
+                  { icon: '📞', text: 'Mantenga su celular activo antes y después (no durante el evento) por si el colegio necesita contactarle.' },
                   { icon: '🚗', text: 'Si llega en vehículo, respete las zonas señalizadas y las indicaciones del personal de seguridad.' },
                   { icon: '👮', text: 'El personal del colegio verificará la identidad de quien recoge. Este proceso es por la seguridad de su hijo.' },
                 ].map((r, i) => (
