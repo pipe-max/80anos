@@ -886,7 +886,9 @@ const CRONOGRAMA = {
     { hora: '5:00 pm', desc: '🎵 Calentamiento: Inicia el calentamiento de voces e instrumentos.' },
     { hora: '5:30 pm', desc: '🚪 Apertura de puertas: En ese momento, todas las personas en sus comisiones deben estar en los espacios designados.' },
     { hora: '6:00 pm', desc: '🎭 Inicio del espectáculo. Todas las comisiones deben estar pendientes por si se presenta algún imprevisto.' },
-    { hora: '7:30 pm', desc: '🎂 Finalización del espectáculo: Cantar el cumpleaños del colegio. Entrega de estudiantes organizada en la plazoleta del teatro.' },
+    { hora: '7:30 pm', desc: '🎂 Finalización del espectáculo: Cantar el cumpleaños del colegio. Desde el teatro se darán indicaciones claras para la salida.' },
+    { hora: '7:35 pm', desc: '🎓 Entrega de estudiantes: Entrega organizada en la plazoleta del teatro.' },
+    { tipo: 'nota', desc: 'Cada estudiante será entregado únicamente a su padre/madre o acudiente autorizado. Se recomienda mantener el orden y seguir indicaciones del equipo logístico.' },
   ],
   '5 de mayo': [
     { hora: '1:00 pm', desc: 'Recogida del personal del Colegio — Envigado' },
