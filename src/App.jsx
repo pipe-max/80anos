@@ -530,7 +530,7 @@ function FormularioPadres({ extra }) {
                   href="https://www.google.com/maps/dir/?api=1&destination=Teatro+Metropolitano+Jos%C3%A9+Guti%C3%A9rrez+G%C3%B3mez,+Medell%C3%ADn"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#fff', border: '1px solid #1d6eed44', borderRadius: 8, padding: '9px 12px', fontSize: 13, fontWeight: 700, color: '#1d6eed', textDecoration: 'none' }}
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: rgba(52, 168, 83, 1), border: '1px solid #1d6eed44', borderRadius: 8, padding: '9px 12px', fontSize: 13, fontWeight: 700, color: '#1d6eed', textDecoration: 'none' }}
                 >
                   🗺️ Google Maps
                 </a>
@@ -538,7 +538,7 @@ function FormularioPadres({ extra }) {
                   href="https://waze.com/ul?q=Teatro+Metropolitano+Medellin&navigate=yes"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#fff', border: '1px solid #33ccff44', borderRadius: 8, padding: '9px 12px', fontSize: 13, fontWeight: 700, color: '#00b0cc', textDecoration: 'none' }}
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: rgba(51, 204, 255, 1), border: '1px solid #33ccff44', borderRadius: 8, padding: '9px 12px', fontSize: 13, fontWeight: 700, color: '#00b0cc', textDecoration: 'none' }}
                 >
                   🚗 Waze
                 </a>
