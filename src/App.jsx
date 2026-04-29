@@ -6,8 +6,8 @@ import autoTable from 'jspdf-autotable'
 
 // ─── Supabase ────────────────────────────────────────────────────────────────
 const supabase = createClient(
-  'https://xldsnyacwndbmbfcaywn.supabase.co',
-  'sb_publishable__95xEW1VP2Bnra8LhfxEMg_C9Ynlf0-'
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
 )
 
 // ─── Constantes ──────────────────────────────────────────────────────────────
