@@ -874,7 +874,7 @@ const CRONOGRAMA = {
   '4 de mayo': [
     { hora: '7:00 – 10:00 am', desc: 'Montaje: Los encargados del montaje deben bajar todo el material para el evento.' },
     { hora: '9:00 am', desc: 'Recogida del personal del Colegio — Envigado' },
-    { hora: '9:15 am', desc: 'Recogida del personal del Colegio — Sandiego' },
+    { hora: '9:15 am', desc: 'Recogida del personal del Colegio — San Diego' },
     { hora: '10:00 am – 12:00 m', desc: 'Llegada Elenco: Recepción de estudiantes participantes del elenco teatro, música (solistas) y todo el personal del colegio.' },
     { hora: '11:50 am', desc: 'Inicia recorrido de rutas para primaria y bachillerato.' },
     { hora: '12:00 m – 12:30 pm', desc: 'Almuerzo: Habrá servicio del restaurante CRES para llevar los almuerzos al teatro.' },
@@ -892,7 +892,7 @@ const CRONOGRAMA = {
   ],
   '5 de mayo': [
     { hora: '1:00 pm', desc: 'Recogida del personal del Colegio — Envigado' },
-    { hora: '1:15 pm', desc: 'Recogida del personal del Colegio — Sandiego' },
+    { hora: '1:15 pm', desc: 'Recogida del personal del Colegio — San Diego' },
     { hora: '1:10 pm', desc: 'Inicia recorrido de rutas para primaria y bachillerato.' },
     { hora: '1:50 pm', desc: 'Inicio recorrido de rutas para preescolar.' },
     { hora: '2:00 pm', desc: 'Llegada Elenco: Recepción de estudiantes participantes del elenco teatro, música (solistas) y todo el personal del colegio.' },
@@ -1030,6 +1030,7 @@ function LogisticaView({ onBack }) {
           <TabBtn id="buscar" label="🔍 Mi comisión" />
           <TabBtn id="comisiones" label="📋 Todas las comisiones" />
           <TabBtn id="cronograma" label="🕐 Cronograma" />
+          <TabBtn id="mapa" label="🗺️ Mapa" />
         </div>
         <div style={{ background: '#fff', borderRadius: '0 0 12px 12px', border: `1px solid ${C.cardB}`, padding: '20px 18px', marginBottom: 20 }}>
 
@@ -1143,6 +1144,29 @@ function LogisticaView({ onBack }) {
                     </div>
                   )
               ))}
+            </div>
+          )}
+
+          {/* Tab: Mapa */}
+          {tab === 'mapa' && (
+            <div>
+              <div style={{ fontSize: 14, color: C.muted, marginBottom: 14 }}>Plano del evento. Pellizca o usa el scroll para hacer zoom.</div>
+              <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.cardB}` }}>
+                <img
+                  src="/mapadeleevnto.jpg"
+                  alt="Mapa del evento"
+                  style={{ width: '100%', display: 'block', cursor: 'zoom-in' }}
+                  onClick={e => {
+                    if (e.target.style.width === '100%') {
+                      e.target.style.width = '200%'
+                      e.target.style.cursor = 'zoom-out'
+                    } else {
+                      e.target.style.width = '100%'
+                      e.target.style.cursor = 'zoom-in'
+                    }
+                  }}
+                />
+              </div>
             </div>
           )}
         </div>
