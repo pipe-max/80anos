@@ -672,7 +672,6 @@ function FormularioPadres({ extra }) {
                 ))}
               </div>
             </div>
-          </div            </div>
           </div>
 
         </form>}
