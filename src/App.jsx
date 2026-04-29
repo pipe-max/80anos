@@ -414,8 +414,9 @@ function FormularioPadres({ extra }) {
           <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 26, fontWeight: 700, letterSpacing: 0.5, marginBottom: 6 }}>
             Formulario de Recogida
           </div>
-          <div style={{ color: C.muted, fontSize: 14 }}>
-            Teatro Metropolitano de Medellín · Lunes 4 y Martes 5 de mayo
+          <div style={{ color: C.muted, fontSize: 14, lineHeight: 1.7 }}>
+            Teatro Metropolitano de Medellín<br />
+            Lunes 4 y Martes 5 de mayo a las 6:00 p.m.
           </div>
         </div>
 
