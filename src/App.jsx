@@ -495,26 +495,26 @@ function FormularioPadres({ extra }) {
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                 <div style={{ background: '#fff', border: '1px solid #f59e0b55', borderRadius: 8, padding: '10px 14px', flex: 1, minWidth: 120, textAlign: 'center' }}>
                   <div style={{ fontSize: 11, color: '#92610a', fontWeight: 600, marginBottom: 4 }}>☀️ LUNES 4 DE MAYO</div>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: '#1a2a3a', letterSpacing: 2 }}>1 · 2</div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#1a2a3a', letterSpacing: 2 }}>1 · 7</div>
                   <div style={{ fontSize: 11, color: '#5a7a9a', marginTop: 2 }}>Últimos dígitos de placa</div>
                 </div>
                 <div style={{ background: '#fff', border: '1px solid #f59e0b55', borderRadius: 8, padding: '10px 14px', flex: 1, minWidth: 120, textAlign: 'center' }}>
                   <div style={{ fontSize: 11, color: '#92610a', fontWeight: 600, marginBottom: 4 }}>🌤️ MARTES 5 DE MAYO</div>
-                  <div style={{ fontSize: 22, fontWeight: 800, color: '#1a2a3a', letterSpacing: 2 }}>3 · 4</div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#1a2a3a', letterSpacing: 2 }}>0 · 3</div>
                   <div style={{ fontSize: 11, color: '#5a7a9a', marginTop: 2 }}>Últimos dígitos de placa</div>
                 </div>
               </div>
-              <div style={{ fontSize: 11, color: '#92610a', marginTop: 10 }}>⏰ Restricción: 7:00–8:30 a.m. y 5:30–7:00 p.m. · Verifica en <strong>movilidadmedellin.gov.co</strong></div>
+              <div style={{ fontSize: 11, color: '#92610a', marginTop: 10 }}>⏰ Restricción: 5:00 a.m. – 8:00 p.m. · Verifica en <strong>medellin.gov.co</strong></div>
             </div>
 
             {/* Mapa y puntos de recogida */}
             <div style={{ background: '#f0f7ff', border: '1px solid #1d6eed44', borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
-              <div style={{ fontWeight: 700, color: C.blueL, fontSize: 14, marginBottom: 8 }}>📍 Ubicación y puntos de recogida</div>
+              <div style={{ fontWeight: 700, color: C.blueL, fontSize: 14, marginBottom: 8 }}>📍 Ubicación</div>
               <div style={{ fontSize: 13, color: C.text, marginBottom: 10 }}>
                 <strong>Teatro Metropolitano José Gutiérrez Gómez</strong><br />
                 <span style={{ color: C.muted }}>Calle 41 #57-30, El Centro, Medellín</span>
               </div>
-              <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 10 }}>
+              <div style={{ borderRadius: 8, overflow: 'hidden' }}>
                 <iframe
                   title="Ubicación Teatro Metropolitano"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1!2d-75.5741!3d6.2476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428e3e9b9a1e7%3A0x6e1e1e1e1e1e1e1e!2sTeatro%20Metropolitano%20Jos%C3%A9%20Guti%C3%A9rrez%20G%C3%B3mez!5e0!3m2!1ses!2sco!4v1"
@@ -524,22 +524,6 @@ function FormularioPadres({ extra }) {
                   allowFullScreen=""
                   loading="lazy"
                 />
-              </div>
-              <div style={{ fontSize: 13, color: C.text, fontWeight: 600, marginBottom: 6 }}>🚏 Puntos de recogida:</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {[
-                  { emoji: '🟦', label: 'Preescolar', desc: 'Puerta principal — Calle 41' },
-                  { emoji: '🟩', label: 'Primaria', desc: 'Costado norte — Carrera 57' },
-                  { emoji: '🟧', label: 'Bachillerato', desc: 'Costado sur — Salida lateral' },
-                ].map(p => (
-                  <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#fff', borderRadius: 6, padding: '7px 10px', border: `1px solid ${C.cardB}` }}>
-                    <span style={{ fontSize: 16 }}>{p.emoji}</span>
-                    <div>
-                      <span style={{ fontWeight: 700, fontSize: 13 }}>{p.label}</span>
-                      <span style={{ color: C.muted, fontSize: 12 }}> — {p.desc}</span>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
 
