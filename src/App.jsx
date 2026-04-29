@@ -1280,7 +1280,8 @@ function PanelDirectores({ onLogout }) {
   const [filtroDia, setFiltroDia] = useState('todos')
   const [busqueda, setBusqueda] = useState('')
   const [saving, setSaving] = useState({})
-
+  const [pagina, setPagina] = useState(1)
+  const POR_PAGINA = 20
   const fetchData = useCallback(async () => {
     setLoading(true)
     const { data, error } = await supabase
@@ -1332,6 +1333,9 @@ function PanelDirectores({ onLogout }) {
     if (filtroDia === 'd5_pendiente') return !r.d5_checked
     return true
   })
+
+  const totalPaginas = Math.ceil(filtered.length / POR_PAGINA)
+  const paginados = filtered.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA)
 
   // ─── Export PDF ──────────────────────────────────────────────────────────────
   const exportPDF = () => {
@@ -1417,11 +1421,11 @@ function PanelDirectores({ onLogout }) {
           <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
             <div>
               <label style={S.label}>🔍 Buscar estudiante</label>
-              <input style={S.input} placeholder="Nombre..." value={busqueda} onChange={e => setBusqueda(e.target.value)} />
+              <input style={S.input} placeholder="Nombre..." value={busqueda} onChange={e => { setBusqueda(e.target.value); setPagina(1) }} />
             </div>
             <div>
               <label style={S.label}>📚 Filtrar por grupo</label>
-              <select style={S.select} value={filtroSec} onChange={e => setFiltroSec(e.target.value)}>
+              <select style={S.select} value={filtroSec} onChange={e => { setFiltroSec(e.target.value); setPagina(1) }}>
                 <option value="">Todos los grupos</option>
                 {[...SECCIONES].sort((a, b) => {
                   const ia = GRADOS_ORDEN.indexOf(a.split(' - ')[0])
@@ -1432,7 +1436,7 @@ function PanelDirectores({ onLogout }) {
             </div>
             <div>
               <label style={S.label}>📅 Filtrar por día</label>
-              <select style={S.select} value={filtroDia} onChange={e => setFiltroDia(e.target.value)}>
+              <select style={S.select} value={filtroDia} onChange={e => { setFiltroDia(e.target.value); setPagina(1) }}>
                 <option value="todos">Todos</option>
                 <option value="d4_pendiente">Lunes 4 — Pendientes</option>
                 <option value="d5_pendiente">Martes 5 — Pendientes</option>
@@ -1462,9 +1466,28 @@ function PanelDirectores({ onLogout }) {
         ) : filtered.length === 0 ? (
           <div style={{ textAlign: 'center', color: C.muted, padding: 40 }}>No hay registros para este filtro.</div>
         ) : (
-          filtered.map(r => (
-            <RowSubmission key={r.id} r={r} onToggle={toggle} onSaveObs={saveObs} saving={saving} />
-          ))
+          <>
+            {paginados.map(r => (
+              <RowSubmission key={r.id} r={r} onToggle={toggle} onSaveObs={saveObs} saving={saving} />
+            ))}
+            {totalPaginas > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
+                <button
+                  style={{ ...S.btnSm(pagina === 1 ? C.cardB : C.blue), opacity: pagina === 1 ? 0.5 : 1, cursor: pagina === 1 ? 'default' : 'pointer' }}
+                  onClick={() => setPagina(p => Math.max(1, p - 1))}
+                  disabled={pagina === 1}
+                >← Anterior</button>
+                <span style={{ fontSize: 13, color: C.muted, fontWeight: 600 }}>
+                  Página {pagina} de {totalPaginas} · {filtered.length} registros
+                </span>
+                <button
+                  style={{ ...S.btnSm(pagina === totalPaginas ? C.cardB : C.blue), opacity: pagina === totalPaginas ? 0.5 : 1, cursor: pagina === totalPaginas ? 'default' : 'pointer' }}
+                  onClick={() => setPagina(p => Math.min(totalPaginas, p + 1))}
+                  disabled={pagina === totalPaginas}
+                >Siguiente →</button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
