@@ -1598,18 +1598,18 @@ function useContadorRegistros() {
 function Header({ extra }) {
   const count = useContadorRegistros()
   return (
-    <div style={{ ...S.header, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px' }}>
-      <div style={{ width: 120 }} />
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-        <img src="/logo80.png" alt="Logo 80 años" style={{ height: 120, width: 'auto', objectFit: 'contain' }} />
+    <div style={{ ...S.header, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '10px 12px', gap: 8 }}>
+      <div style={{ flexShrink: 0, minWidth: 0 }} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, flex: 1 }}>
+        <img src="/logo80.png" alt="Logo 80 años" style={{ height: 80, width: 'auto', objectFit: 'contain' }} />
         {count !== null && (
-          <div style={{ background: '#e8f5e9', border: '1px solid #a5d6a7', borderRadius: 20, padding: '4px 14px', fontSize: 13, fontWeight: 600, color: '#2e7d32', display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: '#43a047', animation: 'pulse 1.5s infinite' }} />
+          <div style={{ background: '#e8f5e9', border: '1px solid #a5d6a7', borderRadius: 20, padding: '3px 10px', fontSize: 12, fontWeight: 600, color: '#2e7d32', display: 'flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap' }}>
+            <span style={{ display: 'inline-block', width: 7, height: 7, borderRadius: '50%', background: '#43a047', animation: 'pulse 1.5s infinite', flexShrink: 0 }} />
             {count} de {TOTAL_ESTUDIANTES} estudiantes registrados
           </div>
         )}
       </div>
-      <div style={{ width: 120, display: 'flex', justifyContent: 'flex-end' }}>{extra}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0 }}>{extra}</div>
     </div>
   )
 }
@@ -1747,15 +1747,15 @@ export default function App() {
   }
 
   const extraBtns = (
-    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <button
-        style={{ background: '#1d6e3a', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
+        style={{ background: '#1d6e3a', color: '#fff', border: 'none', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", whiteSpace: 'nowrap' }}
         onClick={() => setView(logAuthed ? 'logistica' : 'loginLogistica')}
       >
         📋 Logística
       </button>
       <button
-        style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
+        style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", whiteSpace: 'nowrap' }}
         onClick={() => setView('login')}
       >
         🔐 Directores
