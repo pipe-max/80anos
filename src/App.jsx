@@ -922,13 +922,20 @@ function LogisticaView({ onBack }) {
 
   const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 
+  // Coincidencia flexible: todas las palabras buscadas deben aparecer en el nombre (en cualquier orden)
+  const matchNombre = (responsable, termino) => {
+    const normedR = norm(responsable)
+    const palabras = norm(termino).trim().split(/\s+/).filter(Boolean)
+    return palabras.every(p => normedR.includes(p))
+  }
+
   // Buscar persona en todas las comisiones
   const resultadosBusqueda = busqueda.trim().length >= 2
     ? COMISIONES.filter(c =>
-        c.responsables.some(r => norm(r).includes(norm(busqueda.trim())))
+        c.responsables.some(r => matchNombre(r, busqueda))
       ).map(c => ({
         ...c,
-        coincidentes: c.responsables.filter(r => norm(r).includes(norm(busqueda.trim())))
+        coincidentes: c.responsables.filter(r => matchNombre(r, busqueda))
       }))
     : []
 
