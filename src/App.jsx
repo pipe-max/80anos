@@ -1151,22 +1151,14 @@ function LogisticaView({ onBack }) {
           {tab === 'mapa' && (
             <div>
               <div style={{ fontSize: 14, color: C.muted, marginBottom: 14 }}>Plano del evento. Pellizca o usa el scroll para hacer zoom.</div>
-              <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${C.cardB}` }}>
+              <div style={{ borderRadius: 10, overflowX: 'auto', overflowY: 'hidden', border: `1px solid ${C.cardB}`, WebkitOverflowScrolling: 'touch' }}>
                 <img
                   src="/mapadelevento.jpg"
                   alt="Mapa del evento"
-                  style={{ width: '100%', display: 'block', cursor: 'zoom-in' }}
-                  onClick={e => {
-                    if (e.target.style.width === '100%') {
-                      e.target.style.width = '200%'
-                      e.target.style.cursor = 'zoom-out'
-                    } else {
-                      e.target.style.width = '100%'
-                      e.target.style.cursor = 'zoom-in'
-                    }
-                  }}
+                  style={{ width: '900px', maxWidth: 'none', display: 'block' }}
                 />
               </div>
+              <div style={{ fontSize: 12, color: C.muted, textAlign: 'center', marginTop: 8 }}>← Desliza horizontalmente para ver el mapa completo →</div>
             </div>
           )}
         </div>
