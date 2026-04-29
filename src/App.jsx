@@ -618,6 +618,528 @@ function FormularioPadres({ extra }) {
   )
 }
 
+// ─── DATOS LOGÍSTICA ──────────────────────────────────────────────────────────
+const COMISIONES = [
+  {
+    nombre: 'Cubrimiento de ingreso y evacuación al teatro',
+    funciones: [
+      'Coordinar la apertura y control de accesos al teatro.',
+      'Orientar a los estudiantes en puntos de ingreso y salida.',
+      'Regular el flujo de personas para evitar congestiones en entradas, pasillos y accesos.',
+      'Apoyar la ubicación ordenada de los estudiantes.',
+      'Guiar los flujos de evacuación por rutas establecidas y salidas habilitadas.',
+      'Evitar aglomeraciones en puertas, corredores y zonas externas.',
+      'Orientar al público durante procedimientos de evacuación preventiva o de emergencia.',
+      'Reportar novedades o incidentes a coordinación logística.',
+    ],
+    responsables: [
+      'Escaleras 1: Carlos Giraldo', 'Escalera 2: Tomás González', 'Puerta ingreso 3: Sonia Franco',
+      'Puerta 4: Diana Restrepo', 'Puerta 6: Mariza Velásquez', 'Puerta 7: Mora Stiberman',
+      'Zona externa 8: Giovani Torres', 'Zona Externa 9: Ivón Valenzuela', 'Zona externa 10: Óscar Castañeda',
+      'Zona externa 11: Carlos Velásquez', 'Puerta de evacuación 5: Nicolás Naranjo',
+      'Escaleras 12: Laura Torres', 'Escaleras 13: Juan Carlos Cadavid', 'Escaleras 14: Darwin Mercado',
+    ],
+  },
+  {
+    nombre: 'Escenario laterales',
+    funciones: [
+      'Apoyar la organización y disposición de accesorios, utilería y elementos requeridos para cada presentación.',
+      'Verificar que los materiales y apoyos escénicos estén listos y disponibles.',
+      'Asistir en entradas y salidas de participantes hacia el escenario.',
+      'Facilitar el movimiento seguro de estudiantes, evitando congestiones o interrupciones durante las presentaciones.',
+      'Mantener comunicación constante con coordinación logística, dirección de escenario y responsables de cada presentación.',
+      'Reportar novedades, imprevistos o requerimientos que puedan afectar el desarrollo del evento.',
+    ],
+    responsables: ['Astrid Betancur', 'Vanessa Vivares', 'Camilo Gómez', 'Marlon', 'Diana Ocampo', 'Adriana Cooper', 'Yorman', 'Área de música'],
+  },
+  {
+    nombre: 'Patinadores',
+    funciones: [
+      'Apoyar en los requerimientos generales de utilería.',
+      'Transportar y entregar oportunamente la utilería necesaria durante el evento.',
+      'Atender necesidades imprevistas o urgentes que surjan en escenario.',
+      'Apoyar montajes y desmontaje.',
+      'Estar atentos a instrucciones de coordinación logística para cubrir necesidades emergentes.',
+    ],
+    responsables: ['William Vélez', 'Victor Vélez', 'Luis Felipe Tejada'],
+  },
+  {
+    nombre: 'Busetas - Carros particulares en el teatro',
+    funciones: [
+      'Planificar la llegada y ubicación de vehículos.',
+      'Organizar rutas y tiempos de transporte.',
+      'Coordinar la evacuación ordenada al finalizar el evento.',
+      'Garantizar seguridad en movilidad.',
+    ],
+    responsables: ['Tabares Londoño Santiago', 'Lopez Cardona Cristian Camilo', 'Ruiz Rhenals Nover Alonso', 'Lezer Hila Carolina'],
+  },
+  {
+    nombre: 'Escenografía y elementos digitales',
+    funciones: [
+      'Diseñar y elaborar elementos de utilería y escenografía.',
+      'Crear y gestionar apoyos visuales y digitales.',
+      'Coordinar montaje y desmontaje escenográfico.',
+      'Verificar funcionalidad técnica antes del evento.',
+    ],
+    responsables: ['Alvarez Hernandez Ricardo Alberto', 'Gomez Garavito Camilo', 'Velasquez Londoño Luz Mariza', 'Gonzalez Felipe'],
+  },
+  {
+    nombre: 'Utilería / Mantenimiento',
+    funciones: [
+      'Organizar y distribuir la utilería necesaria.',
+      'Apoyar montaje de instrumentos y mobiliario.',
+      'Transportar materiales desde el colegio al teatro.',
+      'Garantizar el orden y cuidado de los elementos.',
+    ],
+    responsables: ['Garcia Yorman Augusto', 'Betancur Alzate Andres Felipe', 'Velez Escudero Victor Manuel', 'Velez Escudero William Andres', 'TEJADA BOLIVAR LUIS FELIPE'],
+    requerimientos: 'WALKIE TALKIE 12',
+  },
+  {
+    nombre: 'Coordinación y Logística',
+    funciones: [
+      'Supervisar el desarrollo logístico dentro y fuera del teatro.',
+      'Verificar que cada comisión cumpla sus funciones.',
+      'Resolver imprevistos en tiempo real.',
+      'Mantener comunicación constante entre equipos.',
+      'Asegurar la coherencia y fluidez del evento.',
+    ],
+    responsables: ['Amar Ospina Olga Lucia', 'Zuluaga Gil Alexander', 'Cardona Paola Catalina', 'Nidia Londoño Echeverri', 'Andrea Toledo', 'Sandra Agudelo', 'Andrés Betancur'],
+  },
+  {
+    nombre: 'Comunicaciones / Sistemas',
+    funciones: [
+      'Gestionar los canales de comunicación interna (radios, mensajes, etc.).',
+      'Apoyar el funcionamiento de sistemas tecnológicos.',
+      'Coordinar información entre comisiones.',
+      'Responder ante fallas técnicas durante el evento.',
+    ],
+    responsables: ['Lince Gomez Laura', 'Ramirez Agudelo Juan Camilo', 'Giraldo Jaramillo Carlos Mario', 'Cañas Marin Valentina', 'González Tomás'],
+  },
+  {
+    nombre: 'Seguridad',
+    funciones: ['Se encarga de toda la seguridad en compañía de la Policía Nacional y autoridades locales.'],
+    responsables: ['Hemes Cañaveral Walkie'],
+  },
+  {
+    nombre: 'Coordinadores de sección artístico',
+    funciones: [
+      'Los coordinadores deben estar todo el tiempo en comunicación con el director general (Camilo Correa), apoyándose con el guión técnico y dando las instrucciones en el espacio que corresponda.',
+      'Camerinos preescolar: Patricia Larralde',
+      'Carpas primaria: Kelly Pulgarín',
+      'Carpas bachillerato: Estefanía Ordóñez',
+    ],
+    responsables: ['Juán Camilo Correa (Director General)', 'Maria Fernanda Mesa', 'Kelly Pulgarín', 'Estefania Ordóñez'],
+    requerimientos: 'Walkie Talkie',
+  },
+  {
+    nombre: 'Carpas Bachillerato',
+    funciones: [
+      'Directores de grupo y maestros auxiliares/acompañantes.',
+      'Coordinar la preparación de los estudiantes para la escena.',
+      'Apoyar en logística de vestuario y utilería.',
+      'Garantizar organización, puntualidad y flujo hacia el escenario.',
+      'Supervisar el comportamiento y cumplimiento de tiempos.',
+    ],
+    responsables: [
+      'Rodriguez España Mario Alberto', 'Torres Arango Giovanny Augusto', 'Marchena Corrales Katty',
+      'Castrillon Restrepo Liliana', 'Lorenzo Correa Tahia', 'Rave Ortiz Ferney Osbaldo',
+      'Castañeda Guevara Oscar Alexan', 'Naranjo Boza Nicolas', 'Acevedo Acosta Jorge Ohel',
+      'Garces Garcia Dayron Fernando', 'Velez Miranda Juan Felipe', 'Salazar Correa Santiago',
+      'Suarez Torres Yuliana', 'Gomez Jimenez Diana Marcela', 'Ortiz Moreno Hobbys Oswaldo',
+      'Valenzuela Jarmillo Ivon Esther', 'Castaño Escalante Cristian', 'Abraham Mrejen',
+    ],
+  },
+  {
+    nombre: 'Dirección Espectáculo',
+    funciones: [
+      'Coordinar integralmente el desarrollo del espectáculo.',
+      'Dirigir desde cabina y tarima.',
+      'Asegurar el cumplimiento del guion, tiempos y transiciones.',
+      'Tomar decisiones en tiempo real ante imprevistos.',
+    ],
+    responsables: ['Correa Jiménez Juan Camilo', 'Andres Cardona'],
+    requerimientos: 'WALKIE TALKIE',
+  },
+  {
+    nombre: 'Brigada y Protocolos de Bioseguridad',
+    funciones: [
+      'Diseñar y comunicar los protocolos del evento.',
+      'Verificar la asignación y control de asistentes.',
+      'Supervisar el cumplimiento de normas de seguridad durante el evento.',
+      'Coordinar servicios médicos, ambulancia y atención de emergencias.',
+      'Velar por la seguridad general de todos los participantes.',
+    ],
+    responsables: ['Montoya Tamayo Diana Marcela', 'Henao Escobar Sara', 'Hoyos Zuleta Veronica'],
+  },
+  {
+    nombre: 'Refrigerios',
+    funciones: [
+      'Organizar la entrega de refrigerios por grupos.',
+      'Coordinar la alimentación del personal y equipo logístico.',
+      'Garantizar tiempos adecuados de distribución.',
+      'Supervisar higiene y manejo adecuado de alimentos.',
+    ],
+    responsables: ['Vivares Figueroa Vanesa Isabel', 'Franco Correa Sonia Irene', 'Restrepo Gonzalez Diana Yorlen', 'Cristina Cres'],
+  },
+  {
+    nombre: 'Carpas Primaria',
+    funciones: [
+      'Directores de grupo y maestros auxiliares/acompañantes.',
+      'Organizar a los estudiantes antes y después de su presentación.',
+      'Supervisar accesorios y vestuario.',
+      'Mantener el orden en el espacio asignado.',
+      'Acompañar y guiar a los estudiantes en tiempos de espera.',
+    ],
+    responsables: [
+      'Laloum Yael', 'Cartagena Ramírez Edwin Alejandro', 'Lebrun Perez Diana Marcela',
+      'Cooper Cooper Adriana Hannah', 'Montes Herrera Daniela', 'Pulgarin Gomez Kelly Andrea',
+      'Gomez Agudelo Sirley Johana', 'Zapata Sanchez Valeria', 'Melo Acosta Andres Felipe',
+      'Chica Henao Manuela', 'Dorrell Giraldo Jessica', 'Bedoya Marulanda Jennyfer',
+      'Pelaez Alvarez Alejandra', 'Montes Zuñiga Sorsy Melina', 'Ortega Vanegas Mariana Lisbeth',
+      'Alvarez Molina Diana Cecilia', 'Betancur Ortiz Marco Antonio', 'Gonzalez Suarez Laura',
+      'Mazo Meneses Lina Marcela', 'Rosita Kertzman',
+    ],
+  },
+  {
+    nombre: 'Camerinos Preschool',
+    funciones: [
+      'Directores de grupo y maestros auxiliares.',
+      'Organizar a los niños para su salida a escena.',
+      'Apoyar con vestuario y accesorios.',
+      'Mantener el orden, cuidado y acompañamiento permanente.',
+      'Garantizar la seguridad y el bienestar de los niños.',
+    ],
+    responsables: [
+      'Goldstein Elaine Cristina', 'Arboleda Morales Isabel Cristina', 'Arias Montoya Sara Maria',
+      'Salinas Acosta Luisa Fernanda', 'Solano Guerra Sandra Patricia', 'Preciado Ortiz Nataly',
+      'Daza Aristizabal Valentina', 'Arango Giraldo Luisa Maria', 'Lopez Cadavid Valentina',
+      'Uran Ramirez Nathalie', 'Agudelo Restrepo Ana Maria', 'Gonzalez Fontalvo Catherine Liseth',
+      'Lopez Lopez Liliana Patricia', 'Betancur Gómez Jeniffer', 'Lopez Mejia Carolina',
+      'Durango Jaramillo Daniela', 'Monsalve Tobon Paula Andrea', 'Herrera Arenas Natalia',
+      'Cano Rendon Manuela',
+    ],
+    requerimientos: 'Stiberman Mora / Carlos Velásquez',
+  },
+  {
+    nombre: 'Presupuesto',
+    funciones: [
+      'Aprobar el presupuesto general de todas las comisiones.',
+      'Revisar y validar cotizaciones.',
+      'Ejecutar y hacer seguimiento a las compras requeridas.',
+      'Gestionar la reserva del teatro para ambos días del evento.',
+      'Llevar control de gastos y asegurar el cumplimiento del presupuesto asignado.',
+    ],
+    responsables: ['Nidia Londoño', 'Andrea Toledo', 'Juan Camilo Correa', 'Andrés Cardona'],
+  },
+  {
+    nombre: 'Boletería',
+    funciones: [
+      'Diseñar e implementar el sistema de boletería digital.',
+      'Gestionar la adquisición de boletas con anterioridad.',
+      'Llevar registro de asistentes y aforo.',
+    ],
+    responsables: ['Andrea Toledo', 'Laura Lince', 'Juan Camilo Ramírez', 'Felipe González'],
+  },
+  {
+    nombre: 'Puerta Principal',
+    funciones: [
+      'Recibir y dar la bienvenida a los asistentes.',
+      'Orientar a los padres de familia sobre el ingreso al teatro.',
+      'Informar sobre la logística interna (ubicación, tiempos, recomendaciones).',
+      'Garantizar un flujo organizado de entrada.',
+    ],
+    responsables: [
+      'Criollo Monsalve Luz Dary', 'Restrepo Granada Luz Elena', 'Nidia Londoño Eceverry',
+      'Juan Camilo Ramírez', 'Mariana Tamayo', 'Vivares Figueroa Vanesa Isabel',
+      'Franco Correa Sonia Irene', 'Restrepo Gonzalez Diana Yorlen',
+    ],
+  },
+  {
+    nombre: 'Camerinos / Escenario',
+    funciones: [
+      'Coordinar la preparación del elenco antes de salir a escena.',
+      'Supervisar el orden y funcionamiento en camerinos.',
+      'Asegurar la correcta transición de los estudiantes hacia el escenario.',
+      'Apoyar la coordinación musical y técnica durante el espectáculo.',
+    ],
+    responsables: [
+      'Diaz Arcia Edinson Javier', 'Palacio Zuluaga Eliana Marcela', 'Huffington Webster Georgie Bell',
+      'Restrepo Vera Marlon', 'Ordóñez Arango Estefania', 'Giraldo Duque Christian David',
+      'Toro Perez Lorena', 'Hurtado Rivera Said Enrique',
+    ],
+  },
+]
+
+const CRONOGRAMA = {
+  '4 de mayo': [
+    { hora: '7:00 – 10:00 am', desc: 'Montaje: Los encargados del montaje deben bajar todo el material para el evento.' },
+    { hora: '9:00 am', desc: 'Recogida del personal del Colegio — Envigado' },
+    { hora: '9:15 am', desc: 'Recogida del personal del Colegio — Sandiego' },
+    { hora: '10:00 am – 12:00 m', desc: 'Llegada Elenco: Recepción de estudiantes participantes del elenco teatro, música (solistas) y todo el personal del colegio.' },
+    { hora: '12:00 m – 12:30 pm', desc: 'Almuerzo: Habrá servicio del restaurante CRES para llevar los almuerzos al teatro.' },
+    { hora: '11:50 am', desc: 'Inicia recorrido de rutas para primaria y bachillerato.' },
+    { hora: '1:00 pm', desc: 'Llegada al teatro: Llegada de los estudiantes de primaria y bachillerato, rutas escolares y carros particulares. Todo el equipo logístico estará presente.' },
+    { hora: '1:00 pm', desc: 'Inicio recorrido de rutas para preescolar.' },
+    { hora: '2:30 pm', desc: 'Llegada al teatro: Llegada de niños de preescolar, rutas escolares y carros particulares.' },
+    { hora: '4:30 – 5:00 pm', desc: 'Refrigerio primaria-bachillerato y todo el personal del colegio.' },
+    { hora: '5:00 – 5:30 pm', desc: 'Refrigerio Preescolar — estarán ubicados en los camerinos.' },
+    { hora: '5:00 pm', desc: '🎵 Calentamiento: Inician el calentamiento de voces e instrumentos.' },
+    { hora: '5:30 pm', desc: '🚪 Apertura de puertas — En ese momento todas las personas en sus comisiones deben estar en los espacios designados.' },
+    { hora: '6:00 pm', desc: '🎭 Inicio del espectáculo. Todas las comisiones deben estar pendientes por si se presenta algún imprevisto.' },
+    { hora: '7:30 pm', desc: '🎂 Finalización del espectáculo: Cantar el cumpleaños del colegio. Entrega de estudiantes organizada en la plazoleta del teatro.' },
+  ],
+  '5 de mayo': [
+    { hora: '1:00 pm', desc: 'Recogida del personal del Colegio — Envigado' },
+    { hora: '1:10 pm', desc: 'Inicia recorrido de rutas para primaria y bachillerato.' },
+    { hora: '1:15 pm', desc: 'Recogida del personal del Colegio — Sandiego' },
+    { hora: '2:00 pm', desc: 'Llegada Elenco: Recepción de estudiantes participantes del elenco teatro, música (solistas) y todo el personal del colegio.' },
+    { hora: '2:30 pm', desc: 'Llegada al teatro: Llegada de los estudiantes de primaria y bachillerato, rutas escolares y carros particulares.' },
+    { hora: '1:50 pm', desc: 'Inicio recorrido de rutas para preescolar.' },
+    { hora: '3:00 pm', desc: 'Llegada al teatro: Llegada de niños de preescolar, rutas escolares y carros particulares.' },
+    { hora: '4:30 – 5:00 pm', desc: 'Refrigerio primaria-bachillerato y todo el personal del colegio.' },
+    { hora: '5:00 – 5:30 pm', desc: 'Refrigerio Preescolar — estarán ubicados en los camerinos.' },
+    { hora: '5:00 pm', desc: '🎵 Calentamiento: Inician el calentamiento de voces e instrumentos.' },
+    { hora: '5:30 pm', desc: '🚪 Apertura de puertas — En ese momento todas las personas en sus comisiones deben estar en los espacios designados.' },
+    { hora: '6:00 pm', desc: '🎭 Inicio del espectáculo. Todas las comisiones deben estar pendientes por si se presenta algún imprevisto.' },
+    { hora: '7:30 pm', desc: '🎂 Finalización del espectáculo: Entrega de estudiantes organizada en la plazoleta del teatro.' },
+    { hora: '7:45 pm', desc: '🔧 Desmontaje: Colaborar con el desmontaje y ayudar a subirlo al camión que llevará los instrumentos y silletería del colegio.' },
+  ],
+}
+
+const LINEAMIENTOS = [
+  'Todos los equipos deben asistir a los ensayos generales.',
+  'Cada comisión debe conocer sus funciones y las de los demás.',
+  'Se debe mantener comunicación permanente durante el evento.',
+  'Ante cualquier situación, se debe informar a Coordinaciones y equipo logístico.',
+  'Se debe priorizar siempre la seguridad de los estudiantes.',
+]
+
+// ─── VISTA LOGÍSTICA ──────────────────────────────────────────────────────────
+function LogisticaView({ onBack }) {
+  const [tab, setTab] = useState('buscar')
+  const [busqueda, setBusqueda] = useState('')
+  const [diaActivo, setDiaActivo] = useState('4 de mayo')
+
+  const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+
+  // Buscar persona en todas las comisiones
+  const resultadosBusqueda = busqueda.trim().length >= 2
+    ? COMISIONES.filter(c =>
+        c.responsables.some(r => norm(r).includes(norm(busqueda.trim())))
+      ).map(c => ({
+        ...c,
+        coincidentes: c.responsables.filter(r => norm(r).includes(norm(busqueda.trim())))
+      }))
+    : []
+
+  const TabBtn = ({ id, label }) => (
+    <button
+      onClick={() => setTab(id)}
+      style={{
+        flex: 1, padding: '10px 8px', fontSize: 13, fontWeight: 700, cursor: 'pointer',
+        background: tab === id ? C.blue : 'transparent',
+        color: tab === id ? '#fff' : C.muted,
+        border: 'none', borderBottom: tab === id ? `3px solid ${C.blueL}` : '3px solid transparent',
+        fontFamily: "'DM Sans', sans-serif", transition: 'all 0.15s',
+      }}
+    >
+      {label}
+    </button>
+  )
+
+  return (
+    <div style={S.page}>
+      <Header extra={
+        <button onClick={onBack} style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}>
+          ← Volver
+        </button>
+      } />
+      <div style={{ ...S.container, maxWidth: 760 }}>
+        {/* Cabecera */}
+        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 28, fontWeight: 800, color: '#1d3a6e', letterSpacing: 1 }}>
+            📋 Logística — Espectáculo 80 Años
+          </div>
+          <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>Teatro Metropolitano · 4 y 5 de mayo de 2026</div>
+        </div>
+
+        {/* Lineamientos */}
+        <div style={{ ...S.card, background: '#f0f7ff', border: `1px solid ${C.blue}44`, marginBottom: 20 }}>
+          <div style={{ fontWeight: 700, color: C.blueL, fontSize: 14, marginBottom: 10 }}>🎯 Objetivo y lineamientos generales</div>
+          <div style={{ fontSize: 13, color: C.text, marginBottom: 10, fontStyle: 'italic' }}>
+            Organizar, orientar y garantizar el adecuado desarrollo del espectáculo de los 80 años del colegio, asegurando una ejecución coordinada, segura y exitosa del evento.
+          </div>
+          {LINEAMIENTOS.map((l, i) => (
+            <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', marginBottom: 6 }}>
+              <span style={{ color: C.blue, fontWeight: 800, flexShrink: 0 }}>•</span>
+              <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{l}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Tabs */}
+        <div style={{ display: 'flex', background: '#fff', borderRadius: '12px 12px 0 0', border: `1px solid ${C.cardB}`, borderBottom: 'none', overflow: 'hidden', marginBottom: 0 }}>
+          <TabBtn id="buscar" label="🔍 Mi comisión" />
+          <TabBtn id="comisiones" label="📋 Todas las comisiones" />
+          <TabBtn id="cronograma" label="🕐 Cronograma" />
+        </div>
+        <div style={{ background: '#fff', borderRadius: '0 0 12px 12px', border: `1px solid ${C.cardB}`, padding: '20px 18px', marginBottom: 20 }}>
+
+          {/* Tab: Buscar mi comisión */}
+          {tab === 'buscar' && (
+            <div>
+              <div style={{ fontSize: 14, color: C.muted, marginBottom: 14 }}>Escribe tu nombre para ver a qué comisión perteneces y cuáles son tus funciones.</div>
+              <input
+                style={{ ...S.input, marginBottom: 16, fontSize: 15 }}
+                placeholder="Ej: Sonia Franco, Carlos Giraldo..."
+                value={busqueda}
+                onChange={e => setBusqueda(e.target.value)}
+                autoFocus
+              />
+              {busqueda.trim().length >= 2 && resultadosBusqueda.length === 0 && (
+                <div style={{ color: C.muted, fontSize: 14, textAlign: 'center', padding: '20px 0' }}>
+                  No se encontró ninguna coincidencia para "<strong>{busqueda}</strong>".
+                </div>
+              )}
+              {resultadosBusqueda.map((c, i) => (
+                <div key={i} style={{ border: `2px solid ${C.blue}55`, borderRadius: 12, padding: '16px 18px', marginBottom: 14, background: '#f8fbff' }}>
+                  <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 19, fontWeight: 800, color: C.blueL, marginBottom: 4 }}>{c.nombre}</div>
+                  {c.requerimientos && (
+                    <div style={{ ...S.tag('#f59e0b'), marginBottom: 10, display: 'inline-block' }}>🔧 {c.requerimientos}</div>
+                  )}
+                  <div style={{ marginBottom: 10 }}>
+                    {c.coincidentes.map((r, j) => (
+                      <div key={j} style={{ display: 'inline-block', background: C.green + '22', color: C.green, border: `1px solid ${C.green}55`, borderRadius: 20, padding: '3px 12px', fontSize: 13, fontWeight: 700, marginRight: 6, marginBottom: 4 }}>
+                        ✅ {r}
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 13, color: C.muted, fontWeight: 700, marginBottom: 6 }}>Funciones:</div>
+                  {c.funciones.map((f, j) => (
+                    <div key={j} style={{ display: 'flex', gap: 8, marginBottom: 5 }}>
+                      <span style={{ color: C.blue, flexShrink: 0 }}>›</span>
+                      <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+              {busqueda.trim().length < 2 && (
+                <div style={{ textAlign: 'center', padding: '20px 0', color: C.muted, fontSize: 13 }}>
+                  Escribe al menos 2 caracteres para buscar.
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Tab: Todas las comisiones */}
+          {tab === 'comisiones' && (
+            <div>
+              {COMISIONES.map((c, i) => (
+                <details key={i} style={{ marginBottom: 10, border: `1px solid ${C.cardB}`, borderRadius: 10, overflow: 'hidden' }}>
+                  <summary style={{ padding: '13px 16px', fontWeight: 700, fontSize: 14, cursor: 'pointer', background: '#f5f8fc', color: C.blueL, listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>{c.nombre}</span>
+                    {c.requerimientos && <span style={{ ...S.tag('#f59e0b'), fontSize: 11 }}>🔧 {c.requerimientos}</span>}
+                  </summary>
+                  <div style={{ padding: '14px 16px' }}>
+                    <div style={{ marginBottom: 12 }}>
+                      <div style={{ fontSize: 12, color: C.muted, fontWeight: 700, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Responsables</div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                        {c.responsables.map((r, j) => (
+                          <span key={j} style={{ background: '#e8f0fb', color: '#1d3a6e', borderRadius: 20, padding: '3px 10px', fontSize: 12, fontWeight: 600 }}>{r}</span>
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ fontSize: 12, color: C.muted, fontWeight: 700, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Funciones</div>
+                    {c.funciones.map((f, j) => (
+                      <div key={j} style={{ display: 'flex', gap: 8, marginBottom: 5 }}>
+                        <span style={{ color: C.blue, flexShrink: 0 }}>›</span>
+                        <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+              ))}
+            </div>
+          )}
+
+          {/* Tab: Cronograma */}
+          {tab === 'cronograma' && (
+            <div>
+              <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
+                {['4 de mayo', '5 de mayo'].map(d => (
+                  <button key={d} onClick={() => setDiaActivo(d)} style={{
+                    flex: 1, padding: '10px', fontSize: 14, fontWeight: 700, cursor: 'pointer', borderRadius: 8,
+                    background: diaActivo === d ? C.blue : '#f5f8fc',
+                    color: diaActivo === d ? '#fff' : C.muted,
+                    border: `1px solid ${diaActivo === d ? C.blueL : C.cardB}`,
+                    fontFamily: "'DM Sans', sans-serif",
+                  }}>
+                    {d === '4 de mayo' ? '☀️ Lunes 4 de mayo' : '🌤️ Martes 5 de mayo'}
+                  </button>
+                ))}
+              </div>
+              {CRONOGRAMA[diaActivo].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 12, alignItems: 'flex-start' }}>
+                  <div style={{ minWidth: 110, fontSize: 12, fontWeight: 800, color: C.blue, textAlign: 'right', paddingTop: 2, flexShrink: 0 }}>{item.hora}</div>
+                  <div style={{ width: 3, background: C.cardB, borderRadius: 4, alignSelf: 'stretch', flexShrink: 0 }} />
+                  <div style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Frase motivacional */}
+        <div style={{ textAlign: 'center', fontSize: 13, color: C.muted, fontStyle: 'italic', marginTop: 10 }}>
+          "Este evento es el reflejo del trabajo, la dedicación y el amor por nuestra comunidad educativa.<br />Cada rol es fundamental para que este espectáculo sea una experiencia inolvidable."
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── LOGIN LOGÍSTICA ──────────────────────────────────────────────────────────
+function LoginLogistica({ onLogin, onBack }) {
+  const [pin, setPin] = useState('')
+  const [error, setError] = useState('')
+  const PIN_LOG = 'herzl80'
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    if (pin === PIN_LOG) { onLogin() }
+    else { setError('PIN incorrecto'); setPin('') }
+  }
+
+  return (
+    <div style={S.page}>
+      <Header extra={
+        <button onClick={onBack} style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}>
+          ← Volver
+        </button>
+      } />
+      <div style={{ ...S.container, maxWidth: 380, paddingTop: 60 }}>
+        <div style={{ ...S.card, textAlign: 'center' }}>
+          <div style={{ fontSize: 44, marginBottom: 12 }}>📋</div>
+          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 22, fontWeight: 700, marginBottom: 6 }}>Logística — Personal Colegio</div>
+          <div style={{ fontSize: 13, color: C.muted, marginBottom: 20 }}>Esta sección es solo para docentes, directivos y personal de servicio.</div>
+          <form onSubmit={handleLogin}>
+            <input
+              type="password"
+              style={{ ...S.input, textAlign: 'center', fontSize: 20, letterSpacing: 6, marginBottom: 14 }}
+              placeholder="••••••••"
+              value={pin}
+              onChange={e => setPin(e.target.value)}
+              autoFocus
+            />
+            {error && <div style={{ color: C.red, marginBottom: 10, fontSize: 13 }}>{error}</div>}
+            <button type="submit" style={{ ...S.btn(C.blue), width: '100%' }}>Ingresar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ─── PANEL DIRECTORES ─────────────────────────────────────────────────────────
 function PanelDirectores({ onLogout }) {
   const [submissions, setSubmissions] = useState([])
@@ -989,27 +1511,42 @@ export default function App() {
   const isPanel = window.location.search.includes('panel') || window.location.pathname.includes('panel')
   const [view, setView] = useState(isPanel ? 'login' : 'form')
   const [authed, setAuthed] = useState(false)
+  const [logAuthed, setLogAuthed] = useState(false)
 
-  // Botón flotante para ir al panel (discreto)
+  const extraBtns = (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+      <button
+        style={{ background: '#1d6e3a', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
+        onClick={() => setView(logAuthed ? 'logistica' : 'loginLogistica')}
+      >
+        📋 Logística
+      </button>
+      <button
+        style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
+        onClick={() => setView('login')}
+      >
+        🔐 Directores
+      </button>
+    </div>
+  )
+
   return (
     <div>
-      {view === 'form' && (
-        <>
-          <FormularioPadres extra={
-            <button
-              style={{ background: '#1d3a6e', color: '#fff', border: 'none', borderRadius: 8, padding: '9px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer', fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}
-              onClick={() => setView('login')}
-            >
-              🔐 Directores
-            </button>
-          } />
-        </>
-      )}
+      {view === 'form' && <FormularioPadres extra={extraBtns} />}
       {view === 'login' && !authed && (
         <LoginDirectores onLogin={() => { setAuthed(true); setView('panel') }} />
       )}
       {view === 'panel' && authed && (
         <PanelDirectores onLogout={() => { setAuthed(false); setView('form') }} />
+      )}
+      {view === 'loginLogistica' && (
+        <LoginLogistica
+          onLogin={() => { setLogAuthed(true); setView('logistica') }}
+          onBack={() => setView('form')}
+        />
+      )}
+      {view === 'logistica' && logAuthed && (
+        <LogisticaView onBack={() => setView('form')} />
       )}
     </div>
   )
