@@ -1149,8 +1149,12 @@ function LogisticaView({ onBack }) {
         </div>
 
         {/* Frase motivacional */}
-        <div style={{ textAlign: 'center', fontSize: 13, color: C.muted, fontStyle: 'italic', marginTop: 10 }}>
-          "Este evento es el reflejo del trabajo, la dedicación y el amor por nuestra comunidad educativa.<br />Cada rol es fundamental para que este espectáculo sea una experiencia inolvidable."
+        <div style={{ background: 'linear-gradient(135deg, #1d3a6e, #2a52a0)', borderRadius: 14, padding: '18px 20px', marginTop: 16, textAlign: 'center' }}>
+          <div style={{ fontSize: 22, marginBottom: 8 }}>✨</div>
+          <div style={{ fontSize: 14, color: '#fff', fontStyle: 'italic', lineHeight: 1.7, fontWeight: 500 }}>
+            "Este evento es el reflejo del trabajo, la dedicación y el amor por nuestra comunidad educativa.
+            <br />Cada rol es fundamental para que este espectáculo sea una experiencia inolvidable."
+          </div>
         </div>
       </div>
     </div>
