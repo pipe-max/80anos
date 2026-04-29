@@ -514,7 +514,7 @@ function FormularioPadres({ extra }) {
                 <strong>Teatro Metropolitano José Gutiérrez Gómez</strong><br />
                 <span style={{ color: C.muted }}>Calle 41 #57-30, El Centro, Medellín</span>
               </div>
-              <div style={{ borderRadius: 8, overflow: 'hidden' }}>
+              <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 10 }}>
                 <iframe
                   title="Ubicación Teatro Metropolitano"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1!2d-75.5741!3d6.2476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428e3e9b9a1e7%3A0x6e1e1e1e1e1e1e1e!2sTeatro%20Metropolitano%20Jos%C3%A9%20Guti%C3%A9rrez%20G%C3%B3mez!5e0!3m2!1ses!2sco!4v1"
@@ -524,6 +524,24 @@ function FormularioPadres({ extra }) {
                   allowFullScreen=""
                   loading="lazy"
                 />
+              </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Teatro+Metropolitano+Jos%C3%A9+Guti%C3%A9rrez+G%C3%B3mez,+Medell%C3%ADn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#fff', border: '1px solid #1d6eed44', borderRadius: 8, padding: '9px 12px', fontSize: 13, fontWeight: 700, color: '#1d6eed', textDecoration: 'none' }}
+                >
+                  🗺️ Google Maps
+                </a>
+                <a
+                  href="https://waze.com/ul?q=Teatro+Metropolitano+Medellin&navigate=yes"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: '#fff', border: '1px solid #33ccff44', borderRadius: 8, padding: '9px 12px', fontSize: 13, fontWeight: 700, color: '#00b0cc', textDecoration: 'none' }}
+                >
+                  🚗 Waze
+                </a>
               </div>
             </div>
 
