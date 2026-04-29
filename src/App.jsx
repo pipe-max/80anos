@@ -272,6 +272,7 @@ function FormularioPadres({ extra }) {
   const [isEditing, setIsEditing] = useState(false)
   const [buscadorAbierto, setBuscadorAbierto] = useState(false)
   const [generatedPin, setGeneratedPin] = useState('')
+  const [duplicado, setDuplicado] = useState(null)  // registro duplicado detectado
 
   const gradosDisponibles = nivel ? SECCIONES_POR_NIVEL(nivel) : []
   const estudiantes = grado ? ESTUDIANTES[grado] || [] : []
@@ -279,7 +280,7 @@ function FormularioPadres({ extra }) {
   const resetForm = () => {
     setNivel(''); setGrado(''); setNombre('')
     setDay4(emptyRecoge()); setDay5(emptyRecoge())
-    setEditId(null); setIsEditing(false); setSuccess(false); setError(''); setGeneratedPin('')
+    setEditId(null); setIsEditing(false); setSuccess(false); setError(''); setGeneratedPin(''); setDuplicado(null)
   }
 
   const handleSubmit = async (e) => {
@@ -305,7 +306,19 @@ function FormularioPadres({ extra }) {
         const { error: err } = await supabase.from('submissions').update(payload).eq('id', editId)
         if (err) throw err
       } else {
-        // CREAR nuevo registro — generar PIN de 6 dígitos
+        // Verificar si ya existe un registro para este estudiante
+        const { data: existing } = await supabase
+          .from('submissions')
+          .select('id, nombre, seccion, submitted_at')
+          .eq('nombre', nombre)
+          .eq('seccion', seccion)
+          .limit(1)
+        if (existing && existing.length > 0) {
+          setDuplicado(existing[0])
+          setLoading(false)
+          return
+        }
+        // CREAR nuevo registro — generar PIN de 4 dígitos
         const pin = Math.floor(1000 + Math.random() * 9000).toString()
         const newId = crypto.randomUUID()
         const { error: err } = await supabase.from('submissions').insert([{ id: newId, pin, ...payload }])
@@ -475,6 +488,45 @@ function FormularioPadres({ extra }) {
           {error && (
             <div style={{ background: C.red + '22', border: `1px solid ${C.red}55`, color: C.red, borderRadius: 8, padding: '12px 16px', marginTop: 16, fontSize: 14 }}>
               ⚠️ {error}
+            </div>
+          )}
+
+          {duplicado && (
+            <div style={{ background: '#fff8e1', border: '2px solid #f59e0b', borderRadius: 12, padding: '16px 18px', marginTop: 16 }}>
+              <div style={{ fontWeight: 700, color: '#92610a', fontSize: 15, marginBottom: 6 }}>⚠️ Ya existe un registro para este estudiante</div>
+              <div style={{ fontSize: 13, color: C.text, marginBottom: 4 }}>
+                <strong>{duplicado.nombre}</strong> ya fue registrado el {new Date(duplicado.submitted_at).toLocaleString('es-CO')}.
+              </div>
+              <div style={{ fontSize: 13, color: C.muted, marginBottom: 14 }}>
+                Si quieres modificar ese registro, usa el botón <strong>"¿Ya registraste?"</strong> e ingresa tu PIN. Si de todas formas quieres crear un registro nuevo, confirma abajo.
+              </div>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  style={S.btn(C.red)}
+                  onClick={async () => {
+                    setDuplicado(null)
+                    setLoading(true)
+                    const seccion = grado
+                    const pin = Math.floor(1000 + Math.random() * 9000).toString()
+                    const newId = crypto.randomUUID()
+                    const payload = {
+                      nombre, seccion,
+                      day4: day4.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day4.auth },
+                      day5: day5.tipo === 'padres' ? { tipo: 'padres' } : { tipo: 'autorizado', ...day5.auth },
+                    }
+                    const { error: err } = await supabase.from('submissions').insert([{ id: newId, pin, ...payload }])
+                    setLoading(false)
+                    if (err) { setError('Error al enviar: ' + err.message); return }
+                    setEditId(newId); setGeneratedPin(pin); setIsEditing(false); setSuccess(true)
+                  }}
+                >
+                  Crear de todas formas
+                </button>
+                <button type="button" style={S.btn(C.muted)} onClick={() => setDuplicado(null)}>
+                  Cancelar
+                </button>
+              </div>
             </div>
           )}
 
