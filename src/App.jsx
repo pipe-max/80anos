@@ -485,6 +485,85 @@ function FormularioPadres({ extra }) {
             <RecogeCard dia="🌤️ Martes 5 de mayo" value={day5} onChange={setDay5} />
           </div>
 
+          {/* ── Sección informativa ── */}
+          <div style={{ ...S.card, marginTop: 20, marginBottom: 0, border: `1px solid #d0dce8` }}>
+            <div style={{ ...S.sectionTitle, marginBottom: 18 }}>📌 Información importante</div>
+
+            {/* Pico y placa */}
+            <div style={{ background: '#fff8e1', border: '1px solid #f59e0b88', borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
+              <div style={{ fontWeight: 700, color: '#92610a', fontSize: 14, marginBottom: 8 }}>🚗 Pico y Placa — Medellín</div>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                <div style={{ background: '#fff', border: '1px solid #f59e0b55', borderRadius: 8, padding: '10px 14px', flex: 1, minWidth: 120, textAlign: 'center' }}>
+                  <div style={{ fontSize: 11, color: '#92610a', fontWeight: 600, marginBottom: 4 }}>☀️ LUNES 4 DE MAYO</div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#1a2a3a', letterSpacing: 2 }}>1 · 2</div>
+                  <div style={{ fontSize: 11, color: '#5a7a9a', marginTop: 2 }}>Últimos dígitos de placa</div>
+                </div>
+                <div style={{ background: '#fff', border: '1px solid #f59e0b55', borderRadius: 8, padding: '10px 14px', flex: 1, minWidth: 120, textAlign: 'center' }}>
+                  <div style={{ fontSize: 11, color: '#92610a', fontWeight: 600, marginBottom: 4 }}>🌤️ MARTES 5 DE MAYO</div>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: '#1a2a3a', letterSpacing: 2 }}>3 · 4</div>
+                  <div style={{ fontSize: 11, color: '#5a7a9a', marginTop: 2 }}>Últimos dígitos de placa</div>
+                </div>
+              </div>
+              <div style={{ fontSize: 11, color: '#92610a', marginTop: 10 }}>⏰ Restricción: 7:00–8:30 a.m. y 5:30–7:00 p.m. · Verifica en <strong>movilidadmedellin.gov.co</strong></div>
+            </div>
+
+            {/* Mapa y puntos de recogida */}
+            <div style={{ background: '#f0f7ff', border: '1px solid #1d6eed44', borderRadius: 10, padding: '14px 16px', marginBottom: 16 }}>
+              <div style={{ fontWeight: 700, color: C.blueL, fontSize: 14, marginBottom: 8 }}>📍 Ubicación y puntos de recogida</div>
+              <div style={{ fontSize: 13, color: C.text, marginBottom: 10 }}>
+                <strong>Teatro Metropolitano José Gutiérrez Gómez</strong><br />
+                <span style={{ color: C.muted }}>Calle 41 #57-30, El Centro, Medellín</span>
+              </div>
+              <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 10 }}>
+                <iframe
+                  title="Ubicación Teatro Metropolitano"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1!2d-75.5741!3d6.2476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428e3e9b9a1e7%3A0x6e1e1e1e1e1e1e1e!2sTeatro%20Metropolitano%20Jos%C3%A9%20Guti%C3%A9rrez%20G%C3%B3mez!5e0!3m2!1ses!2sco!4v1"
+                  width="100%"
+                  height="180"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                />
+              </div>
+              <div style={{ fontSize: 13, color: C.text, fontWeight: 600, marginBottom: 6 }}>🚏 Puntos de recogida:</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {[
+                  { emoji: '🟦', label: 'Preescolar', desc: 'Puerta principal — Calle 41' },
+                  { emoji: '🟩', label: 'Primaria', desc: 'Costado norte — Carrera 57' },
+                  { emoji: '🟧', label: 'Bachillerato', desc: 'Costado sur — Salida lateral' },
+                ].map(p => (
+                  <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#fff', borderRadius: 6, padding: '7px 10px', border: `1px solid ${C.cardB}` }}>
+                    <span style={{ fontSize: 16 }}>{p.emoji}</span>
+                    <div>
+                      <span style={{ fontWeight: 700, fontSize: 13 }}>{p.label}</span>
+                      <span style={{ color: C.muted, fontSize: 12 }}> — {p.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Recomendaciones de seguridad */}
+            <div style={{ background: '#f0fff8', border: '1px solid #10b98144', borderRadius: 10, padding: '14px 16px' }}>
+              <div style={{ fontWeight: 700, color: '#0a7a54', fontSize: 14, marginBottom: 10 }}>🛡️ Recomendaciones de seguridad</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[
+                  { icon: '🪪', text: 'La persona autorizada debe presentar su cédula al momento de recoger al estudiante.' },
+                  { icon: '⏰', text: 'Llegue puntual al horario de recogida asignado para evitar congestión.' },
+                  { icon: '📵', text: 'No envíe a personas no registradas en este formulario. No se entregará el estudiante sin autorización previa.' },
+                  { icon: '📞', text: 'Mantenga su celular activo durante el evento por si el colegio necesita contactarle.' },
+                  { icon: '🚗', text: 'Si llega en vehículo, respete las zonas señalizadas y las indicaciones del personal de seguridad.' },
+                  { icon: '👮', text: 'El personal del colegio verificará la identidad de quien recoge. Este proceso es por la seguridad de su hijo.' },
+                ].map((r, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: 16, flexShrink: 0 }}>{r.icon}</span>
+                    <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{r.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {error && (
             <div style={{ background: C.red + '22', border: `1px solid ${C.red}55`, color: C.red, borderRadius: 8, padding: '12px 16px', marginTop: 16, fontSize: 14 }}>
               ⚠️ {error}
