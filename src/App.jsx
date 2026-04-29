@@ -134,7 +134,7 @@ function RecogeCard({ dia, value, onChange }) {
               <Campo label="Celular" value={value.auth.celular} onChange={v => onChange({ ...value, auth: { ...value.auth, celular: v } })} placeholder="Ej. 3001234567" type="tel" required />
             </div>
             <div style={{ flex: 1, minWidth: 140 }}>
-              <Campo label="Placa del vehículo (opcional)" value={value.auth.placa} onChange={v => onChange({ ...value, auth: { ...value.auth, placa: v } })} placeholder="Ej. ABC123" />
+              <Campo label="Placa del vehículo" value={value.auth.placa} onChange={v => onChange({ ...value, auth: { ...value.auth, placa: v } })} placeholder="Ej. ABC123" required />
             </div>
           </div>
         </div>
