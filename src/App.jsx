@@ -692,7 +692,7 @@ const COMISIONES = [
       'Garantizar el orden y cuidado de los elementos.',
     ],
     responsables: ['Garcia Yorman Augusto', 'Betancur Alzate Andres Felipe', 'Velez Escudero Victor Manuel', 'Velez Escudero William Andres', 'TEJADA BOLIVAR LUIS FELIPE'],
-    requerimientos: 'WALKIE TALKIE 12',
+    requerimientos: 'Walkie Talkie 12',
   },
   {
     nombre: 'Coordinación y Logística',
@@ -758,7 +758,7 @@ const COMISIONES = [
       'Tomar decisiones en tiempo real ante imprevistos.',
     ],
     responsables: ['Correa Jiménez Juan Camilo', 'Andres Cardona'],
-    requerimientos: 'WALKIE TALKIE',
+    requerimientos: 'Walkie Talkie',
   },
   {
     nombre: 'Brigada y Protocolos de Bioseguridad',
