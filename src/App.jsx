@@ -259,7 +259,7 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
 }
 
 // ─── FORMULARIO PADRES ────────────────────────────────────────────────────────
-function FormularioPadres() {
+function FormularioPadres({ extra }) {
   const [nivel, setNivel] = useState('')
   const [grado, setGrado] = useState('')
   const [nombre, setNombre] = useState('')
@@ -344,7 +344,7 @@ function FormularioPadres() {
 
     return (
       <div style={S.page}>
-        <Header />
+        <Header extra={extra} />
         <div style={{ ...S.container, paddingTop: 40 }}>
           <div style={{ textAlign: 'center', marginBottom: 28 }}>
             <div style={{ fontSize: 52, marginBottom: 12 }}>✅</div>
@@ -390,9 +390,9 @@ function FormularioPadres() {
 
   return (
     <div style={S.page}>
-      <Header />
+      <Header extra={extra} />
       <div style={S.container}>
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ marginBottom: 24, textAlign: 'center' }}>
           {isEditing && (
             <div style={{ background: C.yellow + '22', border: `1px solid ${C.yellow}88`, borderRadius: 10, padding: '12px 16px', marginBottom: 16, fontSize: 14, color: C.yellow, fontWeight: 600 }}>
               ✏️ Modo edición — Corrige los datos y vuelve a enviar el formulario.
@@ -783,13 +783,10 @@ function DiaPanel({ label, recoge, auth, checked, obs, onObs, onToggle, onSaveOb
 // ─── Header ───────────────────────────────────────────────────────────────────
 function Header({ extra }) {
   return (
-    <div style={S.header}>
-      <img src="/logo80.png" alt="Logo 80 años" style={{ height: 90, width: 'auto', objectFit: 'contain' }} />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={S.logoText}>CTH · 80 Años Creando Memorias</div>
-        <div style={S.subtitle}>Teatro Metropolitano · 4 y 5 de mayo</div>
-      </div>
-      {extra}
+    <div style={{ ...S.header, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px' }}>
+      <div style={{ width: 80 }} />
+      <img src="/logo80.png" alt="Logo 80 años" style={{ height: 120, width: 'auto', objectFit: 'contain' }} />
+      <div style={{ width: 80, display: 'flex', justifyContent: 'flex-end' }}>{extra}</div>
     </div>
   )
 }
@@ -843,27 +840,9 @@ function LoginDirectores({ onLogin }) {
                 autoFocus
               />
               {error && <div style={{ color: C.red, marginBottom: 10, fontSize: 13 }}>{error}</div>}
-              <button type="submit" style={{ ...S.btn(C.blue), width: '100%', marginBottom: 10 }}>Entrar</button>
-              <button type="button" style={{ ...S.btnSm('#1a2a3a'), marginTop: 4 }} onClick={() => setShowChangePin(true)}>
-                🔑 Cambiar PIN
-              </button>
+              <button type="submit" style={{ ...S.btn(C.blue), width: '100%' }}>Entrar</button>
             </form>
-          ) : (
-            <div>
-              <div style={{ fontSize: 13, color: C.muted, marginBottom: 12 }}>Ingresa el PIN actual para confirmar el cambio</div>
-              <input type="password" style={{ ...S.input, marginBottom: 10 }} placeholder="PIN actual" value={pin} onChange={e => setPin(e.target.value)} />
-              <input type="password" style={{ ...S.input, marginBottom: 10 }} placeholder="Nuevo PIN" value={newPin} onChange={e => setNewPin(e.target.value)} />
-              <input type="password" style={{ ...S.input, marginBottom: 14 }} placeholder="Confirmar nuevo PIN" value={confirmPin} onChange={e => setConfirmPin(e.target.value)} />
-              {error && <div style={{ color: C.red, marginBottom: 10, fontSize: 13 }}>{error}</div>}
-              <div style={{ display: 'flex', gap: 8 }}>
-                <button style={{ ...S.btn(C.green), flex: 1 }} onClick={() => {
-                  if (pin !== storedPin()) return setError('PIN actual incorrecto')
-                  handleChangePin()
-                }}>Guardar</button>
-                <button style={{ ...S.btn('#334'), flex: 1 }} onClick={() => { setShowChangePin(false); setError('') }}>Cancelar</button>
-              </div>
-            </div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
@@ -882,15 +861,14 @@ export default function App() {
     <div>
       {view === 'form' && (
         <>
-          <FormularioPadres />
-          <div style={{ position: 'fixed', bottom: 18, right: 18 }}>
+          <FormularioPadres extra={
             <button
-              style={{ ...S.btnSm('#0c1728'), border: `1px solid ${C.cardB}`, opacity: 0.6, fontSize: 11 }}
+              style={{ ...S.btnSm('#0c1728'), border: `1px solid ${C.cardB}`, opacity: 0.7, fontSize: 11 }}
               onClick={() => setView('login')}
             >
               Directores
             </button>
-          </div>
+          } />
         </>
       )}
       {view === 'login' && !authed && (
