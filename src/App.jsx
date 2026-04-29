@@ -876,15 +876,15 @@ const CRONOGRAMA = {
     { hora: '9:00 am', desc: 'Recogida del personal del Colegio — Envigado' },
     { hora: '9:15 am', desc: 'Recogida del personal del Colegio — Sandiego' },
     { hora: '10:00 am – 12:00 m', desc: 'Llegada Elenco: Recepción de estudiantes participantes del elenco teatro, música (solistas) y todo el personal del colegio.' },
-    { hora: '12:00 m – 12:30 pm', desc: 'Almuerzo: Habrá servicio del restaurante CRES para llevar los almuerzos al teatro.' },
     { hora: '11:50 am', desc: 'Inicia recorrido de rutas para primaria y bachillerato.' },
-    { hora: '1:00 pm', desc: 'Llegada al teatro: Llegada de los estudiantes de primaria y bachillerato, rutas escolares y carros particulares. Todo el equipo logístico estará presente.' },
+    { hora: '12:00 m – 12:30 pm', desc: 'Almuerzo: Habrá servicio del restaurante CRES para llevar los almuerzos al teatro.' },
     { hora: '1:00 pm', desc: 'Inicio recorrido de rutas para preescolar.' },
+    { hora: '1:00 pm', desc: 'Llegada al teatro: Llegada de los estudiantes de primaria y bachillerato, rutas escolares y carros particulares. Todo el equipo logístico estará presente.' },
     { hora: '2:30 pm', desc: 'Llegada al teatro: Llegada de niños de preescolar, rutas escolares y carros particulares.' },
-    { hora: '4:30 – 5:00 pm', desc: 'Refrigerio primaria-bachillerato y todo el personal del colegio.' },
-    { hora: '5:00 – 5:30 pm', desc: 'Refrigerio Preescolar — estarán ubicados en los camerinos.' },
-    { hora: '5:00 pm', desc: '🎵 Calentamiento: Inician el calentamiento de voces e instrumentos.' },
-    { hora: '5:30 pm', desc: '🚪 Apertura de puertas — En ese momento todas las personas en sus comisiones deben estar en los espacios designados.' },
+    { tipo: 'nota', desc: 'Todo el equipo logístico estará presente para el acompañamiento y orientación. Se brindarán indicaciones generales y ubicación de los estudiantes en los espacios asignados en los horarios de 1:00 p.m. y 2:30 p.m.' },
+    { hora: '4:30 pm', desc: 'Refrigerio para todo el personal y estudiantes. Habrá unos puntos específicos con señalización para hacer entrega de los refrigerios.' },
+    { hora: '5:00 pm', desc: '🎵 Calentamiento: Inicia el calentamiento de voces e instrumentos.' },
+    { hora: '5:30 pm', desc: '🚪 Apertura de puertas: En ese momento, todas las personas en sus comisiones deben estar en los espacios designados.' },
     { hora: '6:00 pm', desc: '🎭 Inicio del espectáculo. Todas las comisiones deben estar pendientes por si se presenta algún imprevisto.' },
     { hora: '7:30 pm', desc: '🎂 Finalización del espectáculo: Cantar el cumpleaños del colegio. Entrega de estudiantes organizada en la plazoleta del teatro.' },
   ],
@@ -1122,11 +1122,21 @@ function LogisticaView({ onBack }) {
                 ))}
               </div>
               {CRONOGRAMA[diaActivo].map((item, i) => (
-                <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 12, alignItems: 'flex-start' }}>
-                  <div style={{ minWidth: 110, fontSize: 12, fontWeight: 800, color: C.blue, textAlign: 'right', paddingTop: 2, flexShrink: 0 }}>{item.hora}</div>
-                  <div style={{ width: 3, background: C.cardB, borderRadius: 4, alignSelf: 'stretch', flexShrink: 0 }} />
-                  <div style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{item.desc}</div>
-                </div>
+                item.tipo === 'nota'
+                  ? (
+                    <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 14, alignItems: 'flex-start' }}>
+                      <div style={{ minWidth: 110, flexShrink: 0 }} />
+                      <div style={{ flex: 1, background: '#fffbea', border: '1px solid #f59e0b88', borderRadius: 8, padding: '10px 14px', fontSize: 13, color: '#7c5a00', lineHeight: 1.5 }}>
+                        <strong>📌 Nota:</strong> {item.desc}
+                      </div>
+                    </div>
+                  ) : (
+                    <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 12, alignItems: 'flex-start' }}>
+                      <div style={{ minWidth: 110, fontSize: 12, fontWeight: 800, color: C.blue, textAlign: 'right', paddingTop: 2, flexShrink: 0 }}>{item.hora}</div>
+                      <div style={{ width: 3, background: C.cardB, borderRadius: 4, alignSelf: 'stretch', flexShrink: 0 }} />
+                      <div style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{item.desc}</div>
+                    </div>
+                  )
               ))}
             </div>
           )}
