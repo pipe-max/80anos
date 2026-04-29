@@ -972,7 +972,7 @@ function LogisticaView({ onBack }) {
         {/* Cabecera */}
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 28, fontWeight: 800, color: '#1d3a6e', letterSpacing: 1 }}>
-            📋 Logística — Espectáculo 80 Años
+            📋 Logística
           </div>
           <div style={{ fontSize: 13, color: C.muted, marginTop: 4 }}>Teatro Metropolitano · 4 y 5 de mayo de 2026</div>
         </div>
