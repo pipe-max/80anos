@@ -944,18 +944,20 @@ function LogisticaView({ onBack }) {
       }))
     : []
 
-  const TabBtn = ({ id, label }) => (
+  const TabBtn = ({ id, icon, label }) => (
     <button
       onClick={() => setTab(id)}
       style={{
-        flex: 1, padding: '10px 8px', fontSize: 13, fontWeight: 700, cursor: 'pointer',
+        flex: 1, padding: '8px 4px', cursor: 'pointer',
         background: tab === id ? C.blue : 'transparent',
         color: tab === id ? '#fff' : C.muted,
         border: 'none', borderBottom: tab === id ? `3px solid ${C.blueL}` : '3px solid transparent',
         fontFamily: "'DM Sans', sans-serif", transition: 'all 0.15s',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
       }}
     >
-      {label}
+      <span style={{ fontSize: 18, lineHeight: 1 }}>{icon}</span>
+      <span style={{ fontSize: 11, fontWeight: 700, lineHeight: 1.2 }}>{label}</span>
     </button>
   )
 
@@ -1010,10 +1012,10 @@ function LogisticaView({ onBack }) {
 
         {/* Tabs */}
         <div style={{ display: 'flex', background: '#fff', borderRadius: '12px 12px 0 0', border: `1px solid ${C.cardB}`, borderBottom: 'none', overflow: 'hidden', marginBottom: 0 }}>
-          <TabBtn id="buscar" label="🔍 Mi comisión" />
-          <TabBtn id="comisiones" label="📋 Todas las comisiones" />
-          <TabBtn id="cronograma" label="🕐 Cronograma" />
-          <TabBtn id="mapa" label="🗺️ Mapa" />
+          <TabBtn id="buscar" icon="🔍" label="Mi comisión" />
+          <TabBtn id="comisiones" icon="📋" label="Comisiones" />
+          <TabBtn id="cronograma" icon="🕐" label="Cronograma" />
+          <TabBtn id="mapa" icon="🗺️" label="Mapa" />
         </div>
         <div style={{ background: '#fff', borderRadius: '0 0 12px 12px', border: `1px solid ${C.cardB}`, padding: '20px 18px', marginBottom: 20 }}>
 
