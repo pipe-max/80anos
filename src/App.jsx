@@ -990,36 +990,19 @@ function LogisticaView({ onBack }) {
         </div>
 
         {/* Fases de la operación logística */}
-        <div style={{ ...S.card, marginBottom: 20, background: '#fafbff', border: `1px solid ${C.cardB}` }}>
-          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 20, fontWeight: 800, color: '#1d3a6e', marginBottom: 20, letterSpacing: 0.5, borderLeft: '4px solid #b8972e', paddingLeft: 12 }}>
+        <div style={{ ...S.card, marginBottom: 20, background: '#fafbff', border: `1px solid ${C.cardB}`, padding: '12px 16px' }}>
+          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 16, fontWeight: 800, color: '#1d3a6e', marginBottom: 10, letterSpacing: 0.5, borderLeft: '3px solid #b8972e', paddingLeft: 10 }}>
             FASES DE LA OPERACIÓN LOGÍSTICA
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'flex', gap: 10 }}>
             {[
-              {
-                emoji: '✅',
-                label: 'Antes',
-                desc: 'Verificación de espacios y materiales. Ensayo general y preparación de comisiones.',
-                color: '#10b981',
-              },
-              {
-                emoji: '▶️',
-                label: 'Durante',
-                desc: 'Sincronía total con el espectáculo. Información inmediata a coordinaciones ante cualquier novedad.',
-                color: '#1d6eed',
-              },
-              {
-                emoji: '📦',
-                label: 'Después',
-                desc: 'Salida organizada. Entrega ordenada de estudiantes y colaboración en desmontaje.',
-                color: '#b8972e',
-              },
+              { label: 'Antes', desc: 'Verificación de espacios y materiales. Ensayo general y preparación de comisiones.', color: '#10b981' },
+              { label: 'Durante', desc: 'Sincronía total con el espectáculo. Información inmediata a coordinaciones ante cualquier novedad.', color: '#1d6eed' },
+              { label: 'Después', desc: 'Salida organizada. Entrega ordenada de estudiantes y colaboración en desmontaje.', color: '#b8972e' },
             ].map((fase) => (
-              <div key={fase.label} style={{ background: '#fff', border: `1px solid ${C.cardB}`, borderRadius: 12, padding: '20px 16px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-                <div style={{ fontSize: 36 }}>{fase.emoji}</div>
-                <div style={{ fontWeight: 800, fontSize: 15, fontStyle: 'italic', color: '#1d3a6e' }}>{fase.label}</div>
-                <div style={{ fontSize: 13, color: C.text, lineHeight: 1.6 }}>{fase.desc}</div>
-                <div style={{ width: '60%', height: 3, background: fase.color, borderRadius: 4, marginTop: 6 }} />
+              <div key={fase.label} style={{ flex: 1, background: '#fff', border: `1px solid ${C.cardB}`, borderRadius: 8, padding: '8px 10px', borderTop: `3px solid ${fase.color}` }}>
+                <div style={{ fontWeight: 800, fontSize: 13, color: '#1d3a6e', marginBottom: 4 }}>{fase.label}</div>
+                <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.5 }}>{fase.desc}</div>
               </div>
             ))}
           </div>
