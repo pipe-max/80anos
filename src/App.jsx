@@ -173,7 +173,7 @@ function BuscarRegistro({ onEditar, onOpenChange }) {
     // Excluir el campo pin para no exponerlo en el navegador
     const { data, error } = await supabase
       .from('submissions')
-      .select('id, nombre, seccion, autorizados, submitted_at')
+      .select('id, nombre, seccion, day4, day5, submitted_at')
       .order('submitted_at', { ascending: false })
     setBuscando(false)
     if (error) { setSinResultados(true); return }
