@@ -628,33 +628,12 @@ function FormularioPadres({ extra }) {
               </div>
             </div>
 
-            {/* Recomendaciones de seguridad */}
+            {/* Información importante — Salida de estudiantes */}
             <div style={{ background: '#f0fff8', border: '1px solid #10b98144', borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ fontWeight: 700, color: '#0a7a54', fontSize: 14, marginBottom: 10 }}>🛡️ Recomendaciones de seguridad</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {[
-                  { icon: '⏰', text: 'Llegue puntual al horario de recogida asignado para evitar congestión.' },
-                  { icon: '📵', text: 'No envíe a personas no registradas en este formulario. No se entregará el estudiante sin autorización previa.' },
-                  { icon: '📞', text: 'Mantenga su celular activo antes y después (no durante el evento) por si el colegio necesita contactarle.' },
-                  { icon: '🚗', text: 'Si llega en vehículo, respete las zonas señalizadas y las indicaciones del personal de seguridad.' },
-                  { icon: '👮', text: 'El personal del colegio verificará la identidad de quien recoge. Este proceso es por la seguridad de su hijo.' },
-                ].map((r, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: 16, flexShrink: 0 }}>{r.icon}</span>
-                    <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{r.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Logística — Salida de estudiantes */}
-            <div style={{ background: '#fffbeb', border: '1px solid #f59e0b44', borderRadius: 10, padding: '14px 16px' }}>
-              <div style={{ fontWeight: 700, color: '#92610a', fontSize: 14, marginBottom: 12 }}>🛡️ Información importante — Salida de estudiantes</div>
-
-              <div style={{ fontSize: 13, color: C.text, lineHeight: 1.7, marginBottom: 12 }}>
+              <div style={{ fontWeight: 700, color: '#0a7a54', fontSize: 14, marginBottom: 8 }}>📋 Información importante — Salida de estudiantes</div>
+              <div style={{ fontSize: 13, color: '#2d6a4f', lineHeight: 1.7, marginBottom: 12 }}>
                 Una vez finalice el espectáculo (entre 7:30 y 8:00 p.m., aproximadamente) los estudiantes regresarán a sus casas con sus familias de la siguiente manera:
               </div>
-
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {[
                   {
@@ -668,12 +647,12 @@ function FormularioPadres({ extra }) {
                     text: 'Al finalizar el espectáculo deberán salir del teatro y seguir las indicaciones del personal logístico, quienes los guiarán hacia la plazoleta central. Allí, en carpas dispuestas para este fin, se realizará la entrega. Este desplazamiento debe hacerse caminando (no en vehículo).'
                   },
                   {
-                    icon: '�',
+                    icon: '🚗',
                     title: 'Familias que van solo a recoger (sin asistir al espectáculo)',
                     text: 'Se habilitará el ingreso de vehículos entre las 8:20 y 8:40 p.m. aproximadamente. Una vez ingresen, deberán estacionar y dirigirse al punto de entrega: K3 a 2° ingresan al teatro; 3° a 12° se dirigen a las carpas de la plazoleta central.'
                   },
                   {
-                    icon: '👨‍👩‍👧‍👦',
+                    icon: '👨\u200d👩\u200d👧\u200d👦',
                     title: 'Hijos en diferentes secciones',
                     text: 'Les solicitamos recoger primero a los niños de Kinder 3 a 2° y, posteriormente, ir por los estudiantes de 3° a 12°.'
                   },
@@ -683,16 +662,17 @@ function FormularioPadres({ extra }) {
                     text: 'Agradecemos su paciencia y comprensión. Los tiempos indicados son aproximados y pueden presentar variaciones, ya que este proceso logístico requiere el tiempo necesario para garantizar la seguridad y el bienestar de todos los estudiantes.'
                   },
                 ].map((r, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: '#fff', border: '1px solid #fde68a', borderRadius: 8, padding: '10px 12px' }}>
+                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: '#fff', border: '1px solid #d1fae5', borderRadius: 8, padding: '10px 12px' }}>
                     <span style={{ fontSize: 18, flexShrink: 0, marginTop: 1 }}>{r.icon}</span>
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: 13, color: '#92610a', marginBottom: 2 }}>{r.title}</div>
+                      <div style={{ fontWeight: 700, fontSize: 13, color: '#0a7a54', marginBottom: 2 }}>{r.title}</div>
                       <span style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{r.text}</span>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+          </div            </div>
           </div>
 
         </form>}
