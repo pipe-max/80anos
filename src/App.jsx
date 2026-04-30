@@ -1153,6 +1153,7 @@ function LogisticaView({ onBack }) {
           <TabBtn id="buscar" icon="🔍" label="Mi comisión" />
           <TabBtn id="comisiones" icon="📋" label="Comisiones" />
           <TabBtn id="guion" icon="🎭" label="Guión" />
+          <TabBtn id="enescena" icon="🌟" label="En escena" />
           <TabBtn id="cronograma" icon="🕐" label="Cronograma" />
           <TabBtn id="mapa" icon="🗺️" label="Mapa" />
         </div>
@@ -1206,6 +1207,120 @@ function LogisticaView({ onBack }) {
                   Escribe al menos 2 caracteres para buscar.
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Tab: En escena */}
+          {tab === 'enescena' && (
+            <div>
+              <div style={{ background: '#f0f7ff', border: `1px solid ${C.blue}33`, borderRadius: 10, padding: '12px 14px', marginBottom: 16, fontSize: 13, color: '#1d3a6e' }}>
+                <strong>🌟 Participantes todo el tiempo en escenario</strong> — Estudiantes que permanecen en escena durante el espectáculo, organizados por grado y rol.
+              </div>
+              {[
+                {
+                  grado: '2°',
+                  coro: ['Santiago David Golenberg Aguirre','Mariana Arcila','Antonia Mejía Echeverry','Mía Echeverry Ordóñez','Miguel Ángel Patarrollo Correa','Sofía García Lopera','Martina Peña Vélez','Salomón Toledo Gómez','Emma Peñagos Vélez','Mariana Lloreda Ayerbe','Valeriano Quiroz Pinedo','Mariana Arcila Marrugo','Salomón Roldán Salas','Martina Villa Herrera','Jacobo Soto Muriel','Sarah Shoam Cano','Abril de la Cruz Uribe','Gastón Arango','Julieta Posada Piedrahita','Lucia Giraldo Gómez','Gregorio Quintero García','Joaquín Toro Solorzano','Pedro Gómez Botero','Salomón Salazar'],
+                  vientos: [],
+                  cuerdas: [],
+                },
+                {
+                  grado: '3°',
+                  coro: ['Filipa Celis','Olivia García','Emma Correa','Laura Korenfield','Amalia Gómez','Rebeca Mejía','Vicente Mendoza','Celeste Molina','Emma Ortiz','Magdalena Velásquez','Luna Toro','Elisa Ortiz','Sabina Bojanini','Victoria Quintero','Marcelo Escobar','Celeste Restrepo','Julieta Llano','Emma Vélez','Matías Villegas','Guadalupe Calle','Amalia Cano','Clemente Castrillón','David Cásallas','Mayan Milchgrub','Pedro Gómez','Tomás Ríos','Adelaida Hoyos','Thiago Saldarriaga','Pablo Jaramillo','Martín Ujueta'],
+                  vientos: [],
+                  cuerdas: ['Laura Korenfel Farberoff'],
+                },
+                {
+                  grado: '4°',
+                  coro: ['Gabriela Peláez','Juan Martín Betancourt','Pedro Ángel','Martina Cifuentes','Martina Barreto','Mala Nemas','Mariana Botero','Tomás Ríos','Joel Miranda','Lourdes Sierra','Gabriela Peláez','Martina Velasco','Lucía Pinzón','Máximo Trujillo'],
+                  vientos: [],
+                  cuerdas: ['Joaquín Díez Prada','Salomón Ríos','Lucía Pinzón'],
+                },
+                {
+                  grado: '5°',
+                  coro: ['Celeste Arcila Herrera','Helena Cardona García','Gema García Vélez','Alicia Henao Correa','Amalia Martínez Restrepo','Monserrat Molano Sierra','Martín Villegas Ceballos','Salomé Rojas González','Amalia Vagner Peñagos','Miranda Valencia Osorio','Antonio Begue Valderrama','Helena Cifuentes Arroyave'],
+                  vientos: [],
+                  cuerdas: ['Min Ky Shin','Juan Simón García','Julieta Ángel Pérez','Laura Korenfel Farberoff','Joaquín Díez Prada','Salomón Ríos','Lucía Pinzón','Min Ky Shin','Juan Simón García','Julieta Ángel Pérez','Vicente Saldarriaga','Agustín Vélez Vélez'],
+                },
+                {
+                  grado: '6°',
+                  coro: ['Martín Cano','Matías Llano','Vicente Vélez','Samuel Rodríguez','Matías Pineda','Julieta Peñate','Alicia Escobar','Valentina Arango','Elena Gómez','Simona Pérez','Emma Álzate','Paloma Milano','Alana Ramírez'],
+                  vientos: ['Betancur Granda, Cristóbal','Jaramillo David, Joaquín','Vélez Rendón, Vicente','Ramírez Herrera, Isaac','Cano Ballesteros, Jacobo','Saray Uribe, Joel','Mejía Restrepo, Maximiliano','Álvarez Aristizabal, Emilio','López Aldana, Lucas','González García, Matías','Saldarriaga Hinestroza, Valentín','Aristizabal Vasquez, Simón','Vasquez Peña, Benjamín','Quintero Londoño, Juan Sebastián','Herrera Duque, Israel','Milchgrub, Raní Menachem','Martina Vélez'],
+                  cuerdas: [],
+                },
+                {
+                  grado: '7°',
+                  coro: ['Noah Bluman','Amelia Montoya','Florencia Fernández','Maxi Cuervo','Miranda Montoya','Martina Giménez','Rafael Mejía','Martina Jaramillo','Martín Mejía','Tomás Restrepo Osorio','Manolo Valencia'],
+                  vientos: ['Vasquez Zawadzky, Matías','Ceballos Álzate, Joaquín','Vega Álzate, Jerónimo','Shin, Aaron Myung Ki','Munera Carvajal, Emiliano','De la Espriella Zuluaga, Mateo','Zapata Fleisman, Miguel','Beltrán Galindo, Miguel','Jaramillo Sánchez, Miguel','Ordóñez Montoya, Miguel','Toro Ramírez Jerónimo','Wancier, Isaac','Muñoz Dávalos Maximo','Trujillo Ochoa, Cristóbal','Colorado Ealo, Lucia','Giraldo Gómez, Emilia','Gaviria Cardona, Miguel','Zuluaga Quintero, Matías'],
+                  cuerdas: ['Builes Villegas, Valentina','Ortiz Hurtado, Valeria','Evangelista Solorzano, Amelia','Díaz Ossa, Alejandro','Posada Aguirre, Jacobo','Cappeletti Ospina, Mia','Apontes Ríos, Antonia','Roldán Jaramillo, Pedro José','Vagner Peñagos, Alicia','Valencia Londoño, Martina','Quintero García, Lorenzo','Paulo Botero','Miguel Sánchez','Mas Barbier, Sofía','Duque Espinosa, Salomón','Ramírez López, María Gabriela','Vélez Uribe, Emiliana'],
+                },
+                {
+                  grado: '8°',
+                  coro: ['María Villegas','Cristóbal Pineda','Matías Peñate','Simón Vélez','Lila Restrepo','María Ángel','Luciana Bravo','Antonia Calle','Alicia Marín','Valeria Piza','Ana Sofía Toro','Camila Valencia','Susana Valencia','Amelia Vélez','Antonia Gutiérrez','Violeta Montoya'],
+                  vientos: ['García Zivic, Leandro Maximiliano','Correa Aguilar, Martín','Jaramillo Naranjo, Nicolás','Correa Aguilar, Jerónimo','Pérez Gómez, Miguel','Shin, Alexander Myung Soo','Lezer, Eden Ari','Gómez Ceballos, Emiliano','Milchgrub, Ombri'],
+                  cuerdas: ['Arroyave Ospina, Jacobo','Pinzón Gil, Matías','Vasquez Salazar, Cristóbal','Acero Puerta, Jerónimo','Betancur Ossa, Gabriel','López Villegas, Matilda','Tobón Gaviria, Alejandro','Juan Diego Villa Henao','Belén Palacio Mejía','Sabina Helena Pérez','Martín Rojas','Miranda Velásquez'],
+                },
+                {
+                  grado: '9°',
+                  coro: ['Martín Restrepo Ocampo','Emiliano Calderón','María del Mar Agudelo','Manuela Rodríguez','Amalia Ruiz'],
+                  vientos: ['Molina Echeverri, Pedro Juan','Giraldo Gómez, Gregorio','Zapata Ángel, Vicente','Calderón Arango, Isaac','Ríos Peláez, Matías','Begue Valderrama, Pedro','Vélez Rendón, Salvador','Restrepo Marulanda, Martín','Saray Uribe, Jacobo','Zuluaga Pórteles, Emiliano','Pardo González, Matías','Camila López','Lalinde Macías, Federico','Ramírez López, Federico','Miranda Vergara, Isaac'],
+                  cuerdas: ['Gutiérrez Mesa, Cristóbal','Jaramillo Brunstein, Lucas Ilán','Jaramillo Soto, Rosario','Ángel Pérez, Nicolás','Arias López, Cristóbal','Cristóbal Herrera','Jacob Manuel Rojas','María Emilia Mejía','Estrada Ochoa, Lourdes','Saade Posada, Salomé','Aristizabal Moreno, Emilio','Tirado Amaya, José Manuel'],
+                },
+                {
+                  grado: '10°',
+                  coro: ['María Ñpaz Betancourt Patiño','Luciana Botero Pérez','Elena Builes Vesga','María de los Santos Herrera Duque','Martín Jones Osrio','Elías Melo Betancourt','María Belén Naranjo Munera','Sara Peláez Henao','María José Pérez Gómez','Leticia Pulgarín Ramírez','Guadalupe Rendón Jaramillo','Juan Pedro Restrepo Osorio'],
+                  vientos: ['Guarnizo García, Isabela','Ossa Sierra, Juan José'],
+                  cuerdas: ['Restrepo Marulanda, Sara','Hanah Olmos'],
+                },
+                {
+                  grado: '11°',
+                  coro: ['Jerónimo Gutiérrez','Jerónimo Mejía','Cristóbal Arango','Juliana Berrío','Juanita Bocanegra','Sigal Legher','Miranda Muñoz','Amelia Restrepo','Juliana Rico','Belén Toro','Susana Valencia','Luciana Vélez','Amalia Villegas','Juan Antonio García'],
+                  vientos: ['Mc Pherson Franco, Thomas','Sánchez González, Alejandro','Tamayo Sánchez, Cristóbal','Castañeda Jaramillo, Jacobo','Vasquez Escobar, Ricardo'],
+                  cuerdas: ['Jaramillo Arcila, Sofía','Boorla Gómez, Daniel','Palacio Mejía, Luciano','Paucar Sierra, Adelaida','Ramírez Echeverri, Isabella','Roldán Orosco, Alejandro','Jaramillo Brunstein, Tomás Isaac','Molina Echeverri, Nicolás','Restrepo Ocampo, Irene'],
+                },
+                {
+                  grado: '12°',
+                  coro: ['María Paz Aristizabal Muñoz','Salomé Cueter Jaramillo','María Antonia Echeverry Llano','Mía Garat Villegas','Andrés Gaviria González','Carolina Jaramillo Montes','Sofía Lalinde Macías','Sara Elena Prasquier Maza','Paloma Ramírez Avilez','Isabel Lara Aristizabal'],
+                  vientos: ['Arismendi Monsalve, Matías','Giraldo Ramírez, Matías','Arango Raigoza, Camilo','Echeverry Maximiliano'],
+                  cuerdas: ['Mejía Tirado, Elena','Toledo Giraldo, Paulina','Diego Yan Shen','Leona Lozanova','Matías Delgado','Lorenzo Restrepo','Diego Yan Shen'],
+                },
+              ].map((g, gi) => (
+                <details key={gi} style={{ marginBottom: 10, border: `1px solid ${C.cardB}`, borderRadius: 10, overflow: 'hidden' }} open={gi === 0}>
+                  <summary style={{ padding: '12px 16px', cursor: 'pointer', background: '#f5f8fc', listStyle: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ background: '#1d3a6e', color: '#fff', fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 15, borderRadius: 8, padding: '2px 12px', minWidth: 38, textAlign: 'center' }}>{g.grado}</span>
+                    <span style={{ fontWeight: 700, fontSize: 13, color: C.blueL }}>
+                      {g.coro.length > 0 && `🎵 ${g.coro.length} coro`}
+                      {g.vientos.length > 0 && `  🎺 ${g.vientos.length} vientos`}
+                      {g.cuerdas.length > 0 && `  🎻 ${g.cuerdas.length} cuerdas`}
+                    </span>
+                  </summary>
+                  <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+                    {g.coro.length > 0 && (
+                      <div>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: '#1d6eed', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>🎵 Coro</div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                          {g.coro.map((n, i) => <span key={i} style={{ background: '#e8f0fb', color: '#1d3a6e', borderRadius: 20, padding: '3px 10px', fontSize: 12, fontWeight: 500 }}>{n}</span>)}
+                        </div>
+                      </div>
+                    )}
+                    {g.vientos.length > 0 && (
+                      <div>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: '#0891b2', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>🎺 Vientos</div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                          {g.vientos.map((n, i) => <span key={i} style={{ background: '#e0f2fe', color: '#075985', borderRadius: 20, padding: '3px 10px', fontSize: 12, fontWeight: 500 }}>{n}</span>)}
+                        </div>
+                      </div>
+                    )}
+                    {g.cuerdas.length > 0 && (
+                      <div>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 6 }}>🎻 Cuerdas</div>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                          {g.cuerdas.map((n, i) => <span key={i} style={{ background: '#d1fae5', color: '#065f46', borderRadius: 20, padding: '3px 10px', fontSize: 12, fontWeight: 500 }}>{n}</span>)}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              ))}
             </div>
           )}
 
