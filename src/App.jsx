@@ -1152,6 +1152,7 @@ function LogisticaView({ onBack }) {
         <div style={{ display: 'flex', background: '#fff', borderRadius: '12px 12px 0 0', border: `1px solid ${C.cardB}`, borderBottom: 'none', overflow: 'hidden', marginBottom: 0 }}>
           <TabBtn id="buscar" icon="🔍" label="Mi comisión" />
           <TabBtn id="comisiones" icon="📋" label="Comisiones" />
+          <TabBtn id="guion" icon="🎭" label="Guión" />
           <TabBtn id="cronograma" icon="🕐" label="Cronograma" />
           <TabBtn id="mapa" icon="🗺️" label="Mapa" />
         </div>
@@ -1205,6 +1206,254 @@ function LogisticaView({ onBack }) {
                   Escribe al menos 2 caracteres para buscar.
                 </div>
               )}
+            </div>
+          )}
+
+          {/* Tab: Guión */}
+          {tab === 'guion' && (
+            <div>
+              <div style={{ background: '#f0f7ff', border: `1px solid ${C.blue}33`, borderRadius: 10, padding: '12px 14px', marginBottom: 16, fontSize: 13, color: '#1d3a6e' }}>
+                <strong>🎭 Orden del espectáculo</strong> — Revisa qué grupo entra y sale en cada escena para estar preparado en tu puesto.
+              </div>
+              {[
+                {
+                  seccion: 'OVERTURA',
+                  color: '#7c3aed',
+                  items: [
+                    {
+                      numero: 'Overtura',
+                      obra: 'Inicio de los sueños',
+                      coro: 'CORO: 2° y 4° (completos) · 7° 8° 9° 10° 11° 12° (selección) · ORQUESTA SELECCIÓN 6° a 12° · GRUPO POP',
+                      danza: 'K5 canta',
+                      solistas: 'Salomé Cueter (solista) · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Paloma Ramírez · Sofía Lalinde · Helena Cardona · Celeste Arcila · Adelaida Hoyos',
+                      obs: 'Grado 5° no participa en Overtura y Acto 1 (baila en Escena 2). De 6° y 4° algunos alumnos de cuerdas y vientos participan tocando. Grado 3° no canta en Overtura y Acto 1 (baila en Escena 3).',
+                    },
+                  ],
+                },
+                {
+                  seccion: 'ACTO 1',
+                  color: '#1d6eed',
+                  items: [
+                    {
+                      numero: 'Acto 1 · Esc 1',
+                      obra: 'El baile de los sueños',
+                      coro: 'CORO: 2° y 4° (completos) · 7° 8° 9° 10° 11° 12° (selección) · ORQUESTA SELECCIÓN 6° a 12°',
+                      danza: '7° 8° 9° baila (selección) · 1° · Tambores y maracas',
+                      solistas: 'Sofía Lalinde · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Paloma Ramírez · Helena Cardona · Celeste Arcila · Adelaida Hoyos',
+                      obs: 'Grado 5° no participa (baila en Esc 2). Grado 6° alumnos de cuerdas y vientos participan. Grado 3° no canta (baila en Esc 3).',
+                    },
+                    {
+                      numero: 'Acto 1 · Esc 2',
+                      obra: 'Matanok Tanok',
+                      coro: 'CORO: 2° y 4° (completos) · 7° 8° 9° 10° 11° 12° (selección) · ORQUESTA SELECCIÓN 6° a 12°',
+                      danza: '5° baila',
+                      solistas: 'Adelaida Hoyos · Salomé Cueter · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Paloma Ramírez · Sofía Lalinde · Helena Cardona · Celeste Arcila',
+                      obs: 'Alumnos de danza del coro de 7° 8° 9° no pueden cantar en Overtura, Acto 1,2 y 3. Solo participan en Acto 4 y Final.',
+                    },
+                    {
+                      numero: 'Acto 1 · Esc 3',
+                      obra: 'The Gift of a Friend',
+                      coro: 'CORO: 2° y 4° (completos) · 7° 8° 9° 10° 11° 12° (selección) · PISTA',
+                      danza: '3° baila',
+                      solistas: 'Isabel Lara · Sofía Lalinde · Salomé Cueter · Manuela Rodríguez · Carolina Jaramillo · Paloma Ramírez · Helena Cardona · Celeste Arcila · Adelaida Hoyos',
+                      obs: 'Grado 5° no participa (baila en Esc 2). Grado 6° alumnos de cuerdas y vientos. Grado 3° no canta.',
+                    },
+                  ],
+                },
+                {
+                  seccion: 'ACTO 2',
+                  color: '#0891b2',
+                  items: [
+                    {
+                      numero: 'Acto 2 · Esc 1',
+                      obra: 'Renacer en mí',
+                      coro: 'No hay coro',
+                      danza: '10° 11° 12° baila (seleccionados)',
+                      solistas: 'Salomé Cueter · Isabel Lara',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 2 · Esc 1',
+                      obra: 'Algo nuevo',
+                      coro: 'No hay coro',
+                      danza: '7° 8° 9° baila',
+                      solistas: 'Isabel Lara · Sofía Lalinde',
+                      obs: 'Se preparan vientos (selección).',
+                    },
+                    {
+                      numero: 'Acto 2 · Esc 2',
+                      obra: 'Mi destino es hoy',
+                      coro: 'No hay coro',
+                      danza: '10° 11° 12° baila (seleccionados)',
+                      solistas: 'Paloma Ramírez · Carolina Jaramillo · Manuela Rodríguez · Isabel Lara · Sofía Lalinde · Helena Cardona · Celeste Arcila · Adelaida Hoyos',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 2 · Esc 3',
+                      obra: 'Un mundo diverso',
+                      coro: 'CORO: 2° 3° 4° 5° (completos) · 7° 8° 9° 10° 11° 12° (selección)',
+                      danza: '6° baila · K4 canta',
+                      solistas: 'Adelaida Hoyos · Celeste Arcila · Elena Cardona · Alicia Escobar · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Paloma Ramírez · Sofía Lalinde · Helena Cardona',
+                      obs: 'Grado 6° no participa en Acto 2 (baila en Esc 3). ENTRAN CUERDAS ACTO 3 — UN MUNDO DIVERSO. Al finalizar salen 2° y 4° a vestuario.',
+                    },
+                  ],
+                },
+                {
+                  seccion: 'ACTO 3',
+                  color: '#059669',
+                  items: [
+                    {
+                      numero: 'Acto 3 · Esc 1',
+                      obra: 'Who Would Think That Love',
+                      coro: 'No hay coro · Pista',
+                      danza: '7° 8° 9° baila',
+                      solistas: 'Paloma Ramírez · Isabel Lara · Carolina Jaramillo · Manuela Rodríguez · Martín Mejía · Noah Bluman · Martín Restrepo Ocampo · Jerónimo Gutiérrez',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 3 · Esc 2',
+                      obra: 'Vamos a cambiar el mundo',
+                      coro: 'CORO: 2° 3° 4° 5° 6° (completos) · 7° 8° 9° 10° 11° 12° (selección) · ORQUESTA SELECCIÓN 7° a 12°',
+                      danza: '1° Campanas seleccionados y cantan',
+                      solistas: 'Emma Peñagos · Olivia García · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Paloma Ramírez · Sofía Lalinde · Helena Cardona · Celeste Arcila · Adelaida Hoyos',
+                      obs: '2° y 4° NO CANTAN — están en vestuario. Grado 6° no alcanza a llegar de zona de vestuario.',
+                    },
+                    {
+                      numero: 'Acto 3 · Esc 3',
+                      obra: 'Send It On',
+                      coro: 'No hay coro',
+                      danza: 'Cello: Jerónimo Acero · Violín: Irene',
+                      solistas: 'Manuela Rodríguez · Belén Toro · Isabel Lara · Sofía Lalinde · Carolina Jaramillo · Salomé Cueter · Paloma Ramírez',
+                      obs: 'Grado 6° se sube a zona de coro.',
+                    },
+                  ],
+                },
+                {
+                  seccion: 'ACTO 4',
+                  color: '#b8972e',
+                  items: [
+                    {
+                      numero: 'Acto 4 · Esc 1',
+                      obra: 'El Amanecer (animales variados)',
+                      coro: 'ORQUESTA SELECCIÓN 7° a 12°',
+                      danza: '2° baila',
+                      solistas: 'No hay',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 4 · Esc 2',
+                      obra: 'Insectos / Génesis',
+                      coro: 'ORQUESTA SELECCIÓN BANDA 7° a 12°',
+                      danza: 'K3 baila',
+                      solistas: 'No hay',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 4 · Esc 3',
+                      obra: 'Reptiles / In the Hall of the Mountain King',
+                      coro: 'ORQUESTA SELECCIÓN CUERDAS 7° a 12°',
+                      danza: '4° baila',
+                      solistas: 'No hay',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 4 · Esc 4',
+                      obra: 'Aves / Morning',
+                      coro: 'PISTA',
+                      danza: 'K5 baila',
+                      solistas: 'No hay',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 4 · Esc 5',
+                      obra: 'Felinos / Furioso',
+                      coro: 'ORQUESTA SELECCIÓN 7° a 12°',
+                      danza: 'K4 baila',
+                      solistas: 'No hay',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 4 · Esc 6',
+                      obra: 'Peces / Agua',
+                      coro: 'PISTA',
+                      danza: '1° baila',
+                      solistas: 'No hay',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Acto 4 · Esc 7',
+                      obra: 'Haskediyah Porachat',
+                      coro: 'CORO: 2° 3° 4° 5° 6° (completos) · 7° 8° 9° 10° 11° 12° (selección) + alumnos de danza (si lo consideran) · ORQUESTA SELECCIÓN 7° a 12°',
+                      danza: 'No hay',
+                      solistas: 'Gemma García · Alicia Escobar · Celeste Arcila · Helena Cardona · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Paloma Ramírez · Sofía Lalinde · Adelaida Hoyos · Martín Mejía · Noah Bluman · Martín Restrepo Ocampo · Jerónimo Gutiérrez',
+                      obs: 'Se integran algunos estudiantes de primaria que van a tocar.',
+                    },
+                  ],
+                },
+                {
+                  seccion: 'FINAL',
+                  color: '#dc2626',
+                  items: [
+                    {
+                      numero: 'Final · Esc 1',
+                      obra: 'Reach for the Stars',
+                      coro: 'No hay coro · PISTA',
+                      danza: '12° · K3',
+                      solistas: 'Isabel Lara · Carolina Jaramillo · Sofía Lalinde · Paloma Ramírez · Salomé Cueter · Andrés Gaviria',
+                      obs: '',
+                    },
+                    {
+                      numero: 'Final',
+                      obra: '80 Años de Historia',
+                      coro: 'CORO: 2° 3° 4° 5° 6° (completos) + alumnos de danza (si lo consideran) · 7° 8° 9° 10° 11° 12° (selección) · ORQUESTA SELECCIÓN 7° a 12°',
+                      danza: 'No hay',
+                      solistas: 'Belén Toro · Paloma Ramírez · Manuela Rodríguez · Isabel Lara · Carolina Jaramillo · Sofía Lalinde · Helena Cardona · Celeste Arcila · Adelaida Hoyos · Gemma García · Alicia Escobar · Emma Peñagos · Olivia García · Martín Mejía · Noah Bluman · Martín Restrepo Ocampo · Jerónimo Gutiérrez',
+                      obs: 'TODO EL COLEGIO SALE Y PARTICIPA CANTANDO: alumnos de danza, teatro, logística (según lista), docentes, administrativos, servicios generales y logísticos, entre otros.',
+                    },
+                  ],
+                },
+              ].map((seccion, si) => (
+                <div key={si} style={{ marginBottom: 20 }}>
+                  <div style={{ background: seccion.color, color: '#fff', fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 800, fontSize: 15, letterSpacing: 1, padding: '7px 14px', borderRadius: 8, marginBottom: 8, textTransform: 'uppercase' }}>
+                    {seccion.seccion}
+                  </div>
+                  {seccion.items.map((item, ii) => (
+                    <details key={ii} style={{ marginBottom: 8, border: `1px solid ${C.cardB}`, borderRadius: 10, overflow: 'hidden', borderLeft: `4px solid ${seccion.color}` }}>
+                      <summary style={{ padding: '11px 14px', cursor: 'pointer', background: '#f8fafc', listStyle: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                          <span style={{ fontWeight: 800, fontSize: 13, color: '#1d3a6e' }}>{item.numero}</span>
+                          <span style={{ fontWeight: 600, fontSize: 13, color: seccion.color, marginLeft: 10 }}>{item.obra}</span>
+                        </div>
+                        <span style={{ fontSize: 11, color: C.muted }}>▼</span>
+                      </summary>
+                      <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>🎵 Coro / Orquesta</div>
+                          <div style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{item.coro}</div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>💃 Danza / Música</div>
+                          <div style={{ fontSize: 13, color: C.text, lineHeight: 1.5 }}>{item.danza}</div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>🎤 Solistas y acompañantes</div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                            {item.solistas.split(' · ').map((s, si2) => (
+                              <span key={si2} style={{ background: '#e8f0fb', color: '#1d3a6e', borderRadius: 20, padding: '2px 9px', fontSize: 12, fontWeight: 600 }}>{s}</span>
+                            ))}
+                          </div>
+                        </div>
+                        {item.obs && (
+                          <div style={{ background: '#fffbeb', border: '1px solid #f59e0b44', borderRadius: 8, padding: '8px 11px' }}>
+                            <div style={{ fontSize: 11, fontWeight: 700, color: '#b45309', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 3 }}>⚠️ Observaciones</div>
+                            <div style={{ fontSize: 12, color: '#78350f', lineHeight: 1.5 }}>{item.obs}</div>
+                          </div>
+                        )}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              ))}
             </div>
           )}
 
