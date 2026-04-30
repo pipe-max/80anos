@@ -2140,53 +2140,64 @@ function ModalTerminos({ onAceptar }) {
     <div style={{
       position: 'fixed', inset: 0, zIndex: 9999,
       background: 'rgba(10,20,50,0.7)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      padding: '16px',
+      display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+      padding: '0',
     }}>
       <div style={{
-        background: '#fff', borderRadius: 16, padding: '32px 28px',
-        maxWidth: 520, width: '100%', boxShadow: '0 8px 40px rgba(0,0,0,0.25)',
-        maxHeight: '90vh', overflowY: 'auto',
+        background: '#fff', borderRadius: '16px 16px 0 0', padding: '0',
+        maxWidth: 520, width: '100%', boxShadow: '0 -4px 30px rgba(0,0,0,0.25)',
+        maxHeight: '85vh', display: 'flex', flexDirection: 'column',
       }}>
-        {/* Logo + título */}
-        <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <img src="/logo80.png" alt="Logo" style={{ height: 60, marginBottom: 12 }} />
-          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 22, fontWeight: 700, color: '#1a2a3a' }}>
-            Autorización de Tratamiento de Datos
+        {/* Handle / drag indicator */}
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0 0' }}>
+          <div style={{ width: 36, height: 4, background: '#dde3ec', borderRadius: 4 }} />
+        </div>
+
+        {/* Contenido scrolleable */}
+        <div style={{ overflowY: 'auto', padding: '16px 20px 12px', flex: 1 }}>
+          {/* Logo + título */}
+          <div style={{ textAlign: 'center', marginBottom: 14 }}>
+            <img src="/logo80.png" alt="Logo" style={{ height: 44, marginBottom: 8 }} />
+            <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 20, fontWeight: 700, color: '#1a2a3a' }}>
+              Autorización de Tratamiento de Datos
+            </div>
+            <div style={{ fontSize: 12, color: '#5a7a9a', marginTop: 2 }}>
+              Colegio Theodoro Herzl · Evento 80 Años
+            </div>
           </div>
-          <div style={{ fontSize: 13, color: '#5a7a9a', marginTop: 4 }}>
-            Colegio Theodoro Herzl · Evento 80 Años
+
+          {/* Texto legal */}
+          <div style={{ fontSize: 13, color: '#2a3a4a', lineHeight: 1.65, marginBottom: 8 }}>
+            <p>De conformidad con la <strong>Ley 1581 de 2012</strong> (Habeas Data) y el <strong>Decreto 1377 de 2013</strong> de la República de Colombia, el <strong>Colegio Theodoro Herzl</strong> le informa que los datos personales que usted suministre serán tratados de forma confidencial:</p>
+
+            <ul style={{ paddingLeft: 16, margin: '10px 0' }}>
+              <li><strong>Finalidad:</strong> Coordinación y control de la recogida de estudiantes durante el evento <strong>"80 Años Creando Memorias"</strong> (4 y 5 de mayo de 2026), Teatro Metropolitano de Medellín.</li>
+              <li style={{ marginTop: 8 }}><strong>Responsable:</strong> Colegio Theodoro Herzl — Medellín, Colombia.</li>
+              <li style={{ marginTop: 8 }}><strong>Confidencialidad:</strong> La información es estrictamente confidencial y no será cedida a terceros. Solo accederá el personal necesario para la coordinación del evento.</li>
+              <li style={{ marginTop: 8 }}><strong>Almacenamiento:</strong> Los datos serán conservados únicamente durante el período del evento y eliminados posteriormente.</li>
+              <li style={{ marginTop: 8 }}><strong>Derechos:</strong> Puede conocer, actualizar, rectificar y suprimir sus datos comunicándose con la institución.</li>
+            </ul>
+
+            <p style={{ marginTop: 10 }}>Al hacer clic en <strong>"Acepto y continuar"</strong>, declara haber leído y aceptado el tratamiento de sus datos.</p>
           </div>
         </div>
 
-        {/* Texto legal */}
-        <div style={{ fontSize: 13, color: '#2a3a4a', lineHeight: 1.7, marginBottom: 24 }}>
-          <p>De conformidad con la <strong>Ley 1581 de 2012</strong> (Habeas Data) y el <strong>Decreto 1377 de 2013</strong> de la República de Colombia, el <strong>Colegio Theodoro Herzl</strong> le informa que los datos personales que usted suministre en este formulario serán tratados de forma confidencial, con las siguientes condiciones:</p>
-
-          <ul style={{ paddingLeft: 18, margin: '10px 0' }}>
-            <li><strong>Finalidad:</strong> Los datos recolectados (nombre del estudiante, información de la persona autorizada para recogerlo y datos de contacto) serán utilizados <em>exclusivamente</em> para la coordinación y control de la recogida de estudiantes durante el evento <strong>"80 Años Creando Memorias"</strong> (4 y 5 de mayo de 2026) en el Teatro Metropolitano de Medellín.</li>
-            <li style={{ marginTop: 8 }}><strong>Responsable:</strong> Colegio Theodoro Herzl — Medellín, Colombia.</li>
-            <li style={{ marginTop: 8 }}><strong>Confidencialidad y no cesión:</strong> La información suministrada es estrictamente confidencial. El Colegio Theodoro Herzl se compromete a no vender, ceder ni divulgar los datos personales a terceros, entidades externas ni ninguna parte ajena a la institución. Los datos serán accedidos únicamente por el personal docente y administrativo necesario para la coordinación del evento.</li>
-            <li style={{ marginTop: 8 }}><strong>Almacenamiento:</strong> Los datos serán conservados únicamente durante el período del evento y eliminados posteriormente.</li>
-            <li style={{ marginTop: 8 }}><strong>Derechos:</strong> Usted tiene derecho a conocer, actualizar, rectificar y suprimir sus datos personales. Para ejercer estos derechos puede comunicarse con la institución.</li>
-          </ul>
-
-          <p style={{ marginTop: 10 }}>Al hacer clic en <strong>"Acepto y continuar"</strong>, usted declara haber leído, entendido y aceptado el tratamiento de sus datos personales bajo las condiciones descritas.</p>
-        </div>
-
-        <button
-          onClick={onAceptar}
-          style={{
-            width: '100%', background: '#1d6eed', color: '#fff', border: 'none',
-            borderRadius: 10, padding: '14px', fontSize: 16, fontWeight: 700,
-            cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
-            boxShadow: '0 2px 10px rgba(29,110,237,0.3)',
-          }}
-        >
-          ✅ Acepto y continuar
-        </button>
-        <div style={{ textAlign: 'center', marginTop: 10, fontSize: 11, color: '#9aacbe' }}>
-          Si no acepta, no podrá diligenciar el formulario.
+        {/* Botón fijo al fondo */}
+        <div style={{ padding: '12px 20px 20px', borderTop: '1px solid #edf0f5', background: '#fff', borderRadius: '0 0 16px 16px' }}>
+          <button
+            onClick={onAceptar}
+            style={{
+              width: '100%', background: '#1d6eed', color: '#fff', border: 'none',
+              borderRadius: 10, padding: '14px', fontSize: 16, fontWeight: 700,
+              cursor: 'pointer', fontFamily: "'DM Sans', sans-serif",
+              boxShadow: '0 2px 10px rgba(29,110,237,0.3)',
+            }}
+          >
+            ✅ Acepto y continuar
+          </button>
+          <div style={{ textAlign: 'center', marginTop: 8, fontSize: 11, color: '#9aacbe' }}>
+            Si no acepta, no podrá diligenciar el formulario.
+          </div>
         </div>
       </div>
     </div>
